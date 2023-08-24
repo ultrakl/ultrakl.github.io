@@ -73,6 +73,44 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-cplus-learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/project/2023/08/24/cplus-learning/" class="article-date">
+  <time class="dt-published" datetime="2023-08-24T14:07:42.000Z" itemprop="datePublished">2023-08-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/project/2023/08/24/cplus-learning/">cplus_learning</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="2023-8-2"><a href="#2023-8-2" class="headerlink" title="2023&#x2F;8&#x2F;2"></a>2023&#x2F;8&#x2F;2</h1><h2 id="dijstra，每次并入一个节点并更新dist值，下面列举几种不同实现方式-邻接矩阵-时间复杂度为O-v-2-邻接链表，每个顶点连着跟他相连的顶点作为链表中的节点，存储着目的顶点和边的权重，时间复杂度为O-Elogv-可以用list-最小堆-基本知识：节点索引由一个数组维护，左右子树下标和二叉树类似，-每个左右子树的父节点的值都比子节点的值小，这里的值指的是dist值-提取最小值：将堆中最小值节点，也就是根节点和数组中最后一个节点调换位置，并减少堆中size的值，这样可以防止下次寻找最小值时再次访问该节点，之后进行堆最小化操作-堆最小化操作-递归函数，递归对比父节点和左右节点的值并交换节点中的值以及交换对应图中顶点所在索引值-减少键值操作：每次更新顶点的dist值后都要在最小堆中进行更新，并递归和其父节点进行比较，将其放在最小堆中应在的位置-stl-set-集合的定义，每个元素只有一份在集合中-std-tie是C-标准库中的一个函数模板，位于头文件中。std-tie用于创建一个std-tuple元组，可以用来绑定多个变量，并从中提取元素值。-std-tie的用法是将多个变量作为参数传递给它，并返回一个元组，其中包含这些变量的引用。可以使用std-tie来简洁地同时解包多个变量。-myset-erase-myset-find-40-只删除第一个匹配到的元素，而-myset-erase-40-会删除所有匹配到的元素。-set的默认排序方式为升序排序，priority-queue相反-std-sort-myints-myints-8-myfunction-myobject-strcut-or-class仿函数-std-set-myset-myfunction-pair的默认排序方式按pair-first排序-常见的实现方法为BFS，每次从队列或集合中取出最小的dist所对应的节点，松弛该节点相连的所有边，若有更新，将更新后的pair加入至队列中-为了防止遍历到已经提取出最小值的节点，可以加入vis数组，但加不加无所谓，最终都会收敛至最小值-2023-8-3-原地哈希：将原数组的元素对应到其下标中，比如1对应的下标为1-1-0，还可以使用替换的方式将0索引上的数字与1进行交换，该方式可以用来查看某个数字是否出现在了数组中。"><a href="#dijstra，每次并入一个节点并更新dist值，下面列举几种不同实现方式-邻接矩阵-时间复杂度为O-v-2-邻接链表，每个顶点连着跟他相连的顶点作为链表中的节点，存储着目的顶点和边的权重，时间复杂度为O-Elogv-可以用list-最小堆-基本知识：节点索引由一个数组维护，左右子树下标和二叉树类似，-每个左右子树的父节点的值都比子节点的值小，这里的值指的是dist值-提取最小值：将堆中最小值节点，也就是根节点和数组中最后一个节点调换位置，并减少堆中size的值，这样可以防止下次寻找最小值时再次访问该节点，之后进行堆最小化操作-堆最小化操作-递归函数，递归对比父节点和左右节点的值并交换节点中的值以及交换对应图中顶点所在索引值-减少键值操作：每次更新顶点的dist值后都要在最小堆中进行更新，并递归和其父节点进行比较，将其放在最小堆中应在的位置-stl-set-集合的定义，每个元素只有一份在集合中-std-tie是C-标准库中的一个函数模板，位于头文件中。std-tie用于创建一个std-tuple元组，可以用来绑定多个变量，并从中提取元素值。-std-tie的用法是将多个变量作为参数传递给它，并返回一个元组，其中包含这些变量的引用。可以使用std-tie来简洁地同时解包多个变量。-myset-erase-myset-find-40-只删除第一个匹配到的元素，而-myset-erase-40-会删除所有匹配到的元素。-set的默认排序方式为升序排序，priority-queue相反-std-sort-myints-myints-8-myfunction-myobject-strcut-or-class仿函数-std-set-myset-myfunction-pair的默认排序方式按pair-first排序-常见的实现方法为BFS，每次从队列或集合中取出最小的dist所对应的节点，松弛该节点相连的所有边，若有更新，将更新后的pair加入至队列中-为了防止遍历到已经提取出最小值的节点，可以加入vis数组，但加不加无所谓，最终都会收敛至最小值-2023-8-3-原地哈希：将原数组的元素对应到其下标中，比如1对应的下标为1-1-0，还可以使用替换的方式将0索引上的数字与1进行交换，该方式可以用来查看某个数字是否出现在了数组中。" class="headerlink" title="- dijstra，每次并入一个节点并更新dist值，下面列举几种不同实现方式  - 邻接矩阵 时间复杂度为O(v^2)  - 邻接链表，每个顶点连着跟他相连的顶点作为链表中的节点，存储着目的顶点和边的权重，时间复杂度为O(Elogv) 可以用list&lt;pair&lt;int(目的顶点),int(边的权重)&gt;&gt;    - 最小堆      - 基本知识：节点索引由一个数组维护，左右子树下标和二叉树类似， 每个左右子树的父节点的值都比子节点的值小，这里的值指的是dist值      - 提取最小值：将堆中最小值节点，也就是根节点和数组中最后一个节点调换位置，并减少堆中size的值，这样可以防止下次寻找最小值时再次访问该节点，之后进行堆最小化操作      - 堆最小化操作 : 递归函数，递归对比父节点和左右节点的值并交换节点中的值以及交换对应图中顶点所在索引值      - 减少键值操作：每次更新顶点的dist值后都要在最小堆中进行更新，并递归和其父节点进行比较，将其放在最小堆中应在的位置  -  stl set : 集合的定义，每个元素只有一份在集合中  -  std::tie是C++标准库中的一个函数模板，位于头文件中。std::tie用于创建一个std::tuple元组，可以用来绑定多个变量，并从中提取元素值。  -  std::tie的用法是将多个变量作为参数传递给它，并返回一个元组，其中包含这些变量的引用。可以使用std::tie来简洁地同时解包多个变量。  -  myset.erase(myset.find(40)); 只删除第一个匹配到的元素，而 myset.erase(40); 会删除所有匹配到的元素。  -  set的默认排序方式为升序排序，priority_queue相反  -  std::sort(myints, myints+8, myfunction&#x2F;myobject(strcut or class仿函数)) &#x2F; std::set&lt;int, less&#x2F;greater&#x2F;myfunctionobject&#x2F;bool(*)(int, int)&gt; myset(myfunction)  -  pair的默认排序方式按pair.first排序  -  常见的实现方法为BFS，每次从队列或集合中取出最小的dist所对应的节点，松弛该节点相连的所有边，若有更新，将更新后的pair加入至队列中  -  为了防止遍历到已经提取出最小值的节点，可以加入vis数组，但加不加无所谓，最终都会收敛至最小值# 2023&#x2F;8&#x2F;3- 原地哈希：将原数组的元素对应到其下标中，比如1对应的下标为1-1&#x3D;0，还可以使用替换的方式将0索引上的数字与1进行交换，该方式可以用来查看某个数字是否出现在了数组中。"></a><img src="https://user-images.githubusercontent.com/18375710/73044015-c0e3cc80-3ea2-11ea-9485-d52bb65d4d0f.png" alt="alt"><br>- dijstra，每次并入一个节点并更新dist值，下面列举几种不同实现方式<br>  - 邻接矩阵 时间复杂度为O(v^2)<br>  - 邻接链表，每个顶点连着跟他相连的顶点作为链表中的节点，存储着目的顶点和边的权重，时间复杂度为O(Elogv) 可以用list&lt;pair&lt;int(目的顶点),int(边的权重)&gt;&gt;<br>    - 最小堆<br>      - 基本知识：节点索引由一个数组维护，左右子树下标和二叉树类似， 每个左右子树的父节点的值都比子节点的值小，这里的值指的是dist值<br>      - 提取最小值：将堆中最小值节点，也就是根节点和数组中最后一个节点调换位置，并减少堆中size的值，这样可以防止下次寻找最小值时再次访问该节点，之后进行堆最小化操作<br>      - 堆最小化操作 : 递归函数，递归对比父节点和左右节点的值并交换节点中的值以及交换对应图中顶点所在索引值<br>      - 减少键值操作：每次更新顶点的dist值后都要在最小堆中进行更新，并递归和其父节点进行比较，将其放在最小堆中应在的位置<br>  -  stl set : 集合的定义，每个元素只有一份在集合中<br>  -  std::tie是C++标准库中的一个函数模板，位于<tuple>头文件中。std::tie用于创建一个std::tuple元组，可以用来绑定多个变量，并从中提取元素值。<br>  -  std::tie的用法是将多个变量作为参数传递给它，并返回一个元组，其中包含这些变量的引用。可以使用std::tie来简洁地同时解包多个变量。<br>  -  myset.erase(myset.find(40)); 只删除第一个匹配到的元素，而 myset.erase(40); 会删除所有匹配到的元素。<br>  -  set的默认排序方式为升序排序，priority_queue相反<br>  -  std::sort(myints, myints+8, myfunction&#x2F;myobject(strcut or class仿函数)) &#x2F; std::set&lt;int, less<int>&#x2F;greater<int>&#x2F;myfunctionobject&#x2F;bool(*)(int, int)&gt; myset(myfunction)<br>  -  pair的默认排序方式按pair.first排序<br>  -  常见的实现方法为BFS，每次从队列或集合中取出最小的dist所对应的节点，松弛该节点相连的所有边，若有更新，将更新后的pair加入至队列中<br>  -  为了防止遍历到已经提取出最小值的节点，可以加入vis数组，但加不加无所谓，最终都会收敛至最小值<br><br># 2023&#x2F;8&#x2F;3<br>- 原地哈希：将原数组的元素对应到其下标中，比如1对应的下标为1-1&#x3D;0，还可以使用替换的方式将0索引上的数字与1进行交换，该方式可以用来查看某个数字是否出现在了数组中。</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ultrakl.github.io/project/2023/08/24/cplus-learning/" data-id="cllp8ohwb0000l0tldzt74aom" data-title="cplus_learning" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-introduction" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/project/2023/08/24/introduction/" class="article-date">
@@ -326,6 +364,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/project/2023/08/24/cplus-learning/">cplus_learning</a>
+          </li>
         
           <li>
             <a href="/project/2023/08/24/introduction/">introduction</a>
