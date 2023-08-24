@@ -9,7 +9,7 @@
   <meta name="description" content="2023&#x2F;8&#x2F;2- dijstra，每次并入一个节点并更新dist值，下面列举几种不同实现方式  - 邻接矩阵 时间复杂度为O(v^2)  - 邻接链表，每个顶点连着跟他相连的顶点作为链表中的节点，存储着目的顶点和边的权重，时间复杂度为O(Elogv) 可以用list&lt;pair&lt;int(目的顶点),int(边的权重)&gt;&gt;    - 最小堆      -">
 <meta property="og:type" content="article">
 <meta property="og:title" content="cplus_learning">
-<meta property="og:url" content="https://ultrakl.github.io/project/2023/08/24/cplus-learning/index.html">
+<meta property="og:url" content="https://example.com/2023/08/24/cplus-learning/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="2023&#x2F;8&#x2F;2- dijstra，每次并入一个节点并更新dist值，下面列举几种不同实现方式  - 邻接矩阵 时间复杂度为O(v^2)  - 邻接链表，每个顶点连着跟他相连的顶点作为链表中的节点，存储着目的顶点和边的权重，时间复杂度为O(Elogv) 可以用list&lt;pair&lt;int(目的顶点),int(边的权重)&gt;&gt;    - 最小堆      -">
 <meta property="og:locale" content="en_US">
@@ -20,10 +20,10 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://user-images.githubusercontent.com/18375710/73044015-c0e3cc80-3ea2-11ea-9485-d52bb65d4d0f.png">
   
-    <link rel="alternate" href="/project/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
   
-    <link rel="shortcut icon" href="/project/favicon.png">
+    <link rel="shortcut icon" href="/favicon.png">
   
   
     
@@ -31,11 +31,11 @@
 
   
   
-<link rel="stylesheet" href="/project/css/style.css">
+<link rel="stylesheet" href="/css/style.css">
 
   
     
-<link rel="stylesheet" href="/project/fancybox/jquery.fancybox.min.css">
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
   
   
@@ -49,7 +49,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/project/" id="logo">Hexo</a>
+        <a href="/" id="logo">Hexo</a>
       </h1>
       
     </div>
@@ -57,20 +57,20 @@
       <nav id="main-nav">
         <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
         
-          <a class="main-nav-link" href="/project/">Home</a>
+          <a class="main-nav-link" href="/">Home</a>
         
-          <a class="main-nav-link" href="/project/archives">Archives</a>
+          <a class="main-nav-link" href="/archives">Archives</a>
         
       </nav>
       <nav id="sub-nav">
         
         
-          <a class="nav-icon" href="/project/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
         
         <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://ultrakl.github.io/project"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://example.com"></form>
       </div>
     </div>
   </div>
@@ -79,7 +79,7 @@
       <div class="outer">
         <section id="main"><article id="post-cplus-learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/project/2023/08/24/cplus-learning/" class="article-date">
+    <a href="/2023/08/24/cplus-learning/" class="article-date">
   <time class="dt-published" datetime="2023-08-24T14:07:42.000Z" itemprop="datePublished">2023-08-24</time>
 </a>
     
@@ -103,7 +103,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ultrakl.github.io/project/2023/08/24/cplus-learning/" data-id="cllp8ohwb0000l0tldzt74aom" data-title="cplus_learning" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://example.com/2023/08/24/cplus-learning/" data-id="cllp8ohwb0000l0tldzt74aom" data-title="cplus_learning" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -114,7 +114,7 @@
 <nav id="article-nav">
   
   
-    <a href="/project/2023/08/24/introduction/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2023/08/24/introduction/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">introduction</div>
     </a>
@@ -141,7 +141,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/project/archives/2023/08/">August 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li></ul>
     </div>
   </div>
 
@@ -154,15 +154,15 @@
       <ul>
         
           <li>
-            <a href="/project/2023/08/24/cplus-learning/">cplus_learning</a>
+            <a href="/2023/08/24/cplus-learning/">cplus_learning</a>
           </li>
         
           <li>
-            <a href="/project/2023/08/24/introduction/">introduction</a>
+            <a href="/2023/08/24/introduction/">introduction</a>
           </li>
         
           <li>
-            <a href="/project/2023/08/23/hello-world/">Hello World</a>
+            <a href="/2023/08/23/hello-world/">Hello World</a>
           </li>
         
       </ul>
@@ -187,25 +187,25 @@
     </div>
     <nav id="mobile-nav">
   
-    <a href="/project/" class="mobile-nav-link">Home</a>
+    <a href="/" class="mobile-nav-link">Home</a>
   
-    <a href="/project/archives" class="mobile-nav-link">Archives</a>
+    <a href="/archives" class="mobile-nav-link">Archives</a>
   
 </nav>
     
 
 
-<script src="/project/js/jquery-3.6.4.min.js"></script>
+<script src="/js/jquery-3.6.4.min.js"></script>
 
 
 
   
-<script src="/project/fancybox/jquery.fancybox.min.js"></script>
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-<script src="/project/js/script.js"></script>
+<script src="/js/script.js"></script>
 
 
 
