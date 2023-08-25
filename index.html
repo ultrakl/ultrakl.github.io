@@ -4,17 +4,17 @@
   <meta charset="utf-8">
   
   
-  <title>Hexo</title>
+  <title>kuli&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="kuli&#39;s blog">
 <meta property="og:url" content="http://example.com/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="kuli&#39;s blog">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="kuli's blog" type="application/atom+xml">
   
   
     <link rel="shortcut icon" href="/favicon.png">
@@ -43,7 +43,7 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
+        <a href="/" id="logo">kuli&#39;s blog</a>
       </h1>
       
     </div>
@@ -135,7 +135,8 @@
       
         <h1 id="1-2023-7-13"><a href="#1-2023-7-13" class="headerlink" title="1. 2023&#x2F;7&#x2F;13"></a>1. 2023&#x2F;7&#x2F;13</h1><h2 id="1-1-Contribut"><a href="#1-1-Contribut" class="headerlink" title="1.1. Contribut"></a>1.1. Contribut</h2><ul>
 <li>剑桥雅思真题</li>
-<li>manium数学动画<br>-[<strong>1</strong>]: <a target="_blank" rel="noopener" href="https://github.com/">https://github.com/</a></li>
+<li>manium数学动画</li>
+<li><input disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://github.com/">https://github.com/</a></li>
 </ul>
 <ol>
 <li>first</li>
@@ -170,51 +171,34 @@
 <br>
 
 <ul>
-<li><p>using PI &#x3D; pair&lt;Treenode*,__uint128_t&gt;;</p>
-</li>
-<li><p><em>push_back() vs emplace_back()</em></p>
-<blockquote>
-<p>push_back时vector会新建一个数组,将新元素&amp;原vector中的元素<strong>深拷贝</strong>至新vector，原vector会被释放, 其中元素的析构函数也会被调用<br>注意: 这里只适用于没有创建固定大小空间的vector，若使用vector.reverse(N)[^2],提前创建好元素个数，可以提高存取速度<br>使用Reserve()而不是使用“vector<Point> vertices(3)”，因为下面的语法有时不起作用，因为类中没有定义默认构造函数。</p>
-</blockquote>
-<blockquote>
+<li>using PI &#x3D; pair&lt;Treenode*,__uint128_t&gt;;</li>
+<li><em>push_back() vs emplace_back()</em>  <blockquote><p>push_back时vector会新建一个数组,将新元素&amp;原vector中的元素<strong>深拷贝</strong>至新vector，原vector会被释放, 其中元素的析构函数也会被调用<br>注意: 这里只适用于没有创建固定大小空间的vector，若使用vector.reverse(N),提前创建好元素个数，可以提高存取速度<br>使用Reserve()而不是使用“vector<Point> vertices(3)”，因为下面的语法有时不起作用，因为类中没有定义默认构造函数。</p>
 <p>使用emplace_back而不是使用参数化构造函数创建对象并将其分配到不同的内存中，然后将其传递给复制构造函数，复制构造函数会将其插入到向量中。该函数可以直接插入对象，无需调用复制构造函数。</p>
-</blockquote>
-<blockquote>
 <p><em>如果构造函数接受多个参数，push_back 只接受该类型的一个对象obj，	而emplace_back 接受该类型的构造函数的参数。</em></p>
-</blockquote>
-<p>here is a long footnote.[^1] A simple</p>
-<table>
-<thead>
-<tr>
-<th>test</th>
-<th>ts</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>a</td>
-<td>b</td>
-</tr>
-<tr>
-<td>data</td>
-<td>data</td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<p>[^1]:note that<br>[^2]:the capacity of the vec</p>
-</li>
+</blockquote></li>
 </ul>
 <h1 id="2023-7-24"><a href="#2023-7-24" class="headerlink" title="2023&#x2F;7&#x2F;24"></a>2023&#x2F;7&#x2F;24</h1><ul>
 <li><strong>vector empty是常数时间，empty()函数没有使用任何比较运算符，因此使用起来更方便,无论容器类型如何， empty() 函数都以恒定时间实现，而 size() 函数的某些实现需要 O(n) 时间复杂度，例如 list::size()。</strong></li>
 <li><strong>size返回参数为size_t(unsigned int type)，要小心其在vecotr.size()-1上使用时出现小于0的情况出现段错误的情况</strong></li>
 <li>Base(const Base&amp; temp_obj) &#x3D; <em>delete</em>;</li>
-<li><strong>列表初始化(list initalize)</strong><br><code>vector&lt;int&gt; vec&#123;1&#125;</code><br><code>vector&lt;pair&lt;int,int&gt;&gt; vec&#123;&#123;1,1&#125;&#125;</code><br><br><code>vector&lt;pair&lt;int,int&gt;&gt; vec&#123;make_pair(1,1)&#125;</code><br>not the vec{(1,1)},it’s evaluated as 1</li>
+<li><strong>列表初始化(list initalize)</strong><ul>
+<li><code>vector&lt;int&gt; vec&#123;1&#125;</code></li>
+<li><code>vector&lt;pair&lt;int,int&gt;&gt; vec&#123;&#123;1,1&#125;&#125;</code><br></li>
+<li><code>vector&lt;pair&lt;int,int&gt;&gt; vec&#123;make_pair(1,1)&#125;</code><br>not the vec{(1,1)},it’s evaluated as 1</li>
+</ul>
+</li>
 <li><strong>逗号运算符，它是一种中缀运算符，用于对其左右两个表达式进行求值，并返回第二个表达式的值。</strong></li>
 <li><strong>使用声明将基类的成员引入到派生类定义中，例如将基类的受保护成员公开为派生类的公共成员。在这种情况下，nested-name-specifier必须命名所定义的基类。如果名称是基类的重载成员函数的名称，则引入具有该名称的所有基类成员函数。如果派生类已具有具有相同名称、参数列表和限定条件的成员，则派生类成员将隐藏或覆盖（<em>不冲突</em>）从基类引入的成员。</strong></li>
 <li><strong>protected关键字说明成员在派生类中是可见的</strong> <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">B</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span>)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;B::f\n&quot;</span>; &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">g</span><span class="params">(<span class="type">char</span>)</span>        </span>&#123; std::cout &lt;&lt; <span class="string">&quot;B::g\n&quot;</span>; &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">h</span><span class="params">(<span class="type">int</span>)</span>         </span>&#123; std::cout &lt;&lt; <span class="string">&quot;B::h\n&quot;</span>; &#125;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="type">int</span> m; <span class="comment">// B::m is protected</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="type">int</span> value_type;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">D</span> : B</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">using</span> B::m;          <span class="comment">// D::m is public</span></span><br><span class="line">    <span class="keyword">using</span> B::value_type; <span class="comment">// D::value_type is public</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">using</span> B::f;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span>)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;D::f\n&quot;</span>; &#125; <span class="comment">// D::f(int) overrides B::f(int)</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">using</span> B::g;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">g</span><span class="params">(<span class="type">int</span>)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;D::g\n&quot;</span>; &#125; <span class="comment">// both g(int) and g(char) are visible</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">using</span> B::h;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">h</span><span class="params">(<span class="type">int</span>)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;D::h\n&quot;</span>; &#125; <span class="comment">// D::h(int) hides B::h(int)</span></span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    D d;</span><br><span class="line">    B&amp; b = d;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//  b.m = 2;  // Error: B::m is protected</span></span><br><span class="line">    d.m = <span class="number">1</span>;  <span class="comment">// protected B::m is accessible as public D::m</span></span><br><span class="line"> </span><br><span class="line">    b.<span class="built_in">f</span>(<span class="number">1</span>);   <span class="comment">// calls derived f()</span></span><br><span class="line">    d.<span class="built_in">f</span>(<span class="number">1</span>);   <span class="comment">// calls derived f()</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;----------\n&quot;</span>;</span><br><span class="line"> </span><br><span class="line">    d.<span class="built_in">g</span>(<span class="number">1</span>);   <span class="comment">// calls derived g(int)</span></span><br><span class="line">    d.<span class="built_in">g</span>(<span class="string">&#x27;a&#x27;</span>); <span class="comment">// calls base g(char), exposed via using B::g;</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;----------\n&quot;</span>;</span><br><span class="line"> </span><br><span class="line">    b.<span class="built_in">h</span>(<span class="number">1</span>);   <span class="comment">// calls base h()</span></span><br><span class="line">    d.<span class="built_in">h</span>(<span class="number">1</span>);   <span class="comment">// calls derived h()</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><strong>聚合初始化(aggregate initialization)</strong><br><br>指定初始化器(designated initializers)<br>four types of initializers：<br>T object{d,s,i} brace elision is prohibited 直接列表初始化<br>T object&#x3D;{d,s,i} 复制初始化</li>
+<li><strong>聚合初始化(aggregate initialization)</strong><br><ul>
+<li>指定初始化器(designated initializers)  </li>
+<li>four types of initializers：<ul>
+<li>T object{d,s,i} brace elision is prohibited 直接列表初始化</li>
+<li>T object&#x3D;{d,s,i} 复制初始化</li>
+</ul>
+</li>
+</ul>
+</li>
 <li><cstdint>头文件规定了uint32_t &amp; so on</li>
 </ul>
 <h1 id="2023-7-25"><a href="#2023-7-25" class="headerlink" title="2023&#x2F;7&#x2F;25"></a>2023&#x2F;7&#x2F;25</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);<span class="comment">//c++将printf和cout绑定到同一个输出流上，为了在输出时发生混乱，默认将cout的输出先放置在缓冲区，该语句可以打消输入输出的缓存，加快输入输出效率  </span></span><br><span class="line">ios::<span class="built_in">tie</span>();<span class="comment">//This unties cin from cout. Tied streams ensure that one stream is flushed automatically before each I/O operation on the other stream.</span></span><br><span class="line"><span class="comment">//解耦输入输出流导致当程序等待用户输入时，输出信息并没有显示在屏幕，此时可以使用 std::flush或者std::endl来刷新缓冲区</span></span><br><span class="line">cin.<span class="built_in">tie</span>(<span class="literal">nullptr</span>);</span><br><span class="line"><span class="comment">//返回值为指向在调用之前绑定的流对象的指针，或者在流未绑定的情况下为空指针。</span></span><br></pre></td></tr></table></figure>
