@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>houjiecpp | kuli&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="2023&#x2F;08&#x2F;29 析构函数和复制构造函数不能是模板。若声明了可用复制构造函数的类型签名实例化的模板构造函数，则替而使用隐式声明的复制构造函数。  成员函数模板不能为虚，且派生类中的成员函数模板不能覆盖来自基类的虚成员函数。      函数模板重载 重载运算符为成员函数和友元函数时关键的区别在于成员函数具有this指针，而友元函数没有this指针。  2023&#x2F;08">
+<meta property="og:type" content="article">
+<meta property="og:title" content="houjiecpp">
+<meta property="og:url" content="http://example.com/2023/08/25/houjiecpp/index.html">
+<meta property="og:site_name" content="kuli&#39;s blog">
+<meta property="og:description" content="2023&#x2F;08&#x2F;29 析构函数和复制构造函数不能是模板。若声明了可用复制构造函数的类型签名实例化的模板构造函数，则替而使用隐式声明的复制构造函数。  成员函数模板不能为虚，且派生类中的成员函数模板不能覆盖来自基类的虚成员函数。      函数模板重载 重载运算符为成员函数和友元函数时关键的区别在于成员函数具有this指针，而友元函数没有this指针。  2023&#x2F;08">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2023/08/25/houjiecpp/Tcp.png">
+<meta property="article:published_time" content="2023-08-25T02:48:38.000Z">
+<meta property="article:modified_time" content="2023-09-01T09:37:32.333Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2023/08/25/houjiecpp/Tcp.png">
+  
+    <link rel="alternate" href="/atom.xml" title="kuli's blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">kuli&#39;s blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-houjiecpp" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/25/houjiecpp/" class="article-date">
+  <time class="dt-published" datetime="2023-08-25T02:48:38.000Z" itemprop="datePublished">2023-08-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      houjiecpp
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="2023-08-29"><a href="#2023-08-29" class="headerlink" title="2023&#x2F;08&#x2F;29"></a>2023&#x2F;08&#x2F;29</h1><ul>
+<li><p>析构函数和复制构造函数不能是模板。若声明了可用复制构造函数的类型签名实例化的模板构造函数，则替而使用隐式声明的复制构造函数。</p>
+</li>
+<li><p>成员函数模板不能为虚，且派生类中的成员函数模板不能覆盖来自基类的虚成员函数。</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><input disabled="" type="checkbox"> 函数模板重载</li>
+<li>重载运算符为成员函数和友元函数时关键的区别在于成员函数具有this指针，而友元函数没有this指针。</li>
+</ul>
+<h1 id="2023-08-29-1"><a href="#2023-08-29-1" class="headerlink" title="2023&#x2F;08&#x2F;29"></a>2023&#x2F;08&#x2F;29</h1><h2 id="network-programming"><a href="#network-programming" class="headerlink" title="network programming"></a>network programming</h2><ul>
+<li>ethernet frame</li>
+<li>tcp</li>
+<li>ip</li>
+<li>dd if&#x3D; of&#x3D; bs&#x3D; count&#x3D; | nc <ip> <port></li>
+<li><img src="/2023/08/25/houjiecpp/Tcp.png" alt="TCP/IP协议族及其体系结构"></li>
+<li>但是也可以在所有权转移的场景中使用它，比如将工厂返回的std::unique_ptr移入容器中，然后将容器元素移入一个对象的数据成员中，然后对象过后被销毁。发生这种情况时，这个对象的std::unique_ptr数据成员也被销毁，并且智能指针数据成员的析构将导致从工厂返回的资源被销毁。如果所有权链由于异常或者其他非典型控制流出现中断（比如提前从函数return或者循环中的break），则拥有托管资源的std::unique_ptr将保证指向内容的析构函数被调用，销毁对应资源。</li>
+<li>默认情况下，内存释放函数和析构函数——不管是用户定义的还是编译器生成的——都是隐式noexcept。因此它们不需要声明noexcept。</li>
+<li>不过这里还有给不抛异常的函数加上noexcept的动机：它允许编译器生成更好的目标代码。<blockquote>
+<p>noexcept修饰的函数不会抛出异常, 在c++11中，如果noexcept修饰的函数抛出了异常，编译器可以选择直接调用std::terminate()来终止程序的运行，这比基于异常机制的throw()在效率上会高出一些。使用noexcept可有效阻止异常的传播与扩散:</p>
+</blockquote>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/08/25/houjiecpp/" data-id="clm0ele3a0000wotl5sjacksd" data-title="houjiecpp" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/08/24/cplus-learning/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">cplus_learning</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/08/25/houjiecpp/">houjiecpp</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/24/cplus-learning/">cplus_learning</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/24/introduction/">introduction</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/23/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

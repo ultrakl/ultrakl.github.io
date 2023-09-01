@@ -73,6 +73,68 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-houjiecpp" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/08/25/houjiecpp/" class="article-date">
+  <time class="dt-published" datetime="2023-08-25T02:48:38.000Z" itemprop="datePublished">2023-08-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/08/25/houjiecpp/">houjiecpp</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="2023-08-29"><a href="#2023-08-29" class="headerlink" title="2023&#x2F;08&#x2F;29"></a>2023&#x2F;08&#x2F;29</h1><ul>
+<li><p>析构函数和复制构造函数不能是模板。若声明了可用复制构造函数的类型签名实例化的模板构造函数，则替而使用隐式声明的复制构造函数。</p>
+</li>
+<li><p>成员函数模板不能为虚，且派生类中的成员函数模板不能覆盖来自基类的虚成员函数。</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li><input disabled="" type="checkbox"> 函数模板重载</li>
+<li>重载运算符为成员函数和友元函数时关键的区别在于成员函数具有this指针，而友元函数没有this指针。</li>
+</ul>
+<h1 id="2023-08-29-1"><a href="#2023-08-29-1" class="headerlink" title="2023&#x2F;08&#x2F;29"></a>2023&#x2F;08&#x2F;29</h1><h2 id="network-programming"><a href="#network-programming" class="headerlink" title="network programming"></a>network programming</h2><ul>
+<li>ethernet frame</li>
+<li>tcp</li>
+<li>ip</li>
+<li>dd if&#x3D; of&#x3D; bs&#x3D; count&#x3D; | nc <ip> <port></li>
+<li><img src="/2023/08/25/houjiecpp/Tcp.png" alt="TCP/IP协议族及其体系结构"></li>
+<li>但是也可以在所有权转移的场景中使用它，比如将工厂返回的std::unique_ptr移入容器中，然后将容器元素移入一个对象的数据成员中，然后对象过后被销毁。发生这种情况时，这个对象的std::unique_ptr数据成员也被销毁，并且智能指针数据成员的析构将导致从工厂返回的资源被销毁。如果所有权链由于异常或者其他非典型控制流出现中断（比如提前从函数return或者循环中的break），则拥有托管资源的std::unique_ptr将保证指向内容的析构函数被调用，销毁对应资源。</li>
+<li>默认情况下，内存释放函数和析构函数——不管是用户定义的还是编译器生成的——都是隐式noexcept。因此它们不需要声明noexcept。</li>
+<li>不过这里还有给不抛异常的函数加上noexcept的动机：它允许编译器生成更好的目标代码。<blockquote>
+<p>noexcept修饰的函数不会抛出异常, 在c++11中，如果noexcept修饰的函数抛出了异常，编译器可以选择直接调用std::terminate()来终止程序的运行，这比基于异常机制的throw()在效率上会高出一些。使用noexcept可有效阻止异常的传播与扩散:</p>
+</blockquote>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/08/25/houjiecpp/" data-id="clm0ele3a0000wotl5sjacksd" data-title="houjiecpp" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-cplus-learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/08/24/cplus-learning/" class="article-date">
@@ -377,6 +439,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2023/08/25/houjiecpp/">houjiecpp</a>
+          </li>
         
           <li>
             <a href="/2023/08/24/cplus-learning/">cplus_learning</a>
