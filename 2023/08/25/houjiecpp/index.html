@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2023/08/25/houjiecpp/structure.png">
 <meta property="article:published_time" content="2023-08-25T02:48:38.000Z">
-<meta property="article:modified_time" content="2023-09-09T06:31:46.042Z">
+<meta property="article:modified_time" content="2023-09-18T07:59:51.713Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2023/08/25/houjiecpp/structure.png">
@@ -117,6 +117,11 @@
 <li><a href="#2112-%E8%99%9A%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0">2.1.12. 虚析构函数</a></li>
 </ul>
 </li>
+<li><a href="#22-202391">2.2. 2023&#x2F;9&#x2F;1</a><ul>
+<li><a href="#221-stdbind">2.2.1. std::bind</a></li>
+<li><a href="#222-%E5%85%B3%E4%BA%8E%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95%E8%A1%A8%E8%BF%B0%E4%B8%8A%E5%8F%AF%E8%83%BD%E6%9C%89%E7%BA%B0%E6%BC%8F%E4%BD%86%E6%A0%B9%E6%8D%AE%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%9D%A5%E7%9C%8B%E5%BA%94%E8%AF%A5%E6%98%AF%E6%AD%A3%E7%A1%AE%E7%9A%84">2.2.2. 关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -124,6 +129,8 @@
 <li><p>析构函数和复制构造函数不能是模板。若声明了可用复制构造函数的类型签名实例化的模板构造函数，则替而使用隐式声明的复制构造函数。</p>
 </li>
 <li><p>成员函数模板不能为虚，且派生类中的成员函数模板不能覆盖来自基类的虚成员函数。</p>
+</li>
+<li><p>重载规则规定当模板实例化函数和非模板函数（或者称为“正常”函数）匹配优先级相当时，优先使用“正常”函数。</p>
 </li>
 </ul>
 <hr>
@@ -168,7 +175,6 @@
 </li>
 <li>如果非类型形参类型为对象指针，则必须传入完整对象的地址，不能是指向该对象的指针</li>
 <li>如下，如果数组类型形参不是引用传递而是值传递，数组会自动降一维，成为一个指向一维数组的指针<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="type">size_t</span> w, <span class="type">size_t</span> h&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">double</span> (&amp;s)[w][h])</span></span>&#123;cout&lt;&lt;s[<span class="number">0</span>]&lt;&lt;endl;&#125;</span><br></pre></td></tr></table></figure></li>
-<li>[vscode][]</li>
 </ol>
 <h3 id="2-1-3-编译时常量表达式"><a href="#2-1-3-编译时常量表达式" class="headerlink" title="2.1.3. 编译时常量表达式"></a>2.1.3. 编译时常量表达式</h3><ul>
 <li>整形常量为如果被常量表达式初始化则为常量表达式 ，也可以用于初始化其他常量表达式，其他类型目前未知</li>
@@ -191,6 +197,7 @@
 <li>up-casting</li>
 </ol>
 </li>
+<li>一个隐式类型转换序列包括一个初始标准转换序列、一个用户定义转换序列、一个第二标准转换序列,也就是说不存在什么两步转换问题，本身转换序列最少可以转换1次，最多可以三次。两次转换当然没问题了。唯一会触发问题的是出现了两次用户定义转换，因为隐式转换序列里只允许一次用户定义转换，语言标准也规定了不允许出现多余一次的用户定义转换：</li>
 </ul>
 <hr>
 <h3 id="2-1-5-设计模式"><a href="#2-1-5-设计模式" class="headerlink" title="2.1.5. 设计模式"></a>2.1.5. 设计模式</h3><ul>
@@ -217,6 +224,9 @@
 <li>一般来说都用std::forward<T>(param)来转发通用引用（有条件的转为右值引用），用std::move将右值引用转为右值，且不会影响cv限定</li>
 </ul>
 </li>
+<li>如果你在按值返回的函数中，返回值绑定到右值引用或者通用引用上，需要对返回的引用使用std::move或者std::forward。要了解原因，考虑两个矩阵相加的operator+函数，左侧的矩阵为右值（可以被用来保存求值之后的和）：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Matrix                              <span class="comment">//按值返回</span></span><br><span class="line"><span class="keyword">operator</span>+(Matrix&amp;&amp; lhs, <span class="type">const</span> Matrix&amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    lhs += rhs;</span><br><span class="line">    <span class="keyword">return</span> std::<span class="built_in">move</span>(lhs);	        <span class="comment">//移动lhs到返回值中</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>通过在return语句中将lhs转换为右值（通过std::move），lhs可以移动到返回值的内存位置。如果省略了std::move调用，<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Matrix                              <span class="comment">//同之前一样</span></span><br><span class="line"><span class="keyword">operator</span>+(Matrix&amp;&amp; lhs, <span class="type">const</span> Matrix&amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    lhs += rhs;</span><br><span class="line">    <span class="keyword">return</span> lhs;                     <span class="comment">//拷贝lhs到返回值中</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>lhs是个左值的事实，会强制编译器拷贝它到返回值的内存空间。假定Matrix支持移动操作，并且比拷贝操作效率更高，在return语句中使用std::move的代码效率更高。</li>
 </ul>
 <h3 id="2-1-9-lambda"><a href="#2-1-9-lambda" class="headerlink" title="2.1.9. lambda"></a>2.1.9. lambda</h3><ul>
 <li>lambda不能捕捉静态存储期限变量</li>
@@ -243,6 +253,29 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">AbstractBase</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">AbstractBase</span>() = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line">AbstractBase::~<span class="built_in">AbstractBase</span>() &#123;&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Derived</span> : <span class="keyword">public</span> AbstractBase &#123;&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// AbstractBase obj; // 编译错误</span></span><br><span class="line">Derived obj;         <span class="comment">// OK</span></span><br></pre></td></tr></table></figure>
 
+<h2 id="2-2-2023-9-1"><a href="#2-2-2023-9-1" class="headerlink" title="2.2. 2023&#x2F;9&#x2F;1"></a>2.2. 2023&#x2F;9&#x2F;1</h2><h3 id="2-2-1-std-bind"><a href="#2-2-1-std-bind" class="headerlink" title="2.2.1. std::bind"></a>2.2.1. std::bind</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;<span class="type">double</span>&gt; data;               <span class="comment">//同上</span></span><br><span class="line"></span><br><span class="line">…                                       <span class="comment">//同上</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> func =</span><br><span class="line">    std::<span class="built_in">bind</span>(                              <span class="comment">//C++11模拟初始化捕获</span></span><br><span class="line">        [](<span class="type">const</span> std::vector&lt;<span class="type">double</span>&gt;&amp; data) <span class="comment">//译者注：本行高亮</span></span><br><span class="line">        &#123; <span class="comment">/*使用data*/</span> &#125;,</span><br><span class="line">        std::<span class="built_in">move</span>(data)                     <span class="comment">//译者注：本行高亮</span></span><br><span class="line">    );</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>std::bind为每个实参创建了bind对象里的<strong>副本</strong>，每次调用bind对象时，调用的是传递给lambda表达式的本地副本。在如上的例子中，std::move(data)使用移动构造创建了本地副本（左值），之后每次调用函数副本时，调用的都是该副本</li>
+</ul>
+<h3 id="2-2-2-关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的"><a href="#2-2-2-关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的" class="headerlink" title="2.2.2. 关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的"></a>2.2.2. 关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的</h3><ul>
+<li>具有static(<em>全局变量或static声明</em>)或 thread 存储期限的<strong>非局部变量</strong>在程序开始前被初始化，存放在全局区，先进行<strong>静态初始化</strong>，再进行<strong>动态初始化</strong>, 全局区分为已被初始化的段(.data段)，和未被初始化的段(.bss段)<ul>
+<li>静态初始化一般来说就是指零初始化和常量初始化，动态初始化在 <a href="%5Bhttps://%5D(https://en.cppreference.com/w/cpp/language/initialization#Non-local_variables)">cppreference</a>中并没给出明确定义，网络上对于这方面的相关资料也甚少，但值得注意的是，<strong>若没有被常量初始化的静态非局部变量在其他初始化进行前都会进行零初始化</strong>，之后会根据变量的定义来判断是否改变变量的值，但变量此时必须出现定义，若无定义则会报<strong>undefined reference</strong> 错误！！</li>
+<li>动态初始化一般来说（有别的像无序或部分有序，太复杂）是按照静态非局部变量的定义顺序来进行初始化的</li>
+</ul>
+</li>
+<li>static <strong>局部变量</strong> 拥有静态存储期限，但初始化是在第一次进入scope 作用域并执行到变量声明时初始化，除非他是被 <strong>零初始化</strong> (加载程序时被设为0，一般存储在BSS段)或者 <strong>常量初始化</strong>(编译时间)，这让他们可以像全局变量一样在程序开始前被初始化</li>
+<li>具有自动和动态存储期的非类变量的默认初始化，生成具有不确定值的对象(静态和线程局部对象的初始化为零)。</li>
+<li>引用和常量标量对象不能被默认初始化。<ul>
+<li>标量类型(scalar types)包括integral，reference，floating-point, pointer…………………………..</li>
+</ul>
+</li>
+<li>静态数据成员(static data  members) 在声明<strong>内联或constexpr</strong>时指定initialzer , 在类外不需要重定义，甚至在odr-use时也不需要定义，然而对于普通const成员来说，只有int类型的数据才可以拥有initializer，并且在odr-use时也需要在类外重新声明，但这时不能给出初始化器</li>
+<li>总结就是类静态成员在类中声明时是不会默认初始化的，可以在类外定义进行动态初始化，在类外的静态数据可以直接默认初始化.</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">double</span> <span class="title">fd</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">1.0</span>; &#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">extern</span> <span class="type">double</span> d1;</span><br><span class="line"> </span><br><span class="line"><span class="type">double</span> d2 = d1;   <span class="comment">// unspecified:</span></span><br><span class="line">                  <span class="comment">// dynamically initialized to 0.0 if d1 is dynamically initialized, or</span></span><br><span class="line">                  <span class="comment">// dynamically initialized to 1.0 if d1 is statically initialized, or</span></span><br><span class="line">                  <span class="comment">// statically initialized to 0.0 (because that would be its value</span></span><br><span class="line">                  <span class="comment">// if both variables were dynamically initialized)</span></span><br><span class="line"> </span><br><span class="line"><span class="type">double</span> d1 = <span class="built_in">fd</span>(); <span class="comment">// may be initialized statically or dynamically to 1.0</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>简而言之，d1在程序开始前被赋0，这是静态初始化，之后被赋1，这是动态初始化，但由于某些规则该变量的动态初始化可以被提至编译时间，也就是静态初始化为1，所以d2的值也是不确定的，虽然在本地表现出被动态初始化为1的结果</p>
+</blockquote>
 
       
     </div>
