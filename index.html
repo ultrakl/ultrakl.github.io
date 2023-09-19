@@ -73,6 +73,76 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-network-high-concurrency" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/09/19/network-high-concurrency/" class="article-date">
+  <time class="dt-published" datetime="2023-09-19T09:39:14.000Z" itemprop="datePublished">2023-09-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/09/19/network-high-concurrency/">network &amp; high concurrency</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="c-知识点补充"><a href="#c-知识点补充" class="headerlink" title="c++知识点补充"></a>c++知识点补充</h3><h4 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h4><ol>
+<li>unique_ptr move only</li>
+<li>make函数也实现了完美转发，所以参数为构造函数的参数 </li>
+<li>对于std::unique_ptr，只有这两种情景（自定义删除器和花括号初始化）使用make函数有点问题，使用make函数1是可以原子化操作创建指针，2是可以一次性创建控制块和对象，减少代码生成，提高执行代码的速度</li>
+<li>weak_ptr shared_ptr之间可以相互创建，先创建shared_ptr保证有引用计数，之后赋值给weak_ptr，可以储存到容器中充当缓存来按索引检查是否过期，之后如果用户需要返回cache</li>
+<li><strong>pImpl</strong></li>
+</ol>
+<p><strong>用来减少类的实现和类使用者之间的编译依赖的一种方法</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Widget</span> &#123;                  <span class="comment">//跟之前一样，在“widget.h”中</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Widget</span>();</span><br><span class="line">    ~<span class="built_in">Widget</span>();                  <span class="comment">//只有声明语句</span></span><br><span class="line">    …</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:                        <span class="comment">//跟之前一样</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">Impl</span>;</span><br><span class="line">    std::unique_ptr&lt;Impl&gt; pImpl;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>默认删除器是一个函数，它使用delete来销毁内置于std::unique_ptr的原始指针. 在使用delete之前，通常会使默认删除器使用C++11的特性static_assert来确保原始指针指向的类型<em>不是一个不完整类型</em></li>
+<li>为了避免这种情况发生，在类定义时只声明默认构造和析构函数，具体实现放在实现文件中原始指针指向对象的类型定义之后实现, 同理移动操作</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;widget.h&quot;</span>                 <span class="comment">//跟之前一样，在“widget.cpp”中</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;gadget.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Widget</span>::Impl &#123;               <span class="comment">//跟之前一样，定义Widget::Impl</span></span><br><span class="line">    std::string name;</span><br><span class="line">    std::vector&lt;<span class="type">double</span>&gt; data;</span><br><span class="line">    Gadget g1,g2,g3;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Widget::<span class="built_in">Widget</span>()                    <span class="comment">//跟之前一样</span></span><br><span class="line">: <span class="built_in">pImpl</span>(std::<span class="built_in">make_unique</span>&lt;Impl&gt;())</span><br><span class="line">&#123;&#125;</span><br><span class="line"></span><br><span class="line">Widget::~<span class="built_in">Widget</span>()                   <span class="comment">//析构函数的定义（译者注：这里高亮）</span></span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="comment">//Widget::~Widget() = default </span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>而对std::shared_ptr而言，删除器的类型不是该智能指针的一部分，这让它会生成更大的运行时数据结构和稍微慢点的代码，但是当编译器生成的特殊成员函数被使用的时候，指向的对象不必是一个完整类型。</li>
+</ul>
+<blockquote>
+<p>关于shared_ptr和unique_ptr的具体实现，请参见<a target="_blank" rel="noopener" href="https://murphypei.github.io/blog/2022/03/shared-unique-ptr">这篇博客</a></p>
+</blockquote>
+<h4 id="特殊成员函数的生成"><a href="#特殊成员函数的生成" class="headerlink" title="特殊成员函数的生成"></a>特殊成员函数的生成</h4><ol>
+<li>拷贝，或者移动操作，若有一方是用户定义的，则不会生成另一方，并且对于两个移动操作来说，显式定义一方也会导致另一方不会被自动生成</li>
+<li>所以仅当下面条件成立时才会生成移动操作（当需要时）：<ul>
+<li>类中没有拷贝操作</li>
+<li>类中没有移动操作</li>
+<li>类中没有用户定义的析构，但如果出现定义析构，编译器也会自动生成拷贝操作</li>
+</ul>
+</li>
+<li>注意没有“成员函数模版阻止编译器生成特殊成员函数”的规则</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/09/19/network-high-concurrency/" data-id="clmqgyag10001d8tl8ioh5v8p" data-title="network &amp; high concurrency" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-houjiecpp" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/08/25/houjiecpp/" class="article-date">
@@ -355,10 +425,10 @@
 
 
   
-    <article id="post-introduction" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2023/08/24/introduction/" class="article-date">
-  <time class="dt-published" datetime="2023-08-24T13:55:23.000Z" itemprop="datePublished">2023-08-24</time>
+    <a href="/2023/08/23/hello-world/" class="article-date">
+  <time class="dt-published" datetime="2023-08-23T13:30:22.245Z" itemprop="datePublished">2023-08-23</time>
 </a>
     
   </div>
@@ -369,7 +439,58 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/08/24/introduction/">introduction</a>
+      <a class="p-name article-title" href="/2023/08/23/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/08/23/hello-world/" data-id="cllp8z4to0002pktlcz5ga6p1" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-introduction" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/07/24/introduction/" class="article-date">
+  <time class="dt-published" datetime="2023-07-24T13:55:23.000Z" itemprop="datePublished">2023-07-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/07/24/introduction/">introduction</a>
     </h1>
   
 
@@ -500,58 +621,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/08/24/introduction/" data-id="cllp8z4tn0001pktl894wfrjq" data-title="introduction" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/08/23/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2023-08-23T13:30:22.245Z" itemprop="datePublished">2023-08-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/08/23/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/08/23/hello-world/" data-id="cllp8z4to0002pktlcz5ga6p1" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/07/24/introduction/" data-id="clmqgyafy0000d8tl6jo6194f" data-title="introduction" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -581,7 +651,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
     </div>
   </div>
 
@@ -594,6 +664,10 @@
       <ul>
         
           <li>
+            <a href="/2023/09/19/network-high-concurrency/">network &amp; high concurrency</a>
+          </li>
+        
+          <li>
             <a href="/2023/08/25/houjiecpp/">houjiecpp</a>
           </li>
         
@@ -602,11 +676,11 @@
           </li>
         
           <li>
-            <a href="/2023/08/24/introduction/">introduction</a>
+            <a href="/2023/08/23/hello-world/">Hello World</a>
           </li>
         
           <li>
-            <a href="/2023/08/23/hello-world/">Hello World</a>
+            <a href="/2023/07/24/introduction/">introduction</a>
           </li>
         
       </ul>
