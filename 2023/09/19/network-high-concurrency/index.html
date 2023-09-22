@@ -13,15 +13,15 @@
 <meta property="og:site_name" content="kuli&#39;s blog">
 <meta property="og:description" content="网络编程 基础知识   OSI五层模型         协议 报文 解复用 作用   链路层 ARP&#x2F;RARP      网络层 IP&#x2F;ICMP   检查网络连接   传输层 TCP&#x2F;UDP      应用层               ARP协议主要用来向自己所在的网络广播一个ARP请求,该请求包含目标机器的网络地址。此网络上的其他机器都将收到这个请求，但只有被请求">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2023-09-19-network-high-concurrency/arp%E6%8A%A5%E6%96%87.png">
-<meta property="og:image" content="http://example.com/2023-09-19-network-high-concurrency/ethernetframe.png">
-<meta property="og:image" content="http://example.com/2023-09-19-network-high-concurrency/Snipaste_2023-09-22_22-37-24.png">
-<meta property="og:image" content="http://example.com/2023-09-19-network-high-concurrency/item38_fig1.png">
+<meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/arp%E6%8A%A5%E6%96%87.png">
+<meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/ethernetframe.png">
+<meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/Snipaste_2023-09-22_22-37-24.png">
+<meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/item38_fig1.png">
 <meta property="article:published_time" content="2023-09-19T09:39:14.000Z">
-<meta property="article:modified_time" content="2023-09-22T14:50:07.823Z">
+<meta property="article:modified_time" content="2023-09-22T14:52:47.998Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2023-09-19-network-high-concurrency/arp%E6%8A%A5%E6%96%87.png">
+<meta name="twitter:image" content="http://example.com/2023/09/19/network-high-concurrency/arp%E6%8A%A5%E6%96%87.png">
   
     <link rel="alternate" href="/atom.xml" title="kuli's blog" type="application/atom+xml">
   
@@ -157,8 +157,8 @@
 </tr>
 </tbody></table>
 <ol>
-<li>ARP协议主要用来向自己所在的网络广播一个ARP请求,该请求包含目标机器的网络地址。此网络上的其他机器都将收到这个请求，但只有被请求的目标机器会回应一个ARP应答，其中包含自己的物理地址<br> <img src="/2023-09-19-network-high-concurrency/arp%E6%8A%A5%E6%96%87.png" alt="arp报文"><br> <img src="/2023-09-19-network-high-concurrency/ethernetframe.png" alt="以太网帧"></li>
-<li>使用telnet在同网络机器中进行远程连接，在一台机器上使用tcpdump进行以太网帧捕捉，捕捉结果显示类型为ARP，ARP报文长度为28字节，被封装在以太网帧中，并且根据以太网帧头部信息长度和ARP报文长度来看，帧总长应为46字节，这里显示42字节表示不考虑尾部4字节的CRC字段（对头部和数据进行循环冗余校验）<br> <img src="/2023-09-19-network-high-concurrency/Snipaste_2023-09-22_22-37-24.png" alt="tcpdump检测结果"></li>
+<li>ARP协议主要用来向自己所在的网络广播一个ARP请求,该请求包含目标机器的网络地址。此网络上的其他机器都将收到这个请求，但只有被请求的目标机器会回应一个ARP应答，其中包含自己的物理地址<br> <img src="/2023/09/19/network-high-concurrency/arp%E6%8A%A5%E6%96%87.png" alt="arp报文"><br> <img src="/2023/09/19/network-high-concurrency/ethernetframe.png" alt="以太网帧"></li>
+<li>使用telnet在同网络机器中进行远程连接，在一台机器上使用tcpdump进行以太网帧捕捉，捕捉结果显示类型为ARP，ARP报文长度为28字节，被封装在以太网帧中，并且根据以太网帧头部信息长度和ARP报文长度来看，帧总长应为46字节，这里显示42字节表示不考虑尾部4字节的CRC字段（对头部和数据进行循环冗余校验）<br> <img src="/2023/09/19/network-high-concurrency/Snipaste_2023-09-22_22-37-24.png" alt="tcpdump检测结果"></li>
 </ol>
 <h3 id="c-知识点补充"><a href="#c-知识点补充" class="headerlink" title="c++知识点补充"></a>c++知识点补充</h3><h4 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h4><ol>
 <li>unique_ptr move only</li>
@@ -220,7 +220,7 @@
 <li>与thread不同，在使用默认策略启动时，不一定会使用异步执行，这种调用方式将线程管理的职责转交给C++标准库的开发者。举个例子，这种调用方式会减少抛出资源超额异常的可能性</li>
 <li>std::launch::deferred启动策略意味着f仅当在std::async返回的future上调用get或者wait时才执行。这表示f推迟到存在这样的调用时才执行</li>
 <li>默认启动策略的调度灵活性导致使用thread_local变量比较麻烦，因为这意味着如果f读写了线程本地存储（thread-local storage，TLS），不可能预测到哪个线程的变量被访问<br>可以使用 <code>fut.wait_for(0s) == std::future_status::deferred</code> 检查函数是否被延时</li>
-<li>future是通信信道的一端，被调用者通过该信道将结果发送给调用者。被调用者（通常是异步执行）将计算结果写入通信信道中（通常通过std::promise对象），调用者使用future读取结果, 除了这种普通用途外还可以将promise模板实参设为void，用来当作<strong>条件变量</strong>通知future对象，future所在线程调用wait方法将会阻塞直到结果返回，这种方法好处在于不再需要互斥锁，条件变量，或者原子变量，并且可以用来设置线程优先级，使得线程在创建时不会自动运行，处于挂起状态，坏处在于通道的值只能设置一次，线程也只能被挂起一次。<br>  <img src="/2023-09-19-network-high-concurrency/item38_fig1.png" alt="future信道"></li>
+<li>future是通信信道的一端，被调用者通过该信道将结果发送给调用者。被调用者（通常是异步执行）将计算结果写入通信信道中（通常通过std::promise对象），调用者使用future读取结果, 除了这种普通用途外还可以将promise模板实参设为void，用来当作<strong>条件变量</strong>通知future对象，future所在线程调用wait方法将会阻塞直到结果返回，这种方法好处在于不再需要互斥锁，条件变量，或者原子变量，并且可以用来设置线程优先级，使得线程在创建时不会自动运行，处于挂起状态，坏处在于通道的值只能设置一次，线程也只能被挂起一次。<br>  <img src="/2023/09/19/network-high-concurrency/item38_fig1.png" alt="future信道"></li>
 <li>因为与被调用者关联的对象和与调用者关联的对象都不适合存储这个结果，所以调用结果必须存储在两者之外的位置。此位置称为共享状态（shared state）。共享状态通常是基于堆的对象，一般来说对于future对象拥有这个共享状态的控制权，或者说引用了共享状态，析构时引用该状态的future会自动阻塞并且等待任务完成</li>
 <li>future不能被拷贝，但他却可以用来构造shared_future，之后转交共享状态的控制权，shared_future在并发访问时可以用来为每个线程构造副本来共享共享状态的拥有权，设置std::promise::set_value()可以在多线程使用wait来唤起多个线程<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">std::promise&lt;<span class="type">void</span>&gt; p;                   <span class="comment">//跟之前一样</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">detect</span><span class="params">()</span>                           <span class="comment">//现在针对多个反映线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> sf = p.<span class="built_in">get_future</span>().<span class="built_in">share</span>();   <span class="comment">//sf的类型是std::shared_future&lt;void&gt;</span></span><br><span class="line">    std::vector&lt;std::thread&gt; vt;        <span class="comment">//反应线程容器</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; threadsToRun; ++i) &#123;</span><br><span class="line">        vt.<span class="built_in">emplace_back</span>([sf]&#123; sf.<span class="built_in">wait</span>();    <span class="comment">//在sf的局部副本上wait；</span></span><br><span class="line">                              <span class="built_in">react</span>(); &#125;);  <span class="comment">//emplace_back见条款42</span></span><br><span class="line">    &#125;</span><br><span class="line">    …                                   <span class="comment">//如果这个“…”抛出异常，detect挂起！</span></span><br><span class="line">    p.<span class="built_in">set_value</span>();                      <span class="comment">//所有线程解除挂起</span></span><br><span class="line">    …</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; t : vt) &#123;                <span class="comment">//使所有线程不可结合；</span></span><br><span class="line">        t.<span class="built_in">join</span>();                       <span class="comment">//“auto&amp;”见条款2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
@@ -235,7 +235,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2023/09/19/network-high-concurrency/" data-id="clmupy8mj0003nctlhhpl6f32" data-title="network &amp; high concurrency" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="http://example.com/2023/09/19/network-high-concurrency/" data-id="clmuq1gth0003ektl8s3s823h" data-title="network &amp; high concurrency" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
