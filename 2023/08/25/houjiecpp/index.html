@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2023/08/25/houjiecpp/structure.png">
 <meta property="article:published_time" content="2023-08-25T02:48:38.000Z">
-<meta property="article:modified_time" content="2023-09-27T14:50:58.814Z">
+<meta property="article:modified_time" content="2023-10-20T16:27:00.860Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2023/08/25/houjiecpp/structure.png">
@@ -187,9 +187,13 @@
 <li>constexpr 所表示的函数的参数和返回值都应为字面值或编译期常量（该常量也应被加上constexpr说明符），当多个不可知量调用constexpr函数时，该函数所表现出的形式为普通函数，所以constexpr的返回值不一定是const</li>
 <li>在C++11中，除了void外的所有内置类型，以及一些用户定义类型都可以是字面值类型，因为构造函数和其他成员函数可能是constexpr(<strong>c++14</strong>constexpr函数可以返回void)</li>
 <li>Point的构造函数可被声明为constexpr，因为如果传入的参数在编译期可知，Point的数据成员也能在编译器可知。因此这样初始化的Point就能为constexpr </li>
-<li>声明为constexpr的成员对象是<strong>内联</strong>的，在odr-use时可以不用在类外定义，lambda表达式中被odr-use的变量一定要被捕获，被捕获的变量不论是不是constexpr都不能用于常量表达式</li>
+<li>声明为constexpr的<strong>静态</strong>成员对象是<strong>内联</strong>的，在odr-use时可以不用在类外定义，lambda表达式中被odr-use的变量一定要被捕获，被捕获的变量不论是不是constexpr都不能用于常量表达式</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">magic</span> &#123;</span><br><span class="line">  <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> number = <span class="number">42</span>; <span class="comment">//c++17引入内联变量的概念，此处使用constexpr默认为内联，</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  std::vector&lt;<span class="type">int</span>&gt; v;</span><br><span class="line">  <span class="comment">// 调用 push_back(const T&amp;)</span></span><br><span class="line">  v.<span class="built_in">push_back</span>(magic::number);</span><br><span class="line">  std::cout &lt;&lt; v[<span class="number">0</span>] &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
 <li>在函数体内定义的constexpr变量不能用于初始化constexpr引用，constexpr引用必须被静态存储或<em>线程局部</em>常量表达式初始化（也称左值核心常量表达式）</li>
 <li>constexpr的变量也是在运行期给予地址的，所以取地址不是常量表达式</li>
+<li>constexpr变量模板，之前我们需要用类静态数据成员来表达的东西，使用变量模板可以更简洁地表达。constexpr 很合适用在变量模板里，表达一个和某个类型相关的编译期常量。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="type">bool</span></span><br><span class="line">  is_trivially_destructible_v =</span><br><span class="line">    is_trivially_destructible&lt;</span><br><span class="line">      T&gt;::value;  <span class="comment">//判断类是否能平凡析构，指是否不调用析构函数也能正确回收资源</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
 </ul>
 <blockquote>
 <p>个人对于常量表达式的理解目前仍旧比较浅显，cppreference关于constexpr的叙述看的好像明白又好像完全不懂…</p>
@@ -368,6 +372,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2023/09/30/cmake-and-so-on/">cmake and so_on</a>
+          </li>
         
           <li>
             <a href="/2023/09/19/network-high-concurrency/">network &amp; high concurrency</a>

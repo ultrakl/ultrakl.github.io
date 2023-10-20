@@ -73,6 +73,61 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-cmake-and-so-on" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/09/30/cmake-and-so-on/" class="article-date">
+  <time class="dt-published" datetime="2023-09-30T03:35:37.000Z" itemprop="datePublished">2023-09-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/09/30/cmake-and-so-on/">cmake and so_on</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="Linux-命令"><a href="#Linux-命令" class="headerlink" title="Linux 命令"></a>Linux 命令</h2><ol>
+<li>ldconfig (creates the required links and cache to the most recent shared libraries found in the standard library directories.)</li>
+<li>ldd filename</li>
+<li>file filename</li>
+<li>set (shell variable)</li>
+<li>ar -t (static library)</li>
+<li>du (show the file size)</li>
+<li>gcc -I . -c mathDemo.c (-I . means tell gcc search headerfiles in the specific folder, in the example is .)</li>
+<li>set v export(shell variable export to user variable) v env (local user variable)</li>
+<li>environment variable (globally) :  etc&#x2F;zsh&#x2F;zprofile (source) etc&#x2F;profile (source) etc&#x2F;proifile.d&#x2F;*sh</li>
+<li>environment variable (per-user) :  ~&#x2F;.zshenv, ~&#x2F;.zshrc</li>
+<li>zshenv 是在任何情况下都会被读取的文件，它用于设置一些全局的环境变量，比如 $PATH, $EDITOR 等。<a target="_blank" rel="noopener" href="https://juejin.cn/post/7128574050406367269https://blog.csdn.net/ber_bai/article/details/122257534">它通常不用于设置交互式 shell 的选项，比如 $PROMPT, aliases, functions 等。</a><ul>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7128574050406367269https://bing.com/search?q=.zshenv+%E5%92%8C+.zshrc+%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB&form=SKPBOT">zshrc 是只在交互式 shell 中被读取的文件，它用于设置一些交互式 shell 的选项，比如 $PROMPT, aliases, functions 等。它通常在 .zprofile 之后被加载，所以可以覆盖.zprofile 中的一些设置。</a></li>
+<li><a target="_blank" rel="noopener" href="https://einverne.github.io/post/2023/01/zprofile-zshrc.html">一般来说，.zshenv 用于设置一些不会改变的环境变量，而 .zshrc 用于设置一些会根据个人喜好和需求变化的交互式 shell 的选项</a></li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/09/30/cmake-and-so-on/" data-id="clnytw4ed0000istl36aaa21q" data-title="cmake and so_on" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-network-high-concurrency" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/09/19/network-high-concurrency/" class="article-date">
@@ -96,7 +151,10 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <ul>
-<li><a href="#1-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B">1. 网络编程</a></li>
+<li><a href="#1-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B">1. 网络编程</a><ul>
+<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0">字符串处理函数</a></li>
+</ul>
+</li>
 <li><a href="#2-c%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E5%85%85">2. c++知识点补充</a><ul>
 <li><a href="#21-%E6%9D%82%E9%A1%B9">2.1. 杂项</a></li>
 <li><a href="#22-c%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86">2.2. c++异常处理</a></li>
@@ -170,6 +228,10 @@
 <li>无状态（ stateless ）是指IP通信双方不同步传输数据的状态信息，因此所有IP数据报的发送、传输和接收都是相互独立、没有上下文关系的。这种服务最大的缺点是无法处理乱序<br>和重复的 IP 数据报 。 比如发送端发送出的第 N 个 IP 数据报可能比第 N + 1个IP数据报后到</li>
 <li>计算机电路先处理低位字节，效率比较高，因为计算都是从低位开始的。所以，计算机的内部处理都是小端字节序。在计算机内部，小端序被广泛应用于现代 CPU 内部存储数据；而在其他场景，比如网络传输和文件存储则使用大端序。<br><img src="/2023/09/19/network-high-concurrency/v2-233887068992518bb4eec56de043d1b2_r.jpg" alt="大端序和小端序"></li>
 </ol>
+<h4 id="字符串处理函数"><a href="#字符串处理函数" class="headerlink" title="字符串处理函数"></a>字符串处理函数</h4><ol>
+<li>strpbrk(char* s1, char* s2) 指向str1中任何属于str2字符的第一个出现位置的指针，如果在终止的空字符之前在str1中找不到str2的任何字符，则返回空指针。如果在str1中不存在str2的任何字符，则返回空指针。</li>
+<li><strong>strcasecmp</strong>(char* s1, char* s2) 和 <strong>strcmp</strong> 相似，但strcasecmp不区分大小写，<strong>strcasencmp</strong> 和 <strong>strncmp</strong> 类似</li>
+</ol>
 <p>tcpdump&#x2F;host&#x2F;telnet&#x2F;route&#x2F;iptables</p>
 <h3 id="2-c-知识点补充"><a href="#2-c-知识点补充" class="headerlink" title="2. c++知识点补充"></a>2. c++知识点补充</h3><h4 id="2-1-杂项"><a href="#2-1-杂项" class="headerlink" title="2.1. 杂项"></a>2.1. 杂项</h4><ol>
 <li>c++11 lambda表达式不支持移动捕获和初始化捕获，c++14起开始支持，c++11可以使用std::bind实现近似功能</li>
@@ -228,7 +290,16 @@
 <li>volatile用于访问特殊内存，对并发编程没用。<br>因为std::atomic和volatile用于不同的目的，所以可以结合起来使用：<br><code>volatile std::atomic&lt;int&gt; vai;          //对vai的操作是原子性的，且不能被优化掉</code><br>如果vai变量关联了内存映射I&#x2F;O的位置，被多个线程并发访问，这会很有用。</li>
 </ul>
 <h3 id="3-并发编程"><a href="#3-并发编程" class="headerlink" title="3. 并发编程"></a>3. 并发编程</h3><h4 id="3-1-std-thread"><a href="#3-1-std-thread" class="headerlink" title="3.1. std::thread"></a>3.1. std::thread</h4><ol>
-<li>thread构造时会将可调用函数和传入参数完美转发并根据左值右值选择拷贝或移动构造至一个tuple中，返回invoke_result&lt;decay<F>::type, decay<Args>::type…&gt;的类型，也就是F调用去掉引用和cv限定之后的实参之后返回的类型，调用时会将tuple中的数据使用<strong>std::move</strong>方法转为右值进行调用，所以对于左值引用类型的数据无法正常调用，编译时thread会调用静态断言来报错<em>不能将左值引用绑定到右值</em>之类的消息</li>
+<li>thread构造时会将可调用函数和传入参数完美转发并根据左值右值选择拷贝或移动构造至一个tuple中，返回invoke_result&lt;decay<F>::type, decay<Args>::type…&gt;::type，也就是F调用去掉引用和cv限定之后的实参之后返回的类型，调用时会将tuple中的数据使用<strong>std::move</strong>方法转为右值进行调用，所以对于左值引用类型的数据无法正常调用，编译时thread会调用静态断言来报错<em>不能将左值引用绑定到右值</em>之类的消息</li>
+</ol>
+<blockquote>
+<p>invoke_result 是 result_of 的 更进版本，<del>具体内容见cppreference</del>， 这里加入几个type_traits的知识点：首先decltype(function)不能直接用来调用，可以在后方加入&amp;来表示对函数的引用, 其次常见的type_traits有iterator_traits<T>::type, remove_reference<T>::type, decay<T>::type, 函数declval<T>()（返回右值引用，此函数只能在未求值的操作数（比如 sizeof 和 decltype 的操作数）中使用。）, 除此之外，还有is_constructible&lt;T,args…&gt;::value（args是否能构造T）等返回0或1来表示类型判断的类也属于type_traits</p>
+</blockquote>
+<ul>
+<li>补充两个重要的工具类：</li>
+</ul>
+<p>  <code>typedef std::integral_constant&lt;   bool, true&gt; true_type; typedef std::integral_constant&lt;   bool, false&gt; false_type;</code></p>
+<ol>
 <li>不只是thread，bind以及async都会在创建的对象中构造传入实参另一份数据，所以如果函数形参为引用类型，使用std::ref()来构造reference_wrapper函数对象是一个明智的选择</li>
 <li>thread在析构时若是<strong>可结合的</strong>，比如没有显式join(主线程会阻塞直到thread对应的底层线程返回)或detach(底层软件线程分离)或者移动，则会调用std::terminate终止程序</li>
 <li>thread作为软件线程的句柄可调用native_handle来返回tid，之后可以通过其他方法来设置线程优先级和调度策略，<strong>这是future做不到的</strong></li>
@@ -380,9 +451,13 @@
 <li>constexpr 所表示的函数的参数和返回值都应为字面值或编译期常量（该常量也应被加上constexpr说明符），当多个不可知量调用constexpr函数时，该函数所表现出的形式为普通函数，所以constexpr的返回值不一定是const</li>
 <li>在C++11中，除了void外的所有内置类型，以及一些用户定义类型都可以是字面值类型，因为构造函数和其他成员函数可能是constexpr(<strong>c++14</strong>constexpr函数可以返回void)</li>
 <li>Point的构造函数可被声明为constexpr，因为如果传入的参数在编译期可知，Point的数据成员也能在编译器可知。因此这样初始化的Point就能为constexpr </li>
-<li>声明为constexpr的成员对象是<strong>内联</strong>的，在odr-use时可以不用在类外定义，lambda表达式中被odr-use的变量一定要被捕获，被捕获的变量不论是不是constexpr都不能用于常量表达式</li>
+<li>声明为constexpr的<strong>静态</strong>成员对象是<strong>内联</strong>的，在odr-use时可以不用在类外定义，lambda表达式中被odr-use的变量一定要被捕获，被捕获的变量不论是不是constexpr都不能用于常量表达式</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">magic</span> &#123;</span><br><span class="line">  <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> number = <span class="number">42</span>; <span class="comment">//c++17引入内联变量的概念，此处使用constexpr默认为内联，</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  std::vector&lt;<span class="type">int</span>&gt; v;</span><br><span class="line">  <span class="comment">// 调用 push_back(const T&amp;)</span></span><br><span class="line">  v.<span class="built_in">push_back</span>(magic::number);</span><br><span class="line">  std::cout &lt;&lt; v[<span class="number">0</span>] &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
 <li>在函数体内定义的constexpr变量不能用于初始化constexpr引用，constexpr引用必须被静态存储或<em>线程局部</em>常量表达式初始化（也称左值核心常量表达式）</li>
 <li>constexpr的变量也是在运行期给予地址的，所以取地址不是常量表达式</li>
+<li>constexpr变量模板，之前我们需要用类静态数据成员来表达的东西，使用变量模板可以更简洁地表达。constexpr 很合适用在变量模板里，表达一个和某个类型相关的编译期常量。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="type">bool</span></span><br><span class="line">  is_trivially_destructible_v =</span><br><span class="line">    is_trivially_destructible&lt;</span><br><span class="line">      T&gt;::value;  <span class="comment">//判断类是否能平凡析构，指是否不调用析构函数也能正确回收资源</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
 </ul>
 <blockquote>
 <p>个人对于常量表达式的理解目前仍旧比较浅显，cppreference关于constexpr的叙述看的好像明白又好像完全不懂…</p>
@@ -768,6 +843,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2023/09/30/cmake-and-so-on/">cmake and so_on</a>
+          </li>
         
           <li>
             <a href="/2023/09/19/network-high-concurrency/">network &amp; high concurrency</a>
