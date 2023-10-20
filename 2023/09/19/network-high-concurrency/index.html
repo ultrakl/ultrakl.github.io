@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/v2-233887068992518bb4eec56de043d1b2_r.jpg">
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/item38_fig1.png">
 <meta property="article:published_time" content="2023-09-19T09:39:14.000Z">
-<meta property="article:modified_time" content="2023-10-20T16:45:32.537Z">
+<meta property="article:modified_time" content="2023-10-20T16:47:05.982Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2023/09/19/network-high-concurrency/arp%E6%8A%A5%E6%96%87.png">
@@ -260,8 +260,11 @@
 </ol>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ThreadRAII</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">enum class</span> <span class="title class_">DtorAction</span> &#123; join, detach &#125;;         <span class="comment">//跟之前一样</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">ThreadRAII</span>(std::thread&amp;&amp; t, DtorAction a)       <span class="comment">//跟之前一样</span></span><br><span class="line">    : <span class="built_in">action</span>(a), <span class="built_in">t</span>(std::<span class="built_in">move</span>(t)) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    ~<span class="built_in">ThreadRAII</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        …                                           <span class="comment">//跟之前一样</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">ThreadRAII</span>(ThreadRAII&amp;&amp;) = <span class="keyword">default</span>;             <span class="comment">//支持移动</span></span><br><span class="line">    ThreadRAII&amp; <span class="keyword">operator</span>=(ThreadRAII&amp;&amp;) = <span class="keyword">default</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">std::thread&amp; <span class="title">get</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> t; &#125;                <span class="comment">//跟之前一样</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>: <span class="comment">// as before</span></span><br><span class="line">    DtorAction action;</span><br><span class="line">    std::thread t;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>按理来说当显式生成析构函数时，编译器不会再主动生成移动构造和移动赋值函数，但当对象是可以逐成员移动时，我们可以显式default声明移动函数来保证移动操作是可以被执行的<br>6. 为了防止线程在开始后被修改优先级，可以在创建线程时将方法设为wait函数，将线程挂起</p>
+<p>按理来说当显式生成析构函数时，编译器不会再主动生成移动构造和移动赋值函数，但当对象是可以逐成员移动时，我们可以显式default声明移动函数来保证移动操作是可以被执行的</p>
 </blockquote>
+<ol start="6">
+<li>为了防止线程在开始后被修改优先级，可以在创建线程时将方法设为wait函数，将线程挂起</li>
+</ol>
 <h4 id="3-2-std-future"><a href="#3-2-std-future" class="headerlink" title="3.2. std::future"></a>3.2. std::future</h4><ol>
 <li>与thread不同，在使用默认策略启动时，不一定会使用异步执行，这种调用方式将线程管理的职责转交给C++标准库的开发者。举个例子，这种调用方式会减少抛出资源超额异常的可能性</li>
 <li>std::launch::deferred启动策略意味着f仅当在std::async返回的future上调用get或者wait时才执行。这表示f推迟到存在这样的调用时才执行</li>
