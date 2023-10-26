@@ -95,24 +95,64 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h2 id="Linux-命令"><a href="#Linux-命令" class="headerlink" title="Linux 命令"></a>Linux 命令</h2><ol>
-<li>ldconfig (creates the required links and cache to the most recent shared libraries found in the standard library directories.)</li>
-<li>ldd filename (displays the shared object files that a particular Linux command needs to run.) </li>
-<li>file filename (display the property of the file)</li>
-<li>set (shell variable)</li>
-<li>ar -t (for static library, display contents of the archive)</li>
-<li>du (show the file size)</li>
-<li>gcc -I . -c mathDemo.c (-I . means tell gcc search headerfiles in the specific folder, in the example is .)</li>
-<li>set v export(shell variable export to user variable) v env (local user variable)</li>
-<li>environment variable (globally) :  etc&#x2F;zsh&#x2F;zprofile (source) etc&#x2F;profile (source) etc&#x2F;proifile.d&#x2F;*sh</li>
-<li>environment variable (per-user) :  ~&#x2F;.zshenv, ~&#x2F;.zshrc</li>
-<li>zshenv 是在任何情况下都会被读取的文件，它用于设置一些全局的环境变量，比如 $PATH, $EDITOR 等。<a target="_blank" rel="noopener" href="https://juejin.cn/post/7128574050406367269https://blog.csdn.net/ber_bai/article/details/122257534">它通常不用于设置交互式 shell 的选项，比如 $PROMPT, aliases, functions 等。</a><ul>
+        <ul>
+<li><a href="#linux-%E5%91%BD%E4%BB%A4">Linux 命令</a></li>
+<li><a href="#valgrind-%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7">valgrind 调试工具</a></li>
+<li><a href="#%E7%B3%BB%E7%BB%9F%E7%9B%91%E6%B5%8B%E5%B7%A5%E5%85%B7">系统监测工具</a></li>
+</ul>
+<h2 id="Linux-命令"><a href="#Linux-命令" class="headerlink" title="Linux 命令"></a>Linux 命令</h2><ol>
+<li><p>ldconfig (creates the required links and cache to the most recent shared libraries found in the standard library directories.)</p>
+</li>
+<li><p>ldd filename (displays the shared object files that a particular Linux command needs to run.) </p>
+</li>
+<li><p>file filename (display the property of the file)</p>
+</li>
+<li><p>set (shell variable)</p>
+</li>
+<li><p>ar -t (for static library, display contents of the archive)</p>
+</li>
+<li><p>du (show the file size)</p>
+</li>
+<li><p>gcc -I . -c mathDemo.c (-I . means tell gcc search headerfiles in the specific folder, in the example is .)</p>
+</li>
+<li><p>set v export(shell variable export to user variable) v env (local user variable)</p>
+</li>
+<li><p>environment variable (globally) :  etc&#x2F;zsh&#x2F;zprofile (source) etc&#x2F;profile (source) etc&#x2F;proifile.d&#x2F;*sh</p>
+</li>
+<li><p>environment variable (per-user) :  ~&#x2F;.zshenv, ~&#x2F;.zshrc</p>
+</li>
+<li><p>zshenv 是在任何情况下都会被读取的文件，它用于设置一些全局的环境变量，比如 $PATH, $EDITOR 等。<a target="_blank" rel="noopener" href="https://juejin.cn/post/7128574050406367269https://blog.csdn.net/ber_bai/article/details/122257534">它通常不用于设置交互式 shell 的选项，比如 $PROMPT, aliases, functions 等。</a></p>
+<ul>
 <li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7128574050406367269https://bing.com/search?q=.zshenv+%E5%92%8C+.zshrc+%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB&form=SKPBOT">zshrc 是只在交互式 shell 中被读取的文件，它用于设置一些交互式 shell 的选项，比如 $PROMPT, aliases, functions 等。它通常在 .zprofile 之后被加载，所以可以覆盖.zprofile 中的一些设置。</a></li>
 <li><a target="_blank" rel="noopener" href="https://einverne.github.io/post/2023/01/zprofile-zshrc.html">一般来说，.zshenv 用于设置一些不会改变的环境变量，而 .zshrc 用于设置一些会根据个人喜好和需求变化的交互式 shell 的选项</a></li>
 </ul>
 </li>
-<li></li>
+<li><p>chmod u&#x2F;g&#x2F;a +s （设置目标文件的set-user-id&#x2F;set-group-id&#x2F;全部标志，使得文件可以被不同UID用户执行时设置EUID为ownerID&#x2F;groupID，前提是设置others的权限为可以执行文件）</p>
+<ul>
+<li>数字模式下set-user-id 对应的比特位值为4， set-group-id 对应的比特位值为2，他们对应的比特位在u，g，o之前</li>
+</ul>
+</li>
+<li><p>chmod u&#x2F;g&#x2F;o&#x2F;a +&#x2F;-&#x2F;&#x3D; r&#x2F;w&#x2F; 操作符+会将所选文件的模式位添加到每个文件的现有模式位中；-会将它们移除；&#x3D;会将它们添加，并且将未提及的位移除，但目录的未提及的设置用户和组ID位不受影响。</p>
+<ul>
+<li>the user who owns it (u), other users in the file’s group (g), other users not in the file’s group (o)</li>
+<li>数字模式下u对应的比特位为第二位，之后是g，最后为o，位上的值4代表着读，2代表着写，1代表可执行</li>
+</ul>
+</li>
+<li><p>chmod -r表示递归设置目录文件下的所有文件</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://chmodcommand.com/chmod-2755/">模拟chmod命令的网站</a></p>
+</blockquote>
+</li>
+<li><p>chown root:root 设置owner为root，group为root</p>
+</li>
+<li><p><strong>ps command</strong><br><img src="/2023/09/30/cmake-and-so-on/ps%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B%E7%BB%84%E5%85%B3%E7%B3%BB.png" alt="使用ps查看进程组，会话组之间关系"></p>
+</li>
 </ol>
+<ul>
+<li>这条命令创建出三个进程，一个会话，两个进程组，bash是ps和less的父进程，则ps和less的PPID对应bash的PID</li>
+<li>bash命令是整个会话组的首领（会话组：一些有关联的进程组），会话首领对应的SID和进程组PGID以及PID都是相同的</li>
+<li>bash进程fork出两个子进程ps和less，ps和less同属一个进程组，ps是该进程组的首领</li>
+</ul>
 <h2 id="valgrind-调试工具"><a href="#valgrind-调试工具" class="headerlink" title="valgrind 调试工具"></a>valgrind 调试工具</h2><ol>
 <li>valgrind</li>
 </ol>
@@ -165,34 +205,34 @@
       
         <ul>
 <li><a href="#1-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B">1. 网络编程</a><ul>
-<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0">字符串处理函数</a></li>
-<li><a href="#io%E6%A8%A1%E5%9E%8B">IO模型</a></li>
-<li><a href="#io%E5%A4%8D%E7%94%A8">IO复用</a></li>
+<li><a href="#11-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0">1.1. 字符串处理函数</a></li>
+<li><a href="#12-io%E6%A8%A1%E5%9E%8B">1.2. IO模型</a></li>
+<li><a href="#13-io%E5%A4%8D%E7%94%A8">1.3. IO复用</a></li>
 </ul>
 </li>
-<li><a href="#pthread---%E7%AC%A6%E5%90%88posix%E6%A0%87%E5%87%86%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%BA%93">pthread - 符合POSIX标准的线程库</a><ul>
-<li><a href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8F%96%E6%B6%88">线程的取消</a></li>
-<li><a href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8A%A0%E5%85%A5">线程的加入</a></li>
-<li><a href="#%E4%B8%80%E4%BA%9B%E5%85%B3%E4%BA%8E%E7%BC%96%E7%A8%8B%E7%9A%84%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E8%A1%A5%E5%85%85">一些关于编程的底层知识补充</a></li>
+<li><a href="#2-pthread---%E7%AC%A6%E5%90%88posix%E6%A0%87%E5%87%86%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%BA%93">2. pthread - 符合POSIX标准的线程库</a><ul>
+<li><a href="#21-%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8F%96%E6%B6%88">2.1. 线程的取消</a></li>
+<li><a href="#22-%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8A%A0%E5%85%A5">2.2. 线程的加入</a></li>
+<li><a href="#23-%E4%B8%80%E4%BA%9B%E5%85%B3%E4%BA%8E%E7%BC%96%E7%A8%8B%E7%9A%84%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E8%A1%A5%E5%85%85">2.3. 一些关于编程的底层知识补充</a></li>
 </ul>
 </li>
-<li><a href="#2-c%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E5%85%85">2. c++知识点补充</a><ul>
-<li><a href="#21-%E6%9D%82%E9%A1%B9">2.1. 杂项</a></li>
-<li><a href="#22-c%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86">2.2. c++异常处理</a></li>
-<li><a href="#23-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88">2.3. 智能指针</a></li>
-<li><a href="#24-%E7%89%B9%E6%AE%8A%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%9F%E6%88%90">2.4. 特殊成员函数的生成</a></li>
-<li><a href="#25-volatile-vs-atomic">2.5. volatile vs atomic</a><ul>
-<li><a href="#251-stdatomic">2.5.1. std::atomic</a></li>
-<li><a href="#252-keyword-volatile">2.5.2. keyword volatile</a></li>
+<li><a href="#3-c%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E5%85%85">3. c++知识点补充</a><ul>
+<li><a href="#31-%E6%9D%82%E9%A1%B9">3.1. 杂项</a></li>
+<li><a href="#32-c%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86">3.2. c++异常处理</a></li>
+<li><a href="#33-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88">3.3. 智能指针</a></li>
+<li><a href="#34-%E7%89%B9%E6%AE%8A%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%9F%E6%88%90">3.4. 特殊成员函数的生成</a></li>
+<li><a href="#35-volatile-vs-atomic">3.5. volatile vs atomic</a><ul>
+<li><a href="#351-stdatomic">3.5.1. std::atomic</a></li>
+<li><a href="#352-keyword-volatile">3.5.2. keyword volatile</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#3-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B">3. 并发编程</a><ul>
-<li><a href="#31-stdthread">3.1. std::thread</a></li>
-<li><a href="#32-stdfuture">3.2. std::future</a></li>
-<li><a href="#33-condition_variable--mutex">3.3. condition_variable &amp; mutex</a></li>
-<li><a href="#34-lock_guard--unique_lock">3.4. lock_guard &amp; unique_lock</a></li>
+<li><a href="#4-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B">4. 并发编程</a><ul>
+<li><a href="#41-stdthread">4.1. std::thread</a></li>
+<li><a href="#42-stdfuture">4.2. std::future</a></li>
+<li><a href="#43-condition_variable--mutex">4.3. condition_variable &amp; mutex</a></li>
+<li><a href="#44-lock_guard--unique_lock">4.4. lock_guard &amp; unique_lock</a></li>
 </ul>
 </li>
 </ul>
@@ -249,12 +289,12 @@
 <li>无状态（ stateless ）是指IP通信双方不同步传输数据的状态信息，因此所有IP数据报的发送、传输和接收都是相互独立、没有上下文关系的。这种服务最大的缺点是无法处理乱序<br>和重复的 IP 数据报 。 比如发送端发送出的第 N 个 IP 数据报可能比第 N + 1个IP数据报后到</li>
 <li>计算机电路先处理低位字节，效率比较高，因为计算都是从低位开始的。所以，计算机的内部处理都是小端字节序。在计算机内部，小端序被广泛应用于现代 CPU 内部存储数据；而在其他场景，比如网络传输和文件存储则使用大端序。<br><img src="/2023/09/19/network-high-concurrency/v2-233887068992518bb4eec56de043d1b2_r.jpg" alt="大端序和小端序"></li>
 </ol>
-<h4 id="字符串处理函数"><a href="#字符串处理函数" class="headerlink" title="字符串处理函数"></a>字符串处理函数</h4><ol>
+<h4 id="1-1-字符串处理函数"><a href="#1-1-字符串处理函数" class="headerlink" title="1.1. 字符串处理函数"></a>1.1. 字符串处理函数</h4><ol>
 <li>strpbrk(char* s1, char* s2) 指向str1中任何属于str2字符的第一个出现位置的指针，如果在终止的空字符之前在str1中找不到str2的任何字符，则返回空指针。如果在str1中不存在str2的任何字符，则返回空指针。</li>
 <li><strong>strcasecmp</strong>(char* s1, char* s2) 和 <strong>strcmp</strong> 相似，但strcasecmp不区分大小写，<strong>strcasencmp</strong> 和 <strong>strncmp</strong> 类似</li>
 </ol>
-<h4 id="IO模型"><a href="#IO模型" class="headerlink" title="IO模型"></a>IO模型</h4><p>通过fcntl设置文件描述符属性为O_NONBLOCK，这样的文件描述符被称为非阻塞IO，当accept，recv，send等系统调用处理非阻塞IO时，会立即返回，若事件没有发生，则会返回-1并设置errno为EAGAIN或EWOULDBLOCK（其实二者相同），对connect而言则是EINPORCESS</p>
-<h4 id="IO复用"><a href="#IO复用" class="headerlink" title="IO复用"></a>IO复用</h4><p>IO复用可以使程序同时监听多个文件描述符，IO复用函数可以向内核注册文件描述符及其关联的可读，可写，异常事件，并返回就绪事件的数量（通知进程事件已经就绪）</p>
+<h4 id="1-2-IO模型"><a href="#1-2-IO模型" class="headerlink" title="1.2. IO模型"></a>1.2. IO模型</h4><p>通过fcntl设置文件描述符属性为O_NONBLOCK，这样的文件描述符被称为非阻塞IO，当accept，recv，send等系统调用处理非阻塞IO时，会立即返回，若事件没有发生，则会返回-1并设置errno为EAGAIN或EWOULDBLOCK（其实二者相同），对connect而言则是EINPORCESS</p>
+<h4 id="1-3-IO复用"><a href="#1-3-IO复用" class="headerlink" title="1.3. IO复用"></a>1.3. IO复用</h4><p>IO复用可以使程序同时监听多个文件描述符，IO复用函数可以向内核注册文件描述符及其关联的可读，可写，异常事件，并返回就绪事件的数量（通知进程事件已经就绪）</p>
 <ol>
 <li>epoll和select以及poll的区别在于epoll对应一组函数调用，如epoll_ctl,epoll_wait，并将就绪事件重新赋值给一个新event数组，这样节省轮询事件就绪的时间</li>
 <li>epoll，select，poll都会因为内核收到信号而返回-1并设置errno为EINTR</li>
@@ -270,7 +310,7 @@
 </li>
 <li>多线程使用pthread_exit(NULL)来退出线程不是<strong>异步信号安全的</strong>，其发出的信号可以中断例如epoll_wait()等阻塞函数</li>
 </ol>
-<h3 id="pthread-符合POSIX标准的线程库"><a href="#pthread-符合POSIX标准的线程库" class="headerlink" title="pthread - 符合POSIX标准的线程库"></a>pthread - 符合POSIX标准的线程库</h3><h4 id="线程的取消"><a href="#线程的取消" class="headerlink" title="线程的取消"></a>线程的取消</h4><ol>
+<h3 id="2-pthread-符合POSIX标准的线程库"><a href="#2-pthread-符合POSIX标准的线程库" class="headerlink" title="2. pthread - 符合POSIX标准的线程库"></a>2. pthread - 符合POSIX标准的线程库</h3><h4 id="2-1-线程的取消"><a href="#2-1-线程的取消" class="headerlink" title="2.1. 线程的取消"></a>2.1. 线程的取消</h4><ol>
 <li>如果想在线程执行时取消该线程。可以使用pthread_cancel(thread)来完成此操作,该函数向指定线程发出一个取消请求，。但是，请记住需要启用 pthread 取消支持。此外，还有取消时的清理代码。</li>
 </ol>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">thread_cleanup_push</span>(my_thread_cleanup_handler, resources);</span><br><span class="line"><span class="built_in">pthread_setcancelstate</span>(PTHREAD_CANCEL_ENABLE, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">my_thread_cleanup_handler</span><span class="params">(<span class="type">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// free</span></span><br><span class="line">  <span class="comment">// close, fclose</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -307,28 +347,28 @@
 </ul>
 </li>
 </ol>
-<h4 id="线程的加入"><a href="#线程的加入" class="headerlink" title="线程的加入"></a>线程的加入</h4><p>int pthread_join(pthread_t thread, void **retval)</p>
+<h4 id="2-2-线程的加入"><a href="#2-2-线程的加入" class="headerlink" title="2.2. 线程的加入"></a>2.2. 线程的加入</h4><p>int pthread_join(pthread_t thread, void **retval)</p>
 <ol>
 <li>如果 retval 不为 NULL，则 pthread_join() 将目标线程的退出状态（即目标线程提供给 pthread_exit(3) 的值）复制到 retval 指向的位置。如果目标线程被取消，则在 retval 指向的位置放置 PTHREAD_CANCELED。</li>
 <li>成功的话返回0，失败返回一个errno(例如因中断返回EINTR)</li>
 </ol>
-<h4 id="一些关于编程的底层知识补充"><a href="#一些关于编程的底层知识补充" class="headerlink" title="一些关于编程的底层知识补充"></a>一些关于编程的底层知识补充</h4><ol>
+<h4 id="2-3-一些关于编程的底层知识补充"><a href="#2-3-一些关于编程的底层知识补充" class="headerlink" title="2.3. 一些关于编程的底层知识补充"></a>2.3. 一些关于编程的底层知识补充</h4><ol>
 <li>函数的可重入性(reentrancy)<br>函数的线程安全性，保证多个线程同时执行一个函数不会出现竞态条件，同时在单处理器系统上当该函数被中断（可能是信号导致的）并被重新执行时可以安全执行</li>
 <li>函数的幂等性(idempotence)<br>函数在被多次执行后可以产出同一结果</li>
 </ol>
-<h3 id="2-c-知识点补充"><a href="#2-c-知识点补充" class="headerlink" title="2. c++知识点补充"></a>2. c++知识点补充</h3><h4 id="2-1-杂项"><a href="#2-1-杂项" class="headerlink" title="2.1. 杂项"></a>2.1. 杂项</h4><ol>
+<h3 id="3-c-知识点补充"><a href="#3-c-知识点补充" class="headerlink" title="3. c++知识点补充"></a>3. c++知识点补充</h3><h4 id="3-1-杂项"><a href="#3-1-杂项" class="headerlink" title="3.1. 杂项"></a>3.1. 杂项</h4><ol>
 <li>c++11 lambda表达式不支持移动捕获和初始化捕获，c++14起开始支持，c++11可以使用std::bind实现近似功能</li>
 <li>string内存存储在堆上，但是libstdc++实现了对于字节长度小于十五的短字符串的优化(sso)，string所存储的字符串被构造在栈内存中，不用重新从堆内申请内存，这样虽然string所提供的移动操作为常数时间，拷贝操作为线性时间，但对于短字符串来说移动所需时间不一定比拷贝短</li>
 <li>当一个异常发生时，程序需要沿着运行时栈向上查找合适的异常处理器（catch block）。为了做到这一点，运行时栈必须处于可展开状态，即每个栈帧都有相应的信息来指示如何恢复函数的执行环境，并释放其中的资源。这些信息通常是由编译器在生成代码时添加的，称为展开信息（unwind information） 。当抛出异常并且控制从 try 块传递到处理程序时，C++ 运行时会调用自 try 块开始以来构造的所有自动对象的析构函数。这个过程称为堆栈展开（stack unwind）。</li>
 <li>函数std::terminate()调用作为set_terminate()参数指定的函数, 程序会直接退出</li>
 </ol>
-<h4 id="2-2-c-异常处理"><a href="#2-2-c-异常处理" class="headerlink" title="2.2. c++异常处理"></a>2.2. c++异常处理</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">D</span>(<span class="type">char</span>) <span class="keyword">try</span>: <span class="built_in">D</span>(<span class="number">55</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;D::D(char). Throws.\n&quot;</span>);</span><br><span class="line">    <span class="keyword">throw</span> <span class="number">0</span>;</span><br><span class="line">  &#125;<span class="built_in">catch</span>(...)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-c-异常处理"><a href="#3-2-c-异常处理" class="headerlink" title="3.2. c++异常处理"></a>3.2. c++异常处理</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">D</span>(<span class="type">char</span>) <span class="keyword">try</span>: <span class="built_in">D</span>(<span class="number">55</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;D::D(char). Throws.\n&quot;</span>);</span><br><span class="line">    <span class="keyword">throw</span> <span class="number">0</span>;</span><br><span class="line">  &#125;<span class="built_in">catch</span>(...)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 <ol>
 <li>所有异常类都可继承std::exception，并重载其what方法，注意what方法应该是不抛出异常的，即应做异常规格说明throw（），通常在函数签名尾部加入；</li>
 <li>throw（A,B,C,D）声明函数可能抛出A,B,C,D中的任意一种异常</li>
 <li>try-catch中try块可以抛出异常并被catch块捕捉到，catch后的小括号内可以指定你要处理的异常类型Myexception &amp;e,并在块中使用其what方法输出异常信息，也可以直接用一个变量缩写名代替特定异常</li>
 </ol>
-<h4 id="2-3-智能指针"><a href="#2-3-智能指针" class="headerlink" title="2.3. 智能指针"></a>2.3. 智能指针</h4><ol>
+<h4 id="3-3-智能指针"><a href="#3-3-智能指针" class="headerlink" title="3.3. 智能指针"></a>3.3. 智能指针</h4><ol>
 <li>unique_ptr move only</li>
 <li>make函数也实现了完美转发，所以参数为构造函数的参数 </li>
 <li>对于std::unique_ptr，只有这两种情景（自定义删除器和花括号初始化）使用make函数有点问题，使用make函数1是可以原子化操作创建指针，2是可以一次性创建控制块和对象，减少代码生成，提高执行代码的速度</li>
@@ -350,7 +390,7 @@
 <blockquote>
 <p>关于shared_ptr和unique_ptr的具体实现，请参见<a target="_blank" rel="noopener" href="https://murphypei.github.io/blog/2022/03/shared-unique-ptr">这篇博客</a></p>
 </blockquote>
-<h4 id="2-4-特殊成员函数的生成"><a href="#2-4-特殊成员函数的生成" class="headerlink" title="2.4. 特殊成员函数的生成"></a>2.4. 特殊成员函数的生成</h4><ol>
+<h4 id="3-4-特殊成员函数的生成"><a href="#3-4-特殊成员函数的生成" class="headerlink" title="3.4. 特殊成员函数的生成"></a>3.4. 特殊成员函数的生成</h4><ol>
 <li>拷贝，或者移动操作，若有一方是用户定义的，则不会生成另一方，并且对于两个移动操作来说，显式定义一方也会导致另一方不会被自动生成</li>
 <li>所以仅当下面条件成立时才会生成移动操作（当需要时）：<ul>
 <li>类中没有拷贝操作</li>
@@ -360,19 +400,19 @@
 </li>
 <li>注意没有“成员函数模版阻止编译器生成特殊成员函数”的规则</li>
 </ol>
-<h4 id="2-5-volatile-vs-atomic"><a href="#2-5-volatile-vs-atomic" class="headerlink" title="2.5. volatile vs atomic"></a>2.5. volatile vs atomic</h4><h5 id="2-5-1-std-atomic"><a href="#2-5-1-std-atomic" class="headerlink" title="2.5.1. std::atomic"></a>2.5.1. std::atomic</h5><ol>
+<h4 id="3-5-volatile-vs-atomic"><a href="#3-5-volatile-vs-atomic" class="headerlink" title="3.5. volatile vs atomic"></a>3.5. volatile vs atomic</h4><h5 id="3-5-1-std-atomic"><a href="#3-5-1-std-atomic" class="headerlink" title="3.5.1. std::atomic"></a>3.5.1. std::atomic</h5><ol>
 <li>原子化读写操作，多线程访问时不会产生数据竞争，而且也可以用来当作条件变量，单纯使用时反应函数需要不断轮询，会增加线程开销，线程阻塞而不挂起，内存中的资源一直被占用</li>
 <li>会限制编译器和底层硬件对于代码执行顺序的重排，维护atomic的顺序一致性模型</li>
 <li>无法进行拷贝操作，但是可以进行load和store操作，但是若出现<strong>冗余访问</strong>或者<strong>无用存储</strong>, 编译器也会进行优化</li>
 </ol>
-<h5 id="2-5-2-keyword-volatile"><a href="#2-5-2-keyword-volatile" class="headerlink" title="2.5.2. keyword volatile"></a>2.5.2. keyword volatile</h5><ol>
+<h5 id="3-5-2-keyword-volatile"><a href="#3-5-2-keyword-volatile" class="headerlink" title="3.5.2. keyword volatile"></a>3.5.2. keyword volatile</h5><ol>
 <li>避免编译器对于代码的优化，在变量用来存储<strong>做内存IO映射内存</strong>上报的数据时，非常有用</li>
 </ol>
 <ul>
 <li>std::atomic用在并发编程中，对访问特殊内存没用。</li>
 <li>volatile用于访问特殊内存，对并发编程没用。<br>因为std::atomic和volatile用于不同的目的，所以可以结合起来使用：<br><code>volatile std::atomic&lt;int&gt; vai;          //对vai的操作是原子性的，且不能被优化掉</code><br>如果vai变量关联了内存映射I&#x2F;O的位置，被多个线程并发访问，这会很有用。</li>
 </ul>
-<h3 id="3-并发编程"><a href="#3-并发编程" class="headerlink" title="3. 并发编程"></a>3. 并发编程</h3><h4 id="3-1-std-thread"><a href="#3-1-std-thread" class="headerlink" title="3.1. std::thread"></a>3.1. std::thread</h4><ol>
+<h3 id="4-并发编程"><a href="#4-并发编程" class="headerlink" title="4. 并发编程"></a>4. 并发编程</h3><h4 id="4-1-std-thread"><a href="#4-1-std-thread" class="headerlink" title="4.1. std::thread"></a>4.1. std::thread</h4><ol>
 <li>thread构造时会将可调用函数和传入参数完美转发并根据左值右值选择拷贝或移动构造至一个tuple中，返回invoke_result&lt;decay<F>::type, decay<Args>::type…&gt;::type，也就是F调用去掉引用和cv限定之后的实参之后返回的类型，调用时会将tuple中的数据使用<strong>std::move</strong>方法转为右值进行调用，所以对于左值引用类型的数据无法正常调用，编译时thread会调用静态断言来报错<em>不能将左值引用绑定到右值</em>之类的消息</li>
 </ol>
 <blockquote>
@@ -395,7 +435,7 @@
 <ol start="6">
 <li>为了防止线程在开始后被修改优先级，可以在创建线程时将方法设为wait函数，将线程挂起</li>
 </ol>
-<h4 id="3-2-std-future"><a href="#3-2-std-future" class="headerlink" title="3.2. std::future"></a>3.2. std::future</h4><ol>
+<h4 id="4-2-std-future"><a href="#4-2-std-future" class="headerlink" title="4.2. std::future"></a>4.2. std::future</h4><ol>
 <li>与thread不同，在使用默认策略启动时，不一定会使用异步执行，这种调用方式将线程管理的职责转交给C++标准库的开发者。举个例子，这种调用方式会减少抛出资源超额异常的可能性</li>
 <li>std::launch::deferred启动策略意味着f仅当在std::async返回的future上调用get或者wait时才执行。这表示f推迟到存在这样的调用时才执行</li>
 <li>默认启动策略的调度灵活性导致使用thread_local变量比较麻烦，因为这意味着如果f读写了线程本地存储（thread-local storage，TLS），不可能预测到哪个线程的变量被访问<br>可以使用 <code>fut.wait_for(0s) == std::future_status::deferred</code> 检查函数是否被延时</li>
@@ -403,10 +443,10 @@
 <li>因为与被调用者关联的对象和与调用者关联的对象都不适合存储这个结果，所以调用结果必须存储在两者之外的位置。此位置称为共享状态（shared state）。共享状态通常是基于堆的对象，一般来说对于future对象拥有这个共享状态的控制权，或者说引用了共享状态，析构时引用该状态的future会自动阻塞并且等待任务完成</li>
 <li>future不能被拷贝，但他却可以用来构造shared_future，之后转交共享状态的控制权，shared_future在并发访问时可以用来为每个线程构造副本来共享共享状态的拥有权，设置std::promise::set_value()可以在多线程使用wait来唤起多个线程<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">std::promise&lt;<span class="type">void</span>&gt; p;                   <span class="comment">//跟之前一样</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">detect</span><span class="params">()</span>                           <span class="comment">//现在针对多个反映线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> sf = p.<span class="built_in">get_future</span>().<span class="built_in">share</span>();   <span class="comment">//sf的类型是std::shared_future&lt;void&gt;</span></span><br><span class="line">    std::vector&lt;std::thread&gt; vt;        <span class="comment">//反应线程容器</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; threadsToRun; ++i) &#123;</span><br><span class="line">        vt.<span class="built_in">emplace_back</span>([sf]&#123; sf.<span class="built_in">wait</span>();    <span class="comment">//在sf的局部副本上wait；</span></span><br><span class="line">                              <span class="built_in">react</span>(); &#125;);  <span class="comment">//emplace_back见条款42</span></span><br><span class="line">    &#125;</span><br><span class="line">    …                                   <span class="comment">//如果这个“…”抛出异常，detect挂起！</span></span><br><span class="line">    p.<span class="built_in">set_value</span>();                      <span class="comment">//所有线程解除挂起</span></span><br><span class="line">    …</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; t : vt) &#123;                <span class="comment">//使所有线程不可结合；</span></span><br><span class="line">        t.<span class="built_in">join</span>();                       <span class="comment">//“auto&amp;”见条款2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h4 id="3-3-condition-variable-mutex"><a href="#3-3-condition-variable-mutex" class="headerlink" title="3.3. condition_variable &amp; mutex"></a>3.3. condition_variable &amp; mutex</h4><ol>
+<h4 id="4-3-condition-variable-mutex"><a href="#4-3-condition-variable-mutex" class="headerlink" title="4.3. condition_variable &amp; mutex"></a>4.3. condition_variable &amp; mutex</h4><ol>
 <li>cv.Wait(lock<which is basically unique_lock>, bool function)会导致当前线程阻塞，直到条件变量被通知或发生假唤醒，或者循环直到满足某个谓词</li>
 </ol>
-<h4 id="3-4-lock-guard-unique-lock"><a href="#3-4-lock-guard-unique-lock" class="headerlink" title="3.4. lock_guard &amp; unique_lock"></a>3.4. lock_guard &amp; unique_lock</h4><ol>
+<h4 id="4-4-lock-guard-unique-lock"><a href="#4-4-lock-guard-unique-lock" class="headerlink" title="4.4. lock_guard &amp; unique_lock"></a>4.4. lock_guard &amp; unique_lock</h4><ol>
 <li>lock_guard自动加锁解锁，在函数异常等情况下函数内部直接返回也会执行对锁的析构，需要注意对锁的占用时间，为了手动释放锁可以在lock_guard周围加入花括号即可</li>
 </ol>
 <p>wait causes the current thread to block until the condition variable is notified or a spurious wakeup occurs, optionally looping until some predicate is satisfied</p>
