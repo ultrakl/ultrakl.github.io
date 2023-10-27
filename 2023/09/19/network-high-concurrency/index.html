@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/v2-233887068992518bb4eec56de043d1b2_r.jpg">
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/item38_fig1.png">
 <meta property="article:published_time" content="2023-09-19T09:39:14.000Z">
-<meta property="article:modified_time" content="2023-10-26T15:01:56.789Z">
+<meta property="article:modified_time" content="2023-10-27T14:35:19.693Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2023/09/19/network-high-concurrency/arp%E6%8A%A5%E6%96%87.png">
@@ -196,19 +196,26 @@
 <h4 id="1-2-IO模型"><a href="#1-2-IO模型" class="headerlink" title="1.2. IO模型"></a>1.2. IO模型</h4><p>通过fcntl设置文件描述符属性为O_NONBLOCK，这样的文件描述符被称为非阻塞IO，当accept，recv，send等系统调用处理非阻塞IO时，会立即返回，若事件没有发生，则会返回-1并设置errno为EAGAIN或EWOULDBLOCK（其实二者相同），对connect而言则是EINPORCESS</p>
 <h4 id="1-3-IO复用"><a href="#1-3-IO复用" class="headerlink" title="1.3. IO复用"></a>1.3. IO复用</h4><p>IO复用可以使程序同时监听多个文件描述符，IO复用函数可以向内核注册文件描述符及其关联的可读，可写，异常事件，并返回就绪事件的数量（通知进程事件已经就绪）</p>
 <ol>
-<li>epoll和select以及poll的区别在于epoll对应一组函数调用，如epoll_ctl,epoll_wait，并将就绪事件重新赋值给一个新event数组，这样节省轮询事件就绪的时间</li>
-<li>epoll，select，poll都会因为内核收到信号而返回-1并设置errno为EINTR</li>
-<li>epoll两种工作模式LT,ET在处理可读事件的区别在于<ul>
+<li><p>epoll和select以及poll的区别在于epoll对应一组函数调用，如epoll_ctl,epoll_wait，并将就绪事件重新赋值给一个新event数组，这样节省轮询事件就绪的时间</p>
+</li>
+<li><p>epoll，select，poll都会因为内核收到信号而返回-1并设置errno为EINTR</p>
+</li>
+<li><p>epoll两种工作模式LT,ET在处理可读事件的区别在于</p>
+<ul>
 <li>LT：如果此时缓存区没有可读数据，则epoll_wait不会返回EPOLLIN，如果此时缓冲区有可读数据，则epoll_wait会持续返回EPOLLIN</li>
 <li>ET：如果此时缓存区没有可读数据，则epoll_wait不会返回EPOLLIN，如果此时缓冲区有可读数据，则epoll_wait会返回一次EPOLLIN<br>可通过设置evnets为EPOLL_ET来显式设置工作模式为EPOLL_ET</li>
 </ul>
 </li>
-<li>由于ET工作模式仍会导致某个事件被触发多次，使得多线程可能会处理同个fd，从而避免许多竞态条件，EPOLLONESHOT使得某个时刻只可能触发fd注册的一个可读，可写，异常事件，并且该事件只能触发一次<ul>
+<li><p>由于ET工作模式仍会导致某个事件被触发多次，使得多线程可能会处理同个fd，从而避免许多竞态条件，EPOLLONESHOT使得某个时刻只可能触发fd注册的一个可读，可写，异常事件，并且该事件只能触发一次</p>
+<ul>
 <li>可通过epoll_ctl来重新设置EPOLLONESHOT来重新触发新的可读事件（通过设置flag为EPOLL_CTL_MOD）</li>
 <li>监听fd不应该设为EPOLLONESHOT，不然只能某个时刻处理一个客户连接</li>
 </ul>
 </li>
-<li>多线程使用pthread_exit(NULL)来退出线程不是<strong>异步信号安全的</strong>，其发出的信号可以中断例如epoll_wait()等阻塞函数</li>
+<li><p>多线程使用pthread_exit(NULL)来退出线程不是<strong>异步信号安全的</strong>，其发出的信号可以中断例如epoll_wait()等阻塞函数 </p>
+</li>
+<li><p>对非阻塞IO进行connect()系统调用，可能会立即返回-1并设置errno为EAGAIN（UNIX本地协议族socket）或EINPROGRESS表示连接已经开始但未完全建立好，这时使用select或poll监听sockfd上的写事件（非阻塞connect连接成功或者因为超时失败时会触发写就绪事件）, 超时失败是指客户端同步报文段发出后收不到ack，在本地arch环境下，重连次数为6，也就是127（1+2+4+8+16+32+64）s, 不论是失败或者成功，select都会返回写就绪，此时需要getsockopt中设置SO_ERROR选项来查看socket上的错误事件，对应测试cpp文件为non_blockconnect.cc<br><a target="_blank" rel="noopener" href="http://cr.yp.to/docs/connect.html">Dan_Bernstein对于非阻塞socket连接的理解和思考</a></p>
+</li>
 </ol>
 <h3 id="2-pthread-符合POSIX标准的线程库"><a href="#2-pthread-符合POSIX标准的线程库" class="headerlink" title="2. pthread - 符合POSIX标准的线程库"></a>2. pthread - 符合POSIX标准的线程库</h3><h4 id="2-1-线程的取消"><a href="#2-1-线程的取消" class="headerlink" title="2.1. 线程的取消"></a>2.1. 线程的取消</h4><ol>
 <li>如果想在线程执行时取消该线程。可以使用pthread_cancel(thread)来完成此操作,该函数向指定线程发出一个取消请求，。但是，请记住需要启用 pthread 取消支持。此外，还有取消时的清理代码。</li>
