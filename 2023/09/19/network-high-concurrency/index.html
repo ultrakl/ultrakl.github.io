@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/v2-233887068992518bb4eec56de043d1b2_r.jpg">
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/item38_fig1.png">
 <meta property="article:published_time" content="2023-09-19T09:39:14.000Z">
-<meta property="article:modified_time" content="2023-10-27T14:35:19.693Z">
+<meta property="article:modified_time" content="2023-10-29T14:13:40.255Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2023/09/19/network-high-concurrency/arp%E6%8A%A5%E6%96%87.png">
@@ -355,8 +355,8 @@
 </ol>
 <h4 id="4-4-lock-guard-unique-lock"><a href="#4-4-lock-guard-unique-lock" class="headerlink" title="4.4. lock_guard &amp; unique_lock"></a>4.4. lock_guard &amp; unique_lock</h4><ol>
 <li>lock_guard自动加锁解锁，在函数异常等情况下函数内部直接返回也会执行对锁的析构，需要注意对锁的占用时间，为了手动释放锁可以在lock_guard周围加入花括号即可</li>
+<li>wait function causes the current thread to block until the condition variable is notified or a spurious wakeup occurs, optionally looping until some predicate is satisfied</li>
 </ol>
-<p>wait causes the current thread to block until the condition variable is notified or a spurious wakeup occurs, optionally looping until some predicate is satisfied</p>
 
       
     </div>
