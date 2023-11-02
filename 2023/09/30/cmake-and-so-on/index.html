@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://example.com/2023/09/30/cmake-and-so-on/ps%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B%E7%BB%84%E5%85%B3%E7%B3%BB.png">
 <meta property="og:image" content="http://example.com/2023/09/30/cmake-and-so-on/cmake-simple-flowchart.png">
 <meta property="article:published_time" content="2023-09-30T03:35:37.000Z">
-<meta property="article:modified_time" content="2023-10-27T14:00:37.881Z">
+<meta property="article:modified_time" content="2023-11-02T13:49:05.242Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2023/09/30/cmake-and-so-on/ps%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B%E7%BB%84%E5%85%B3%E7%B3%BB.png">
@@ -162,6 +162,16 @@
 <li>bash命令是整个会话组的首领（会话组：一些有关联的进程组），会话首领对应的SID和进程组PGID以及PID都是相同的</li>
 <li>bash进程fork出两个子进程ps和less，ps和less同属一个进程组，ps是该进程组的首领</li>
 </ul>
+<ol start="17">
+<li>cat<ul>
+<li>cat filename 显示文件内容</li>
+<li>cat &gt; filname1 将标准输入中的内容重定向到filename1中（用ctrl+d作为EOF结束输入）</li>
+<li>cat &gt; filename2 &lt;&lt;EOF 将开始标记EOF和结束标记EOF之间的标准输入中的内容重定向到fiilname2</li>
+<li>cat &gt;&gt; filename3 在filename3中追加内容<br>更多关于重定向的内容：<a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-shell-io-redirections.html">Shell 输入&#x2F;输出重定向</a></li>
+</ul>
+</li>
+<li>wc -l filename 计算file中的行数</li>
+</ol>
 <h2 id="valgrind-调试工具"><a href="#valgrind-调试工具" class="headerlink" title="valgrind 调试工具"></a>valgrind 调试工具</h2><ol>
 <li>valgrind</li>
 </ol>
@@ -174,7 +184,14 @@
 <li>netstat&#x2F;</li>
 <li>nc</li>
 </ol>
-<h2 id="cmake"><a href="#cmake" class="headerlink" title="cmake"></a>cmake</h2><h3 id="cmake具体流程"><a href="#cmake具体流程" class="headerlink" title="cmake具体流程"></a>cmake具体流程</h3><p>  CMakeLists.txt脚本在配置步骤期间执行。该脚本负责定义目标。每个目标表示构建流程的可执行文件、库或其他输出。如果配置步骤成功——也就是说，CMakeLists.txt没有错误——CMake将使用脚本定义的目标生成构建流程。生成的构建流程类型取决于所使用的生成器类型，在配置步骤期间，根据CMakeLists.txt的内容，可能会发生其他事情。<br><img src="/2023/09/30/cmake-and-so-on/cmake-simple-flowchart.png" alt="cmake"></p>
+<h2 id="cmake"><a href="#cmake" class="headerlink" title="cmake"></a>cmake</h2><h3 id="cmake具体流程"><a href="#cmake具体流程" class="headerlink" title="cmake具体流程"></a>cmake具体流程</h3><ol>
+<li><p>CMakeLists.txt脚本在配置步骤期间执行。该脚本负责定义目标。每个目标表示构建流程的可执行文件、库或其他输出。如果配置步骤成功——也就是说，CMakeLists.txt没有错 误——CMake将使用脚本定义的目标生成构建流程。生成的构建流程类型取决于所使用的生成器类型，在配置步骤期间，根据CMakeLists.txt的内容，可能会发生其他事情。<br>  <em>virsual stdio提供了configure with cmake debugger， 可以设置cmakelists的断点来调试配置过程</em><br><img src="/2023/09/30/cmake-and-so-on/cmake-simple-flowchart.png" alt="cmake"></p>
+</li>
+<li><p>vs中可以选择在UI中选择cmake的kit来指定编译器及其配套组件</p>
+</li>
+<li><p>命令行中通过设置cmake的–config选项可以指定编译源文件时是按debug模式还是release模式编译</p>
+</li>
+</ol>
 
       
     </div>
