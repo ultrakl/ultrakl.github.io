@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2023/08/25/houjiecpp/structure.png">
 <meta property="article:published_time" content="2023-08-25T02:48:38.000Z">
-<meta property="article:modified_time" content="2023-11-01T14:25:58.845Z">
+<meta property="article:modified_time" content="2023-11-04T13:20:22.057Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2023/08/25/houjiecpp/structure.png">
@@ -124,7 +124,10 @@
 <li><a href="#212-%E5%85%B3%E4%BA%8E%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95%E8%A1%A8%E8%BF%B0%E4%B8%8A%E5%8F%AF%E8%83%BD%E6%9C%89%E7%BA%B0%E6%BC%8F%E4%BD%86%E6%A0%B9%E6%8D%AE%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%9D%A5%E7%9C%8B%E5%BA%94%E8%AF%A5%E6%98%AF%E6%AD%A3%E7%A1%AE%E7%9A%84">2.1.2. 关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的</a><ul>
 <li><a href="#2121-%E5%80%BC%E5%88%9D%E5%A7%8B%E5%8C%96">2.1.2.1. 值初始化</a></li>
 <li><a href="#2122-%E9%BB%98%E8%AE%A4%E5%88%9D%E5%A7%8B%E5%8C%96">2.1.2.2. 默认初始化</a></li>
-<li><a href="#2123-%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96">2.1.2.3. 静态成员的初始化</a></li>
+<li><a href="#2123-%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96">2.1.2.3. 静态成员的初始化</a><ul>
+<li><a href="#2023111-%E6%9B%B4%E6%96%B0%E5%8A%A8%E6%80%81%E5%88%9D%E5%A7%8B%E5%8C%96">2023&#x2F;11&#x2F;1 更新动态初始化</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#213-internal-linkage--external-linkage">2.1.3. internal linkage &amp;&amp; external linkage</a></li>
@@ -401,10 +404,30 @@
 <li>静态数据成员(static data  members) 在声明<strong>内联或constexpr</strong>时指定initialzer , 在类外不需要重定义，甚至在odr-use时也不需要定义，然而对于普通const成员来说，只有int类型的数据才可以拥有initializer，并且在odr-use时也需要在类外重新声明，但这时不能给出初始化器</li>
 <li>总结就是类静态成员在类中声明时是不会默认初始化的，可以在类外定义进行动态初始化，在类外的静态数据可以直接默认初始化.</li>
 </ul>
+<h5 id="2023-11-1-更新动态初始化"><a href="#2023-11-1-更新动态初始化" class="headerlink" title="2023&#x2F;11&#x2F;1 更新动态初始化"></a>2023&#x2F;11&#x2F;1 更新动态初始化</h5><p>在动手查看过各静态变量汇编层面的动态初始化后，对动态初始化有了更多的认识<br>代码文件及汇编代码在<a target="_blank" rel="noopener" href="https://godbolt.org/z/METvfhPj3">complier explore</a>，编译器为x86-64 clang9.0;</p>
+<ol>
+<li>对于未初始化的普通数据类型静态或全局变量（即没有初始化器）来说， 其被储存在.bss段中且这些0变量本身并没有保存在可执行文件或者动态链接库文件中，但是其总内存段大小和起止位置在加载件时被统计出来。<ul>
+<li>C++ name-mangling机制把<strong>这类数据以及局部静态未初始化或者零或者动态初始化变量</strong>命名为_ZZ3fooiE开头的变量，用于表示一个静态变量的实际存储位置，根据下面对于动态初始化局部静态变量的汇编代码可以看出，编译器它调用了一些C++运行时库的函数，如__cxa_guard_acquire和__cxa_guard_release，来保证初始化的线程安全和一次性 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cmp     byte ptr [guard variable for foo(int)::staticLocalInitVar], 0</span><br><span class="line">jne     .LBB1_3</span><br><span class="line">movabs  rdi, offset guard variable for foo(int)::staticLocalInitVar</span><br><span class="line">call    __cxa_guard_acquire</span><br><span class="line">cmp     eax, 0</span><br><span class="line">je      .LBB1_3</span><br><span class="line">call    fd()</span><br><span class="line">mov     dword ptr [_ZZ3fooiE18staticLocalInitVar], eax</span><br><span class="line">movabs  rdi, offset guard variable for foo(int)::staticLocalInitVar</span><br><span class="line">call    __cxa_guard_release</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>对于有初始化器但不是常量初始化的普通数据类型静态或全局变量来说，其被存储在.data段中，但编译阶段被初始化为0，其被真正初始化的阶段在运行期，program startup的阶段，在主函数执行之前被无序，偏序，或正序初始化。对于clang为每个静态数据成员在编译阶段分配了其初始化的，名称为__cxx_global_var_init.<strong>num</strong>的函数代码，到startup时会被__start函数调用<ul>
+<li>无序初始化针对模板类<strong>没有被特化</strong>的静态数据成员（<em>当然前提是该数据成员不是在类中被赋值的常量整形成员，也不是指定constexpr的内联静态成员</em>），其生成函数的num不一定在它之后声明的变量之前</li>
+<li>偏序初始化针对内联静态变量</li>
+<li>其余静态变量或普通类的静态数据成员在同一翻译单元中按照代码顺序动态初始化</li>
+</ul>
+</li>
+<li>对于class类型的全局成员来说，.data段将其非静态数据成员全部零初始化，并且构造函数也在startup阶段被调用，析构函数在主函数推出后也被调用</li>
+<li>还有一种动态初始化可以提早发生在编译阶段，其必须满足以下条件<ul>
+<li>初始化的动态版本不改变命名空间作用域中任何先于其初始化的对象的值</li>
+<li>初始化的静态版本在被初始化变量中产生的值，与当所有不要求静态初始化的变量都被动态初始化时，由动态初始化所生成的值相同。<br>但这只是可能提前初始化，并不保证一定会</li>
+</ul>
+</li>
+</ol>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">double</span> <span class="title">fd</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">1.0</span>; &#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">extern</span> <span class="type">double</span> d1;</span><br><span class="line"> </span><br><span class="line"><span class="type">double</span> d2 = d1;   <span class="comment">// unspecified:</span></span><br><span class="line">                  <span class="comment">// dynamically initialized to 0.0 if d1 is dynamically initialized, or</span></span><br><span class="line">                  <span class="comment">// dynamically initialized to 1.0 if d1 is statically initialized, or</span></span><br><span class="line">                  <span class="comment">// statically initialized to 0.0 (because that would be its value</span></span><br><span class="line">                  <span class="comment">// if both variables were dynamically initialized)</span></span><br><span class="line"> </span><br><span class="line"><span class="type">double</span> d1 = <span class="built_in">fd</span>(); <span class="comment">// may be initialized statically or dynamically to 1.0</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>简而言之，d1在程序开始前被赋0，这是静态初始化，之后被赋1，这是动态初始化，但由于某些规则该变量的动态初始化可以被提至编译时间，也就是静态初始化为1，所以d2的值也是不确定的，虽然在本地表现出被动态初始化为1的结果</p>
 </blockquote>
+<p>-[] 依然困惑于动态初始化的局部静态变量，在汇编码中没有找到其在.data段被分配内存，莫非仍然在.bss段被分配内存？</p>
 <h3 id="2-1-3-internal-linkage-external-linkage"><a href="#2-1-3-internal-linkage-external-linkage" class="headerlink" title="2.1.3. internal linkage &amp;&amp; external linkage"></a>2.1.3. internal linkage &amp;&amp; external linkage</h3><ul>
 <li>#pragma once 只能作用于某个具体的文件，而无法向 #ifndef 那样仅作用于指定的一段代码</li>
 <li>具有内部链接性质的变量可以在头文件中定义，这样会在每个翻译单元内定义不同实体，但由于该变量只在单文件中可见于是不会引发多重定义的问题， 但是会引发代码冗余</li>
@@ -467,7 +490,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
     </div>
   </div>
 
@@ -478,6 +501,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2023/11/03/linux-high-performanceserver/">linux-high-performanceserver</a>
+          </li>
         
           <li>
             <a href="/2023/09/30/cmake-and-so-on/">cmake and so_on</a>
@@ -493,10 +520,6 @@
         
           <li>
             <a href="/2023/08/24/cplus-learning/">cplus_learning</a>
-          </li>
-        
-          <li>
-            <a href="/2023/07/24/introduction/">introduction</a>
           </li>
         
       </ul>

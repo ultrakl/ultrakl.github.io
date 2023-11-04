@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>linux-high-performanceserver | kuli&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="IO模型 阻塞IO和非阻塞IO的区别就在于对非就绪事件的处理， 对于设置了O_NONBLOCK的文件描述符来说，若此时文件描述符非可读或者可写，针对其进行的系统调用会返回-1，设置errno，而对未设置的文件描述符的connect，recv，send会阻塞进程  管道pipe是环形缓冲区  O_NONBLOCK对一般文件而言没有什么影响，所有一般文件都是可读或者可写的，它主要用来在fcntl时设置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-high-performanceserver">
+<meta property="og:url" content="http://example.com/2023/11/03/linux-high-performanceserver/index.html">
+<meta property="og:site_name" content="kuli&#39;s blog">
+<meta property="og:description" content="IO模型 阻塞IO和非阻塞IO的区别就在于对非就绪事件的处理， 对于设置了O_NONBLOCK的文件描述符来说，若此时文件描述符非可读或者可写，针对其进行的系统调用会返回-1，设置errno，而对未设置的文件描述符的connect，recv，send会阻塞进程  管道pipe是环形缓冲区  O_NONBLOCK对一般文件而言没有什么影响，所有一般文件都是可读或者可写的，它主要用来在fcntl时设置">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-11-03T14:38:03.000Z">
+<meta property="article:modified_time" content="2023-11-03T15:34:22.284Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="kuli's blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">kuli&#39;s blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-linux-high-performanceserver" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/11/03/linux-high-performanceserver/" class="article-date">
+  <time class="dt-published" datetime="2023-11-03T14:38:03.000Z" itemprop="datePublished">2023-11-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      linux-high-performanceserver
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="IO模型"><a href="#IO模型" class="headerlink" title="IO模型"></a>IO模型</h2><ol>
+<li><p>阻塞IO和非阻塞IO的区别就在于对非就绪事件的处理， 对于设置了O_NONBLOCK的文件描述符来说，若此时文件描述符非可读或者可写，针对其进行的系统调用会返回-1，设置errno，而对未设置的文件描述符的connect，recv，send会阻塞进程</p>
+</li>
+<li><p>管道pipe是环形缓冲区</p>
+</li>
+<li><p>O_NONBLOCK对一般文件而言没有什么影响，所有一般文件都是可读或者可写的，它主要用来在fcntl时设置socket或者字符设备的属性，详情请见<a target="_blank" rel="noopener" href="https://www.cnblogs.com/hustxujinkang/p/5072270.html">O_NONBLOCK on regular file</a></p>
+<blockquote>
+<p>字符设备，即流设备，如tty，pts，拥有自己的缓冲区，并且采用行缓冲，每个进程的STDIN_FILENO,STDOUT_FILENO软链接到当前终端中（&#x2F;dev&#x2F;stdin及其他也和这三个文件描述符软链接），所以使用splice等系统调用从标准输入读取中会读取换行符</p>
+</blockquote>
+</li>
+<li><p>同步或者异步I&#x2F;O主要是指访问数据的机制(即实际I&#x2F;O操作的完成方式)，同步一般指主动请求并等待I&#x2F;O操作完毕的方式，I&#x2F;O操作未完成前，会导致应用进程挂起；而异步是指用户进程触发IO操作以后便开始做自己的事情，而当IO操作已经完成的时候会得到IO完成的通知（异步的特点就是通知）,这可以使进程在数据读写时也不阻塞。阻塞或者非阻塞I&#x2F;O主要是指I&#x2F;O操作第一阶段的完成方式(进程访问的数据如果尚未就绪)，即数据还未准备好的时候，应用进程的表现，如果这里进程挂起，则为阻塞I&#x2F;O，否则为非阻塞I&#x2F;O。说白了就是阻塞和非阻塞是针对于进程在访问数据的时候，根据IO操作的就绪状态来采取的不同方式，说白了是一种读取或者写入操作函数的实现方式，阻塞方式下读取或者写入函数将一直等待，<br>而非阻塞方式下，读取或者写入函数会立即返回一个状态值。<br> 而在并发模式中，同步指的是程序严格按照代码顺序执行， 异步指的是程序的执行需要系统事件来驱动</p>
+</li>
+</ol>
+<h2 id="关于splice函数的盲点"><a href="#关于splice函数的盲点" class="headerlink" title="关于splice函数的盲点"></a>关于splice函数的盲点</h2><p>   SPLICE_F_MORE对于写入端是socket的情况下有效，如果设置了 SPLICE_F_MORE 那么会追加 MSG_MORE flag；如果当前 pipe 中还有其他的 page，则追加 MSG_SENDPAGE_NOTLAST flag。</p>
+<p>首先来看 MSG_MORE 的作用，熟悉 TCP 的应该已经知道了这个标志表示调用者有更多的数据要发送。在 TCP socket 中，该标志用于获取与 TCP_CORK 相同的效果，不同之处在于该标志可以在每次调用时设置。顾名思义 TCP_CORK 就是给 TCP 发送数据的时候加了一个木塞子。往这个 socket 写入的数据都会聚集起来。虽然堵上了塞子，但是数据总得发送，取决于:</p>
+<ul>
+<li><p>程序取消设置 TCP_CORK 这个选项</p>
+</li>
+<li><p>socket 聚集的数据大于一个 MSS 的大小</p>
+</li>
+<li><p>自从堵上塞子写入第一个字节开始，已经经过 200ms</p>
+</li>
+<li><p>socket 被关闭了 </p>
+<p>  此外，当设置SPLCICE_NONBLOCK标志时，若读取端设置为非阻塞且没有准备好数据，则会触发EAGAIN错误</p>
+</li>
+</ul>
+<h2 id="三种设备驱动"><a href="#三种设备驱动" class="headerlink" title="三种设备驱动"></a>三种设备驱动</h2><p>即为dev目录下的设备文件是如何实际硬件进行交互的，一般是通过驱动程序进行</p>
+<p><strong>进一步-VFS虚拟文件系统</strong></p>
+<h2 id="Linux中的文件描述符与打开文件之间的关系"><a href="#Linux中的文件描述符与打开文件之间的关系" class="headerlink" title="Linux中的文件描述符与打开文件之间的关系"></a>Linux中的文件描述符与打开文件之间的关系</h2><p>两个不同的文件描述符，若指向同一个打开文件句柄，将共享同一文件偏移量</p>
+<p><a target="_blank" rel="noopener" href="https://www.linuxprobe.com/linux-file-descriptor.html">详情</a></p>
+<h2 id="C、C99、ANSI-C-和-GNU-C-之间的区别"><a href="#C、C99、ANSI-C-和-GNU-C-之间的区别" class="headerlink" title="C、C99、ANSI C 和 GNU C 之间的区别"></a>C、C99、ANSI C 和 GNU C 之间的区别</h2><p>标准化之前的一切一般被称为“K&amp;R C”，以著名的书（第一版和第二版）命名，C语言的发明者丹尼斯·里奇（Dennis Ritchie）是作者之一。这就是 1972 年至 1989 年的“C 语言”。</p>
+<p>第一个 C 标准于 1989 年由美国国家标准协会 ANSI 在全国发布。此版本称为 C89 或 ANSI-C。从 1989 年到 1990 年，这就是“C 语言”。</p>
+<p>次年，美国标准被国际接受并由 ISO 发布（ISO 9899:1990）。此版本称为 C90。从技术上来说，它与C89&#x2F;ANSI-C是相同的标准。从形式上来说，它取代了 C89&#x2F;ANSI-C，使它们变得过时。从 1990 年到 1999 年，C90 是“C 语言”。</p>
+<p>请注意，自 1989 年以来，ANSI 与 C 语言没有任何关系，只是作为 ISO 标准的众多实例之一。现在在美国通过INCITS完成，C 标准在美国的正式名称为 INCITS&#x2F;ISO&#x2F;IEC 9899。就像在欧洲称为 EN&#x2F;ISO&#x2F;IEC 一样。</p>
+<p>仍在谈论“ANSI C”的程序员通常不知道它的含义。ISO 通过 ISO 9899 标准“拥有”C 语言。</p>
+<p>1995 年发布了一个小更新，有时称为“C95”。这不是重大修订，而是正式命名为 ISO&#x2F;IEC 9899:1990&#x2F;Amd.1:1995 的技术修订。主要的变化是引入了广泛的字符支持。</p>
+<p>1999年，C标准进行了重大修订（ISO 9899:1999）。该版本的标准称为 C99。从 1999 年到 2011 年，这就是“C 语言”。</p>
+<p>2011年，C标准再次发生变更（ISO 9899:2011）。这个版本称为C11。该语言中添加了各种新功能，例如_Generic、和线程支持。_Static_assert此次更新重点关注多核、多处理和表达测序。从 2011 年到 2017 年，这就是“C 语言”。</p>
+<p>2017年，C11进行了改版，解决了各种缺陷报告。该标准非正式地称为 C17 或 C18。它于 2017 年完成（并使用__STDC_VERSION__&#x3D; 201710L），但由 ISO 发布为 9899:2018，因此 C17&#x2F;C18 之间存在歧义。它不包含任何新功能，仅包含更正。它是 C 语言的当前版本。</p>
+<p>该委员会正在制定一项名为“C23”&#x2F;“C2X”的草案，计划于 2023 年发布（但官僚主义的车轮磨得很慢，请检查ISO 的状态）。最后的工作草案 N3096 可在此处找到。</p>
+<p>其中包含许多小缺陷报告修复，例如 C17&#x2F;C18，但也包含许多重大更改和新功能。这是一个主要版本。</p>
+<p>“C99 strict”可能是指强制编译器严格遵循标准的编译器设置。C 标准中有一个术语“conformedimplementation” 。本质上它的意思是：“这个编译器实际上正确地实现了C语言”。正确实现 C 语言的程序正式称为严格符合程序。此类程序也可能不包含任何形式的定义不明确的行为。</p>
+<p>“GNU C”有两个含义。作为 GNU 编译器集合 (GCC) 一部分的 C 编译器本身。或者它可能意味着 GCC C 编译器使用的非标准默认设置。如果您使用它进行编译，gcc program.c那么您就不会根据 C 标准进行编译，而是根据非标准 GNU 设置进行编译，这可能被称为“GNU C”。例如，整个 Linux 内核是用非标准 GNU C 编写的，而不是用标准 C 编写的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/11/03/linux-high-performanceserver/" data-id="clok2r2t000000ctl26ut5zac" data-title="linux-high-performanceserver" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/09/30/cmake-and-so-on/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">cmake and so_on</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/11/03/linux-high-performanceserver/">linux-high-performanceserver</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/30/cmake-and-so-on/">cmake and so_on</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/19/network-high-concurrency/">network &amp; high concurrency</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/25/houjiecpp/">houjiecpp</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/24/cplus-learning/">cplus_learning</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

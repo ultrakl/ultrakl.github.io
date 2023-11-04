@@ -73,6 +73,87 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-linux-high-performanceserver" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/11/03/linux-high-performanceserver/" class="article-date">
+  <time class="dt-published" datetime="2023-11-03T14:38:03.000Z" itemprop="datePublished">2023-11-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/11/03/linux-high-performanceserver/">linux-high-performanceserver</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="IO模型"><a href="#IO模型" class="headerlink" title="IO模型"></a>IO模型</h2><ol>
+<li><p>阻塞IO和非阻塞IO的区别就在于对非就绪事件的处理， 对于设置了O_NONBLOCK的文件描述符来说，若此时文件描述符非可读或者可写，针对其进行的系统调用会返回-1，设置errno，而对未设置的文件描述符的connect，recv，send会阻塞进程</p>
+</li>
+<li><p>管道pipe是环形缓冲区</p>
+</li>
+<li><p>O_NONBLOCK对一般文件而言没有什么影响，所有一般文件都是可读或者可写的，它主要用来在fcntl时设置socket或者字符设备的属性，详情请见<a target="_blank" rel="noopener" href="https://www.cnblogs.com/hustxujinkang/p/5072270.html">O_NONBLOCK on regular file</a></p>
+<blockquote>
+<p>字符设备，即流设备，如tty，pts，拥有自己的缓冲区，并且采用行缓冲，每个进程的STDIN_FILENO,STDOUT_FILENO软链接到当前终端中（&#x2F;dev&#x2F;stdin及其他也和这三个文件描述符软链接），所以使用splice等系统调用从标准输入读取中会读取换行符</p>
+</blockquote>
+</li>
+<li><p>同步或者异步I&#x2F;O主要是指访问数据的机制(即实际I&#x2F;O操作的完成方式)，同步一般指主动请求并等待I&#x2F;O操作完毕的方式，I&#x2F;O操作未完成前，会导致应用进程挂起；而异步是指用户进程触发IO操作以后便开始做自己的事情，而当IO操作已经完成的时候会得到IO完成的通知（异步的特点就是通知）,这可以使进程在数据读写时也不阻塞。阻塞或者非阻塞I&#x2F;O主要是指I&#x2F;O操作第一阶段的完成方式(进程访问的数据如果尚未就绪)，即数据还未准备好的时候，应用进程的表现，如果这里进程挂起，则为阻塞I&#x2F;O，否则为非阻塞I&#x2F;O。说白了就是阻塞和非阻塞是针对于进程在访问数据的时候，根据IO操作的就绪状态来采取的不同方式，说白了是一种读取或者写入操作函数的实现方式，阻塞方式下读取或者写入函数将一直等待，<br>而非阻塞方式下，读取或者写入函数会立即返回一个状态值。<br> 而在并发模式中，同步指的是程序严格按照代码顺序执行， 异步指的是程序的执行需要系统事件来驱动</p>
+</li>
+</ol>
+<h2 id="关于splice函数的盲点"><a href="#关于splice函数的盲点" class="headerlink" title="关于splice函数的盲点"></a>关于splice函数的盲点</h2><p>   SPLICE_F_MORE对于写入端是socket的情况下有效，如果设置了 SPLICE_F_MORE 那么会追加 MSG_MORE flag；如果当前 pipe 中还有其他的 page，则追加 MSG_SENDPAGE_NOTLAST flag。</p>
+<p>首先来看 MSG_MORE 的作用，熟悉 TCP 的应该已经知道了这个标志表示调用者有更多的数据要发送。在 TCP socket 中，该标志用于获取与 TCP_CORK 相同的效果，不同之处在于该标志可以在每次调用时设置。顾名思义 TCP_CORK 就是给 TCP 发送数据的时候加了一个木塞子。往这个 socket 写入的数据都会聚集起来。虽然堵上了塞子，但是数据总得发送，取决于:</p>
+<ul>
+<li><p>程序取消设置 TCP_CORK 这个选项</p>
+</li>
+<li><p>socket 聚集的数据大于一个 MSS 的大小</p>
+</li>
+<li><p>自从堵上塞子写入第一个字节开始，已经经过 200ms</p>
+</li>
+<li><p>socket 被关闭了 </p>
+<p>  此外，当设置SPLCICE_NONBLOCK标志时，若读取端设置为非阻塞且没有准备好数据，则会触发EAGAIN错误</p>
+</li>
+</ul>
+<h2 id="三种设备驱动"><a href="#三种设备驱动" class="headerlink" title="三种设备驱动"></a>三种设备驱动</h2><p>即为dev目录下的设备文件是如何实际硬件进行交互的，一般是通过驱动程序进行</p>
+<p><strong>进一步-VFS虚拟文件系统</strong></p>
+<h2 id="Linux中的文件描述符与打开文件之间的关系"><a href="#Linux中的文件描述符与打开文件之间的关系" class="headerlink" title="Linux中的文件描述符与打开文件之间的关系"></a>Linux中的文件描述符与打开文件之间的关系</h2><p>两个不同的文件描述符，若指向同一个打开文件句柄，将共享同一文件偏移量</p>
+<p><a target="_blank" rel="noopener" href="https://www.linuxprobe.com/linux-file-descriptor.html">详情</a></p>
+<h2 id="C、C99、ANSI-C-和-GNU-C-之间的区别"><a href="#C、C99、ANSI-C-和-GNU-C-之间的区别" class="headerlink" title="C、C99、ANSI C 和 GNU C 之间的区别"></a>C、C99、ANSI C 和 GNU C 之间的区别</h2><p>标准化之前的一切一般被称为“K&amp;R C”，以著名的书（第一版和第二版）命名，C语言的发明者丹尼斯·里奇（Dennis Ritchie）是作者之一。这就是 1972 年至 1989 年的“C 语言”。</p>
+<p>第一个 C 标准于 1989 年由美国国家标准协会 ANSI 在全国发布。此版本称为 C89 或 ANSI-C。从 1989 年到 1990 年，这就是“C 语言”。</p>
+<p>次年，美国标准被国际接受并由 ISO 发布（ISO 9899:1990）。此版本称为 C90。从技术上来说，它与C89&#x2F;ANSI-C是相同的标准。从形式上来说，它取代了 C89&#x2F;ANSI-C，使它们变得过时。从 1990 年到 1999 年，C90 是“C 语言”。</p>
+<p>请注意，自 1989 年以来，ANSI 与 C 语言没有任何关系，只是作为 ISO 标准的众多实例之一。现在在美国通过INCITS完成，C 标准在美国的正式名称为 INCITS&#x2F;ISO&#x2F;IEC 9899。就像在欧洲称为 EN&#x2F;ISO&#x2F;IEC 一样。</p>
+<p>仍在谈论“ANSI C”的程序员通常不知道它的含义。ISO 通过 ISO 9899 标准“拥有”C 语言。</p>
+<p>1995 年发布了一个小更新，有时称为“C95”。这不是重大修订，而是正式命名为 ISO&#x2F;IEC 9899:1990&#x2F;Amd.1:1995 的技术修订。主要的变化是引入了广泛的字符支持。</p>
+<p>1999年，C标准进行了重大修订（ISO 9899:1999）。该版本的标准称为 C99。从 1999 年到 2011 年，这就是“C 语言”。</p>
+<p>2011年，C标准再次发生变更（ISO 9899:2011）。这个版本称为C11。该语言中添加了各种新功能，例如_Generic、和线程支持。_Static_assert此次更新重点关注多核、多处理和表达测序。从 2011 年到 2017 年，这就是“C 语言”。</p>
+<p>2017年，C11进行了改版，解决了各种缺陷报告。该标准非正式地称为 C17 或 C18。它于 2017 年完成（并使用__STDC_VERSION__&#x3D; 201710L），但由 ISO 发布为 9899:2018，因此 C17&#x2F;C18 之间存在歧义。它不包含任何新功能，仅包含更正。它是 C 语言的当前版本。</p>
+<p>该委员会正在制定一项名为“C23”&#x2F;“C2X”的草案，计划于 2023 年发布（但官僚主义的车轮磨得很慢，请检查ISO 的状态）。最后的工作草案 N3096 可在此处找到。</p>
+<p>其中包含许多小缺陷报告修复，例如 C17&#x2F;C18，但也包含许多重大更改和新功能。这是一个主要版本。</p>
+<p>“C99 strict”可能是指强制编译器严格遵循标准的编译器设置。C 标准中有一个术语“conformedimplementation” 。本质上它的意思是：“这个编译器实际上正确地实现了C语言”。正确实现 C 语言的程序正式称为严格符合程序。此类程序也可能不包含任何形式的定义不明确的行为。</p>
+<p>“GNU C”有两个含义。作为 GNU 编译器集合 (GCC) 一部分的 C 编译器本身。或者它可能意味着 GCC C 编译器使用的非标准默认设置。如果您使用它进行编译，gcc program.c那么您就不会根据 C 标准进行编译，而是根据非标准 GNU 设置进行编译，这可能被称为“GNU C”。例如，整个 Linux 内核是用非标准 GNU C 编写的，而不是用标准 C 编写的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/11/03/linux-high-performanceserver/" data-id="clok2r2t000000ctl26ut5zac" data-title="linux-high-performanceserver" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-cmake-and-so-on" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/09/30/cmake-and-so-on/" class="article-date">
@@ -166,7 +247,14 @@
 </ul>
 </li>
 <li>wc -l filename 计算file中的行数</li>
+<li>telnet<br>set localecho<br>open <host ip> <port><br>telnet开启本地回显</li>
+<li>ps -ef 列出所有进程(all process)的详细信息(full-format, including command lines)<br>ps aux 列出前台进程(all with tty)，后台进程(processes without controlling ttys)<br><img src="/pscmd.png"><br><img src="/stat.png"><br>其中STAT状态位常见的状态字符有<br>D      &#x2F;&#x2F;无法中断的休眠状态（通常 IO 的进程）；<br>R      &#x2F;&#x2F;正在运行可中在队列中可过行的；<br>S      &#x2F;&#x2F;处于休眠状态；<br>T      &#x2F;&#x2F;停止或被追踪；<br>W      &#x2F;&#x2F;进入内存交换 （从内核2.6开始无效）；<br>X      &#x2F;&#x2F;死掉的进程 （基本很少见）；<br>Z      &#x2F;&#x2F;僵尸进程；<br>&lt;      &#x2F;&#x2F;优先级高的进程<br>N      &#x2F;&#x2F;优先级较低的进程<br>L      &#x2F;&#x2F;有些页被锁进内存；<br>s      &#x2F;&#x2F;进程的领导者（在它之下有子进程）；<br>l      &#x2F;&#x2F;多线程，克隆线程（使用 CLONE_THREAD, 类似 NPTL pthreads）；</li>
 </ol>
+<ul>
+<li><pre><code> //位于后台的进程组；
+</code></pre>
+</li>
+</ul>
 <h2 id="valgrind-调试工具"><a href="#valgrind-调试工具" class="headerlink" title="valgrind 调试工具"></a>valgrind 调试工具</h2><ol>
 <li>valgrind</li>
 </ol>
@@ -310,6 +398,12 @@
 <li>使用telnet在同网络机器中进行远程连接，在一台机器上使用tcpdump进行以太网帧捕捉，捕捉结果显示类型为ARP，ARP报文长度为28字节，被封装在以太网帧中，并且根据以太网帧头部信息长度和ARP报文长度来看，帧总长应为46字节，这里显示42字节表示不考虑尾部4字节的CRC字段（对头部和数据进行循环冗余校验）<br> <img src="/2023/09/19/network-high-concurrency/Snipaste_2023-09-22_22-37-24.png" alt="tcpdump检测结果"></li>
 <li>无状态（ stateless ）是指IP通信双方不同步传输数据的状态信息，因此所有IP数据报的发送、传输和接收都是相互独立、没有上下文关系的。这种服务最大的缺点是无法处理乱序<br>和重复的 IP 数据报 。 比如发送端发送出的第 N 个 IP 数据报可能比第 N + 1个IP数据报后到</li>
 <li>计算机电路先处理低位字节，效率比较高，因为计算都是从低位开始的。所以，计算机的内部处理都是小端字节序。在计算机内部，小端序被广泛应用于现代 CPU 内部存储数据；而在其他场景，比如网络传输和文件存储则使用大端序。<br><img src="/2023/09/19/network-high-concurrency/v2-233887068992518bb4eec56de043d1b2_r.jpg" alt="大端序和小端序"></li>
+<li>tcp&#x2F;ip新感悟<ul>
+<li>tcp通信双方在连接初始化，即发送同步报文段中要确定MSS及扩大窗口因子的大小，这样可以有效防止ip模块进行分片处理</li>
+<li>http和udp都是无状态协议，即每个http请求之间没有上下文关系，解决办法为设置cookie，服务器向客户端发送cookie，客户端每次请求时都会带上cookie（通过HTTP头部字段cookie），这样服务器就可以区别不同客户</li>
+<li>ip模块通过接收和发送ip数据报输入队列和输出队列与网络驱动程序交互</li>
+</ul>
+</li>
 </ol>
 <h4 id="1-1-字符串处理函数"><a href="#1-1-字符串处理函数" class="headerlink" title="1.1. 字符串处理函数"></a>1.1. 字符串处理函数</h4><ol>
 <li>strpbrk(char* s1, char* s2) 指向str1中任何属于str2字符的第一个出现位置的指针，如果在终止的空字符之前在str1中找不到str2的任何字符，则返回空指针。如果在str1中不存在str2的任何字符，则返回空指针。</li>
@@ -542,7 +636,10 @@
 <li><a href="#212-%E5%85%B3%E4%BA%8E%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95%E8%A1%A8%E8%BF%B0%E4%B8%8A%E5%8F%AF%E8%83%BD%E6%9C%89%E7%BA%B0%E6%BC%8F%E4%BD%86%E6%A0%B9%E6%8D%AE%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%9D%A5%E7%9C%8B%E5%BA%94%E8%AF%A5%E6%98%AF%E6%AD%A3%E7%A1%AE%E7%9A%84">2.1.2. 关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的</a><ul>
 <li><a href="#2121-%E5%80%BC%E5%88%9D%E5%A7%8B%E5%8C%96">2.1.2.1. 值初始化</a></li>
 <li><a href="#2122-%E9%BB%98%E8%AE%A4%E5%88%9D%E5%A7%8B%E5%8C%96">2.1.2.2. 默认初始化</a></li>
-<li><a href="#2123-%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96">2.1.2.3. 静态成员的初始化</a></li>
+<li><a href="#2123-%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96">2.1.2.3. 静态成员的初始化</a><ul>
+<li><a href="#2023111-%E6%9B%B4%E6%96%B0%E5%8A%A8%E6%80%81%E5%88%9D%E5%A7%8B%E5%8C%96">2023&#x2F;11&#x2F;1 更新动态初始化</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#213-internal-linkage--external-linkage">2.1.3. internal linkage &amp;&amp; external linkage</a></li>
@@ -819,10 +916,30 @@
 <li>静态数据成员(static data  members) 在声明<strong>内联或constexpr</strong>时指定initialzer , 在类外不需要重定义，甚至在odr-use时也不需要定义，然而对于普通const成员来说，只有int类型的数据才可以拥有initializer，并且在odr-use时也需要在类外重新声明，但这时不能给出初始化器</li>
 <li>总结就是类静态成员在类中声明时是不会默认初始化的，可以在类外定义进行动态初始化，在类外的静态数据可以直接默认初始化.</li>
 </ul>
+<h5 id="2023-11-1-更新动态初始化"><a href="#2023-11-1-更新动态初始化" class="headerlink" title="2023&#x2F;11&#x2F;1 更新动态初始化"></a>2023&#x2F;11&#x2F;1 更新动态初始化</h5><p>在动手查看过各静态变量汇编层面的动态初始化后，对动态初始化有了更多的认识<br>代码文件及汇编代码在<a target="_blank" rel="noopener" href="https://godbolt.org/z/METvfhPj3">complier explore</a>，编译器为x86-64 clang9.0;</p>
+<ol>
+<li>对于未初始化的普通数据类型静态或全局变量（即没有初始化器）来说， 其被储存在.bss段中且这些0变量本身并没有保存在可执行文件或者动态链接库文件中，但是其总内存段大小和起止位置在加载件时被统计出来。<ul>
+<li>C++ name-mangling机制把<strong>这类数据以及局部静态未初始化或者零或者动态初始化变量</strong>命名为_ZZ3fooiE开头的变量，用于表示一个静态变量的实际存储位置，根据下面对于动态初始化局部静态变量的汇编代码可以看出，编译器它调用了一些C++运行时库的函数，如__cxa_guard_acquire和__cxa_guard_release，来保证初始化的线程安全和一次性 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cmp     byte ptr [guard variable for foo(int)::staticLocalInitVar], 0</span><br><span class="line">jne     .LBB1_3</span><br><span class="line">movabs  rdi, offset guard variable for foo(int)::staticLocalInitVar</span><br><span class="line">call    __cxa_guard_acquire</span><br><span class="line">cmp     eax, 0</span><br><span class="line">je      .LBB1_3</span><br><span class="line">call    fd()</span><br><span class="line">mov     dword ptr [_ZZ3fooiE18staticLocalInitVar], eax</span><br><span class="line">movabs  rdi, offset guard variable for foo(int)::staticLocalInitVar</span><br><span class="line">call    __cxa_guard_release</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>对于有初始化器但不是常量初始化的普通数据类型静态或全局变量来说，其被存储在.data段中，但编译阶段被初始化为0，其被真正初始化的阶段在运行期，program startup的阶段，在主函数执行之前被无序，偏序，或正序初始化。对于clang为每个静态数据成员在编译阶段分配了其初始化的，名称为__cxx_global_var_init.<strong>num</strong>的函数代码，到startup时会被__start函数调用<ul>
+<li>无序初始化针对模板类<strong>没有被特化</strong>的静态数据成员（<em>当然前提是该数据成员不是在类中被赋值的常量整形成员，也不是指定constexpr的内联静态成员</em>），其生成函数的num不一定在它之后声明的变量之前</li>
+<li>偏序初始化针对内联静态变量</li>
+<li>其余静态变量或普通类的静态数据成员在同一翻译单元中按照代码顺序动态初始化</li>
+</ul>
+</li>
+<li>对于class类型的全局成员来说，.data段将其非静态数据成员全部零初始化，并且构造函数也在startup阶段被调用，析构函数在主函数推出后也被调用</li>
+<li>还有一种动态初始化可以提早发生在编译阶段，其必须满足以下条件<ul>
+<li>初始化的动态版本不改变命名空间作用域中任何先于其初始化的对象的值</li>
+<li>初始化的静态版本在被初始化变量中产生的值，与当所有不要求静态初始化的变量都被动态初始化时，由动态初始化所生成的值相同。<br>但这只是可能提前初始化，并不保证一定会</li>
+</ul>
+</li>
+</ol>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">double</span> <span class="title">fd</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">1.0</span>; &#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">extern</span> <span class="type">double</span> d1;</span><br><span class="line"> </span><br><span class="line"><span class="type">double</span> d2 = d1;   <span class="comment">// unspecified:</span></span><br><span class="line">                  <span class="comment">// dynamically initialized to 0.0 if d1 is dynamically initialized, or</span></span><br><span class="line">                  <span class="comment">// dynamically initialized to 1.0 if d1 is statically initialized, or</span></span><br><span class="line">                  <span class="comment">// statically initialized to 0.0 (because that would be its value</span></span><br><span class="line">                  <span class="comment">// if both variables were dynamically initialized)</span></span><br><span class="line"> </span><br><span class="line"><span class="type">double</span> d1 = <span class="built_in">fd</span>(); <span class="comment">// may be initialized statically or dynamically to 1.0</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>简而言之，d1在程序开始前被赋0，这是静态初始化，之后被赋1，这是动态初始化，但由于某些规则该变量的动态初始化可以被提至编译时间，也就是静态初始化为1，所以d2的值也是不确定的，虽然在本地表现出被动态初始化为1的结果</p>
 </blockquote>
+<p>-[] 依然困惑于动态初始化的局部静态变量，在汇编码中没有找到其在.data段被分配内存，莫非仍然在.bss段被分配内存？</p>
 <h3 id="2-1-3-internal-linkage-external-linkage"><a href="#2-1-3-internal-linkage-external-linkage" class="headerlink" title="2.1.3. internal linkage &amp;&amp; external linkage"></a>2.1.3. internal linkage &amp;&amp; external linkage</h3><ul>
 <li>#pragma once 只能作用于某个具体的文件，而无法向 #ifndef 那样仅作用于指定的一段代码</li>
 <li>具有内部链接性质的变量可以在头文件中定义，这样会在每个翻译单元内定义不同实体，但由于该变量只在单文件中可见于是不会引发多重定义的问题， 但是会引发代码冗余</li>
@@ -1092,7 +1209,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
     </div>
   </div>
 
@@ -1103,6 +1220,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2023/11/03/linux-high-performanceserver/">linux-high-performanceserver</a>
+          </li>
         
           <li>
             <a href="/2023/09/30/cmake-and-so-on/">cmake and so_on</a>
@@ -1118,10 +1239,6 @@
         
           <li>
             <a href="/2023/08/24/cplus-learning/">cplus_learning</a>
-          </li>
-        
-          <li>
-            <a href="/2023/07/24/introduction/">introduction</a>
           </li>
         
       </ul>
