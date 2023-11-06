@@ -6,12 +6,12 @@
   
   <title>network &amp; high concurrency | kuli&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="1. 网络编程 1.1. 字符串处理函数 1.2. IO模型 1.3. IO复用   2. pthread - 符合POSIX标准的线程库 2.1. 线程的取消 2.2. 线程的加入 2.3. 一些关于编程的底层知识补充   3. c++知识点补充 3.1. 杂项 3.2. c++异常处理 3.3. 智能指针 3.4. 特殊成员函数的生成 3.5. volatile vs atomic 3.5.">
+  <meta name="description" content="1. 网络编程 1.1. 字符串处理函数 1.2. IO模型 1.3. IO复用   2. pthread - 符合POSIX标准的线程库 2.1. 线程的取消 2.2. 线程的加入 2.3. 一些关于编程的底层知识补充   3. 并发编程 3.1. std::thread 3.2. std::future 3.3. condition_variable &amp; mutex 3.4. loc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="network &amp; high concurrency">
 <meta property="og:url" content="http://example.com/2023/09/19/network-high-concurrency/index.html">
 <meta property="og:site_name" content="kuli&#39;s blog">
-<meta property="og:description" content="1. 网络编程 1.1. 字符串处理函数 1.2. IO模型 1.3. IO复用   2. pthread - 符合POSIX标准的线程库 2.1. 线程的取消 2.2. 线程的加入 2.3. 一些关于编程的底层知识补充   3. c++知识点补充 3.1. 杂项 3.2. c++异常处理 3.3. 智能指针 3.4. 特殊成员函数的生成 3.5. volatile vs atomic 3.5.">
+<meta property="og:description" content="1. 网络编程 1.1. 字符串处理函数 1.2. IO模型 1.3. IO复用   2. pthread - 符合POSIX标准的线程库 2.1. 线程的取消 2.2. 线程的加入 2.3. 一些关于编程的底层知识补充   3. 并发编程 3.1. std::thread 3.2. std::future 3.3. condition_variable &amp; mutex 3.4. loc">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/arp%E6%8A%A5%E6%96%87.png">
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/ethernetframe.png">
@@ -19,8 +19,11 @@
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/v2-233887068992518bb4eec56de043d1b2_r.jpg">
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/item38_fig1.png">
 <meta property="article:published_time" content="2023-09-19T09:39:14.000Z">
-<meta property="article:modified_time" content="2023-11-03T15:31:20.310Z">
+<meta property="article:modified_time" content="2023-11-06T10:33:08.635Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="POSIX socket">
+<meta property="article:tag" content="c11&#x2F;14 thread&#x2F;future">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2023/09/19/network-high-concurrency/arp%E6%8A%A5%E6%96%87.png">
   
@@ -87,6 +90,10 @@
   <time class="dt-published" datetime="2023-09-19T09:39:14.000Z" itemprop="datePublished">2023-09-19</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/cpp-related/">cpp-related</a>►<a class="article-category-link" href="/categories/cpp-related/GNU-linux/">GNU/linux</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -116,23 +123,11 @@
 <li><a href="#23-%E4%B8%80%E4%BA%9B%E5%85%B3%E4%BA%8E%E7%BC%96%E7%A8%8B%E7%9A%84%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E8%A1%A5%E5%85%85">2.3. 一些关于编程的底层知识补充</a></li>
 </ul>
 </li>
-<li><a href="#3-c%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E5%85%85">3. c++知识点补充</a><ul>
-<li><a href="#31-%E6%9D%82%E9%A1%B9">3.1. 杂项</a></li>
-<li><a href="#32-c%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86">3.2. c++异常处理</a></li>
-<li><a href="#33-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88">3.3. 智能指针</a></li>
-<li><a href="#34-%E7%89%B9%E6%AE%8A%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%9F%E6%88%90">3.4. 特殊成员函数的生成</a></li>
-<li><a href="#35-volatile-vs-atomic">3.5. volatile vs atomic</a><ul>
-<li><a href="#351-stdatomic">3.5.1. std::atomic</a></li>
-<li><a href="#352-keyword-volatile">3.5.2. keyword volatile</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#4-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B">4. 并发编程</a><ul>
-<li><a href="#41-stdthread">4.1. std::thread</a></li>
-<li><a href="#42-stdfuture">4.2. std::future</a></li>
-<li><a href="#43-condition_variable--mutex">4.3. condition_variable &amp; mutex</a></li>
-<li><a href="#44-lock_guard--unique_lock">4.4. lock_guard &amp; unique_lock</a></li>
+<li><a href="#3-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B">3. 并发编程</a><ul>
+<li><a href="#31-stdthread">3.1. std::thread</a></li>
+<li><a href="#32-stdfuture">3.2. std::future</a></li>
+<li><a href="#33-condition_variable--mutex">3.3. condition_variable &amp; mutex</a></li>
+<li><a href="#34-lock_guard--unique_lock">3.4. lock_guard &amp; unique_lock</a></li>
 </ul>
 </li>
 </ul>
@@ -269,63 +264,7 @@
 <li>函数的可重入性(reentrancy)<br>函数的线程安全性，保证多个线程同时执行一个函数不会出现竞态条件，同时在单处理器系统上当该函数被中断（可能是信号导致的）并被重新执行时可以安全执行</li>
 <li>函数的幂等性(idempotence)<br>函数在被多次执行后可以产出同一结果</li>
 </ol>
-<h3 id="3-c-知识点补充"><a href="#3-c-知识点补充" class="headerlink" title="3. c++知识点补充"></a>3. c++知识点补充</h3><h4 id="3-1-杂项"><a href="#3-1-杂项" class="headerlink" title="3.1. 杂项"></a>3.1. 杂项</h4><ol>
-<li>c++11 lambda表达式不支持移动捕获和初始化捕获，c++14起开始支持，c++11可以使用std::bind实现近似功能</li>
-<li>string内存存储在堆上，但是libstdc++实现了对于字节长度小于十五的短字符串的优化(sso)，string所存储的字符串被构造在栈内存中，不用重新从堆内申请内存，这样虽然string所提供的移动操作为常数时间，拷贝操作为线性时间，但对于短字符串来说移动所需时间不一定比拷贝短</li>
-<li>当一个异常发生时，程序需要沿着运行时栈向上查找合适的异常处理器（catch block）。为了做到这一点，运行时栈必须处于可展开状态，即每个栈帧都有相应的信息来指示如何恢复函数的执行环境，并释放其中的资源。这些信息通常是由编译器在生成代码时添加的，称为展开信息（unwind information） 。当抛出异常并且控制从 try 块传递到处理程序时，C++ 运行时会调用自 try 块开始以来构造的所有自动对象的析构函数。这个过程称为堆栈展开（stack unwind）。</li>
-<li>函数std::terminate()调用作为set_terminate()参数指定的函数, 程序会直接退出</li>
-</ol>
-<h4 id="3-2-c-异常处理"><a href="#3-2-c-异常处理" class="headerlink" title="3.2. c++异常处理"></a>3.2. c++异常处理</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">D</span>(<span class="type">char</span>) <span class="keyword">try</span>: <span class="built_in">D</span>(<span class="number">55</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;D::D(char). Throws.\n&quot;</span>);</span><br><span class="line">    <span class="keyword">throw</span> <span class="number">0</span>;</span><br><span class="line">  &#125;<span class="built_in">catch</span>(...)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>所有异常类都可继承std::exception，并重载其what方法，注意what方法应该是不抛出异常的，即应做异常规格说明throw（），通常在函数签名尾部加入；</li>
-<li>throw（A,B,C,D）声明函数可能抛出A,B,C,D中的任意一种异常</li>
-<li>try-catch中try块可以抛出异常并被catch块捕捉到，catch后的小括号内可以指定你要处理的异常类型Myexception &amp;e,并在块中使用其what方法输出异常信息，也可以直接用一个变量缩写名代替特定异常</li>
-</ol>
-<h4 id="3-3-智能指针"><a href="#3-3-智能指针" class="headerlink" title="3.3. 智能指针"></a>3.3. 智能指针</h4><ol>
-<li>unique_ptr move only</li>
-<li>make函数也实现了完美转发，所以参数为构造函数的参数 </li>
-<li>对于std::unique_ptr，只有这两种情景（自定义删除器和花括号初始化）使用make函数有点问题，使用make函数1是可以原子化操作创建指针，2是可以一次性创建控制块和对象，减少代码生成，提高执行代码的速度</li>
-<li>weak_ptr shared_ptr之间可以相互创建，先创建shared_ptr保证有引用计数，之后赋值给weak_ptr，可以储存到容器中充当缓存来按索引检查是否过期，之后如果用户需要返回cache</li>
-<li><strong>pImpl</strong></li>
-</ol>
-<p><strong>用来减少类的实现和类使用者之间的编译依赖的一种方法</strong></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Widget</span> &#123;                  <span class="comment">//跟之前一样，在“widget.h”中</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Widget</span>();</span><br><span class="line">    ~<span class="built_in">Widget</span>();                  <span class="comment">//只有声明语句</span></span><br><span class="line">    …</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:                        <span class="comment">//跟之前一样</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">Impl</span>;</span><br><span class="line">    std::unique_ptr&lt;Impl&gt; pImpl;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>默认删除器是一个函数，它使用delete来销毁内置于std::unique_ptr的原始指针. 在使用delete之前，通常会使默认删除器使用C++11的特性static_assert来确保原始指针指向的类型<em>不是一个不完整类型</em></li>
-<li>为了避免这种情况发生，在类定义时只声明默认构造和析构函数，具体实现放在实现文件中原始指针指向对象的类型定义之后实现, 同理移动操作</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;widget.h&quot;</span>                 <span class="comment">//跟之前一样，在“widget.cpp”中</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;gadget.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Widget</span>::Impl &#123;               <span class="comment">//跟之前一样，定义Widget::Impl</span></span><br><span class="line">    std::string name;</span><br><span class="line">    std::vector&lt;<span class="type">double</span>&gt; data;</span><br><span class="line">    Gadget g1,g2,g3;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Widget::<span class="built_in">Widget</span>()                    <span class="comment">//跟之前一样</span></span><br><span class="line">: <span class="built_in">pImpl</span>(std::<span class="built_in">make_unique</span>&lt;Impl&gt;())</span><br><span class="line">&#123;&#125;</span><br><span class="line"></span><br><span class="line">Widget::~<span class="built_in">Widget</span>()                   <span class="comment">//析构函数的定义（译者注：这里高亮）</span></span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="comment">//Widget::~Widget() = default </span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>而对std::shared_ptr而言，删除器的类型不是该智能指针的一部分，这让它会生成更大的运行时数据结构和稍微慢点的代码，但是当编译器生成的特殊成员函数被使用的时候，指向的对象不必是一个完整类型。</li>
-</ul>
-<blockquote>
-<p>关于shared_ptr和unique_ptr的具体实现，请参见<a target="_blank" rel="noopener" href="https://murphypei.github.io/blog/2022/03/shared-unique-ptr">这篇博客</a></p>
-</blockquote>
-<h4 id="3-4-特殊成员函数的生成"><a href="#3-4-特殊成员函数的生成" class="headerlink" title="3.4. 特殊成员函数的生成"></a>3.4. 特殊成员函数的生成</h4><ol>
-<li>拷贝，或者移动操作，若有一方是用户定义的，则不会生成另一方，并且对于两个移动操作来说，显式定义一方也会导致另一方不会被自动生成</li>
-<li>所以仅当下面条件成立时才会生成移动操作（当需要时）：<ul>
-<li>类中没有拷贝操作</li>
-<li>类中没有移动操作</li>
-<li>类中没有用户定义的析构，但如果出现定义析构，编译器也会自动生成拷贝操作</li>
-</ul>
-</li>
-<li>注意没有“成员函数模版阻止编译器生成特殊成员函数”的规则</li>
-</ol>
-<h4 id="3-5-volatile-vs-atomic"><a href="#3-5-volatile-vs-atomic" class="headerlink" title="3.5. volatile vs atomic"></a>3.5. volatile vs atomic</h4><h5 id="3-5-1-std-atomic"><a href="#3-5-1-std-atomic" class="headerlink" title="3.5.1. std::atomic"></a>3.5.1. std::atomic</h5><ol>
-<li>原子化读写操作，多线程访问时不会产生数据竞争，而且也可以用来当作条件变量，单纯使用时反应函数需要不断轮询，会增加线程开销，线程阻塞而不挂起，内存中的资源一直被占用</li>
-<li>会限制编译器和底层硬件对于代码执行顺序的重排，维护atomic的顺序一致性模型</li>
-<li>无法进行拷贝操作，但是可以进行load和store操作，但是若出现<strong>冗余访问</strong>或者<strong>无用存储</strong>, 编译器也会进行优化</li>
-</ol>
-<h5 id="3-5-2-keyword-volatile"><a href="#3-5-2-keyword-volatile" class="headerlink" title="3.5.2. keyword volatile"></a>3.5.2. keyword volatile</h5><ol>
-<li>避免编译器对于代码的优化，在变量用来存储<strong>做内存IO映射内存</strong>上报的数据时，非常有用</li>
-</ol>
-<ul>
-<li>std::atomic用在并发编程中，对访问特殊内存没用。</li>
-<li>volatile用于访问特殊内存，对并发编程没用。<br>因为std::atomic和volatile用于不同的目的，所以可以结合起来使用：<br><code>volatile std::atomic&lt;int&gt; vai;          //对vai的操作是原子性的，且不能被优化掉</code><br>如果vai变量关联了内存映射I&#x2F;O的位置，被多个线程并发访问，这会很有用。</li>
-</ul>
-<h3 id="4-并发编程"><a href="#4-并发编程" class="headerlink" title="4. 并发编程"></a>4. 并发编程</h3><h4 id="4-1-std-thread"><a href="#4-1-std-thread" class="headerlink" title="4.1. std::thread"></a>4.1. std::thread</h4><ol>
+<h3 id="3-并发编程"><a href="#3-并发编程" class="headerlink" title="3. 并发编程"></a>3. 并发编程</h3><h4 id="3-1-std-thread"><a href="#3-1-std-thread" class="headerlink" title="3.1. std::thread"></a>3.1. std::thread</h4><ol>
 <li>thread构造时会将可调用函数和传入参数完美转发并根据左值右值选择拷贝或移动构造至一个tuple中，返回invoke_result&lt;decay<F>::type, decay<Args>::type…&gt;::type，也就是F调用去掉引用和cv限定之后的实参之后返回的类型，调用时会将tuple中的数据使用<strong>std::move</strong>方法转为右值进行调用，所以对于左值引用类型的数据无法正常调用，编译时thread会调用静态断言来报错<em>不能将左值引用绑定到右值</em>之类的消息</li>
 </ol>
 <blockquote>
@@ -348,7 +287,7 @@
 <ol start="6">
 <li>为了防止线程在开始后被修改优先级，可以在创建线程时将方法设为wait函数，将线程挂起</li>
 </ol>
-<h4 id="4-2-std-future"><a href="#4-2-std-future" class="headerlink" title="4.2. std::future"></a>4.2. std::future</h4><ol>
+<h4 id="3-2-std-future"><a href="#3-2-std-future" class="headerlink" title="3.2. std::future"></a>3.2. std::future</h4><ol>
 <li>与thread不同，在使用默认策略启动时，不一定会使用异步执行，这种调用方式将线程管理的职责转交给C++标准库的开发者。举个例子，这种调用方式会减少抛出资源超额异常的可能性</li>
 <li>std::launch::deferred启动策略意味着f仅当在std::async返回的future上调用get或者wait时才执行。这表示f推迟到存在这样的调用时才执行</li>
 <li>默认启动策略的调度灵活性导致使用thread_local变量比较麻烦，因为这意味着如果f读写了线程本地存储（thread-local storage，TLS），不可能预测到哪个线程的变量被访问<br>可以使用 <code>fut.wait_for(0s) == std::future_status::deferred</code> 检查函数是否被延时</li>
@@ -356,10 +295,10 @@
 <li>因为与被调用者关联的对象和与调用者关联的对象都不适合存储这个结果，所以调用结果必须存储在两者之外的位置。此位置称为共享状态（shared state）。共享状态通常是基于堆的对象，一般来说对于future对象拥有这个共享状态的控制权，或者说引用了共享状态，析构时引用该状态的future会自动阻塞并且等待任务完成</li>
 <li>future不能被拷贝，但他却可以用来构造shared_future，之后转交共享状态的控制权，shared_future在并发访问时可以用来为每个线程构造副本来共享共享状态的拥有权，设置std::promise::set_value()可以在多线程使用wait来唤起多个线程<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">std::promise&lt;<span class="type">void</span>&gt; p;                   <span class="comment">//跟之前一样</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">detect</span><span class="params">()</span>                           <span class="comment">//现在针对多个反映线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> sf = p.<span class="built_in">get_future</span>().<span class="built_in">share</span>();   <span class="comment">//sf的类型是std::shared_future&lt;void&gt;</span></span><br><span class="line">    std::vector&lt;std::thread&gt; vt;        <span class="comment">//反应线程容器</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; threadsToRun; ++i) &#123;</span><br><span class="line">        vt.<span class="built_in">emplace_back</span>([sf]&#123; sf.<span class="built_in">wait</span>();    <span class="comment">//在sf的局部副本上wait；</span></span><br><span class="line">                              <span class="built_in">react</span>(); &#125;);  <span class="comment">//emplace_back见条款42</span></span><br><span class="line">    &#125;</span><br><span class="line">    …                                   <span class="comment">//如果这个“…”抛出异常，detect挂起！</span></span><br><span class="line">    p.<span class="built_in">set_value</span>();                      <span class="comment">//所有线程解除挂起</span></span><br><span class="line">    …</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; t : vt) &#123;                <span class="comment">//使所有线程不可结合；</span></span><br><span class="line">        t.<span class="built_in">join</span>();                       <span class="comment">//“auto&amp;”见条款2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h4 id="4-3-condition-variable-mutex"><a href="#4-3-condition-variable-mutex" class="headerlink" title="4.3. condition_variable &amp; mutex"></a>4.3. condition_variable &amp; mutex</h4><ol>
+<h4 id="3-3-condition-variable-mutex"><a href="#3-3-condition-variable-mutex" class="headerlink" title="3.3. condition_variable &amp; mutex"></a>3.3. condition_variable &amp; mutex</h4><ol>
 <li>cv.Wait(lock<which is basically unique_lock>, bool function)会导致当前线程阻塞，直到条件变量被通知或发生假唤醒，或者循环直到满足某个谓词</li>
 </ol>
-<h4 id="4-4-lock-guard-unique-lock"><a href="#4-4-lock-guard-unique-lock" class="headerlink" title="4.4. lock_guard &amp; unique_lock"></a>4.4. lock_guard &amp; unique_lock</h4><ol>
+<h4 id="3-4-lock-guard-unique-lock"><a href="#3-4-lock-guard-unique-lock" class="headerlink" title="3.4. lock_guard &amp; unique_lock"></a>3.4. lock_guard &amp; unique_lock</h4><ol>
 <li>lock_guard自动加锁解锁，在函数异常等情况下函数内部直接返回也会执行对锁的析构，需要注意对锁的占用时间，为了手动释放锁可以在lock_guard周围加入花括号即可</li>
 <li>wait function causes the current thread to block until the condition variable is notified or a spurious wakeup occurs, optionally looping until some predicate is satisfied</li>
 </ol>
@@ -371,6 +310,8 @@
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/POSIX-socket/" rel="tag">POSIX socket</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c11-14-thread-future/" rel="tag">c11&#x2F;14 thread&#x2F;future</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
+
     </footer>
   </div>
   
@@ -403,12 +344,33 @@
           <aside id="sidebar">
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GNU-linux/">GNU/linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/cpp-related/">cpp related</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/command-line/">command line</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/command-line/GNU-linux/">GNU/linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpp-related/">cpp related</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpp-related/">cpp-related</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cpp-related/GNU-linux/">GNU/linux</a></li></ul></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/POSIX-socket/" rel="tag">POSIX socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/POSIX-system-call/" rel="tag">POSIX system call</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c11-14-syntax/" rel="tag">c11&#x2F;14 syntax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c11-14-thread-future/" rel="tag">c11&#x2F;14 thread&#x2F;future</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmake/" rel="tag">cmake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpp-memory-model/" rel="tag">cpp memory model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dijstra/" rel="tag">dijstra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/encounter-cpp/" rel="tag">encounter cpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/filesystem/" rel="tag">filesystem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash-table/" rel="tag">hash table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/smart-pointer/" rel="tag">smart-pointer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static-dynamic-polymorphic/" rel="tag">static&#x2F;dynamic polymorphic</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/POSIX-socket/" style="font-size: 10px;">POSIX socket</a> <a href="/tags/POSIX-system-call/" style="font-size: 10px;">POSIX system call</a> <a href="/tags/c11-14-syntax/" style="font-size: 10px;">c11/14 syntax</a> <a href="/tags/c11-14-thread-future/" style="font-size: 10px;">c11/14 thread/future</a> <a href="/tags/cmake/" style="font-size: 10px;">cmake</a> <a href="/tags/cpp-memory-model/" style="font-size: 10px;">cpp memory model</a> <a href="/tags/dijstra/" style="font-size: 10px;">dijstra</a> <a href="/tags/encounter-cpp/" style="font-size: 10px;">encounter cpp</a> <a href="/tags/filesystem/" style="font-size: 10px;">filesystem</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/smart-pointer/" style="font-size: 10px;">smart-pointer</a> <a href="/tags/static-dynamic-polymorphic/" style="font-size: 10px;">static/dynamic polymorphic</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
@@ -427,6 +389,10 @@
       <ul>
         
           <li>
+            <a href="/2023/11/06/effective-modern-cpp/">effective_modern_cpp</a>
+          </li>
+        
+          <li>
             <a href="/2023/11/03/linux-high-performanceserver/">linux-high-performanceserver</a>
           </li>
         
@@ -440,10 +406,6 @@
         
           <li>
             <a href="/2023/08/25/houjiecpp/">houjiecpp</a>
-          </li>
-        
-          <li>
-            <a href="/2023/08/24/cplus-learning/">cplus_learning</a>
           </li>
         
       </ul>

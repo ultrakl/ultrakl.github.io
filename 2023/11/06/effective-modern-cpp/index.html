@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>effective_modern_cpp | kuli&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="1. c++知识点补充 1.1. 杂项 1.2. c++异常处理 1.3. 智能指针 1.4. 特殊成员函数的生成- 1. c++知识点补充 1.5. volatile vs atomic 1.5.1. std::atomic 1.5.2. keyword volatile      1. c++知识点补充1.1. 杂项 c++11 lambda表达式不支持移动捕获和初始化捕获，c++14起开始">
+<meta property="og:type" content="article">
+<meta property="og:title" content="effective_modern_cpp">
+<meta property="og:url" content="http://example.com/2023/11/06/effective-modern-cpp/index.html">
+<meta property="og:site_name" content="kuli&#39;s blog">
+<meta property="og:description" content="1. c++知识点补充 1.1. 杂项 1.2. c++异常处理 1.3. 智能指针 1.4. 特殊成员函数的生成- 1. c++知识点补充 1.5. volatile vs atomic 1.5.1. std::atomic 1.5.2. keyword volatile      1. c++知识点补充1.1. 杂项 c++11 lambda表达式不支持移动捕获和初始化捕获，c++14起开始">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-11-06T09:30:50.000Z">
+<meta property="article:modified_time" content="2023-11-06T10:38:31.708Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="smart-pointer">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="kuli's blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">kuli&#39;s blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-effective-modern-cpp" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/11/06/effective-modern-cpp/" class="article-date">
+  <time class="dt-published" datetime="2023-11-06T09:30:50.000Z" itemprop="datePublished">2023-11-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/cpp-related/">cpp related</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      effective_modern_cpp
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><a href="#1-c%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E5%85%85">1. c++知识点补充</a><ul>
+<li><a href="#11-%E6%9D%82%E9%A1%B9">1.1. 杂项</a></li>
+<li><a href="#12-c%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86">1.2. c++异常处理</a></li>
+<li><a href="#13-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88">1.3. 智能指针</a></li>
+<li><a href="#14-%E7%89%B9%E6%AE%8A%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%9F%E6%88%90--1-c%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E5%85%85">1.4. 特殊成员函数的生成- 1. c++知识点补充</a></li>
+<li><a href="#15-volatile-vs-atomic">1.5. volatile vs atomic</a><ul>
+<li><a href="#151-stdatomic">1.5.1. std::atomic</a></li>
+<li><a href="#152-keyword-volatile">1.5.2. keyword volatile</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="1-c-知识点补充"><a href="#1-c-知识点补充" class="headerlink" title="1. c++知识点补充"></a>1. c++知识点补充</h1><h2 id="1-1-杂项"><a href="#1-1-杂项" class="headerlink" title="1.1. 杂项"></a>1.1. 杂项</h2><ol>
+<li>c++11 lambda表达式不支持移动捕获和初始化捕获，c++14起开始支持，c++11可以使用std::bind实现近似功能</li>
+<li>string内存存储在堆上，但是libstdc++实现了对于字节长度小于十五的短字符串的优化(sso)，string所存储的字符串被构造在栈内存中，不用重新从堆内申请内存，这样虽然string所提供的移动操作为常数时间，拷贝操作为线性时间，但对于短字符串来说移动所需时间不一定比拷贝短</li>
+<li>当一个异常发生时，程序需要沿着运行时栈向上查找合适的异常处理器（catch block）。为了做到这一点，运行时栈必须处于可展开状态，即每个栈帧都有相应的信息来指示如何恢复函数的执行环境，并释放其中的资源。这些信息通常是由编译器在生成代码时添加的，称为展开信息（unwind information） 。当抛出异常并且控制从 try 块传递到处理程序时，C++ 运行时会调用自 try 块开始以来构造的所有自动对象的析构函数。这个过程称为堆栈展开（stack unwind）。</li>
+<li>函数std::terminate()调用作为set_terminate()参数指定的函数, 程序会直接退出</li>
+</ol>
+<h2 id="1-2-c-异常处理"><a href="#1-2-c-异常处理" class="headerlink" title="1.2. c++异常处理"></a>1.2. c++异常处理</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">D</span>(<span class="type">char</span>) <span class="keyword">try</span>: <span class="built_in">D</span>(<span class="number">55</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;D::D(char). Throws.\n&quot;</span>);</span><br><span class="line">    <span class="keyword">throw</span> <span class="number">0</span>;</span><br><span class="line">  &#125;<span class="built_in">catch</span>(...)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>所有异常类都可继承std::exception，并重载其what方法，注意what方法应该是不抛出异常的，即应做异常规格说明throw（），通常在函数签名尾部加入；</li>
+<li>throw（A,B,C,D）声明函数可能抛出A,B,C,D中的任意一种异常</li>
+<li>try-catch中try块可以抛出异常并被catch块捕捉到，catch后的小括号内可以指定你要处理的异常类型Myexception &amp;e,并在块中使用其what方法输出异常信息，也可以直接用一个变量缩写名代替特定异常</li>
+</ol>
+<h2 id="1-3-智能指针"><a href="#1-3-智能指针" class="headerlink" title="1.3. 智能指针"></a>1.3. 智能指针</h2><ol>
+<li>unique_ptr move only</li>
+<li>make函数也实现了完美转发，所以参数为构造函数的参数 </li>
+<li>对于std::unique_ptr，只有这两种情景（自定义删除器和花括号初始化）使用make函数有点问题，使用make函数1是可以原子化操作创建指针，2是可以一次性创建控制块和对象，减少代码生成，提高执行代码的速度</li>
+<li>weak_ptr shared_ptr之间可以相互创建，先创建shared_ptr保证有引用计数，之后赋值给weak_ptr，可以储存到容器中充当缓存来按索引检查是否过期，之后如果用户需要返回cache</li>
+<li>unique只支持移动操作，移动构造表现为源指针置空，移动赋值表现为将被赋值指针销毁</li>
+<li><strong>pImpl</strong></li>
+</ol>
+<p><strong>用来减少类的实现和类使用者之间的编译依赖的一种方法</strong>，将原本类中含有的对象剥离出去，只留下它的指针，如果实现文件中修改成员或函数定义，而类的使用方法没有什么变化， 那么在编译源文件时只需要重新编译实现文件就可以</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Widget</span> &#123;                  <span class="comment">//跟之前一样，在“widget.h”中</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Widget</span>();</span><br><span class="line">    ~<span class="built_in">Widget</span>();                  <span class="comment">//只有声明语句</span></span><br><span class="line">    …</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:                        <span class="comment">//跟之前一样</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">Impl</span>;</span><br><span class="line">    std::unique_ptr&lt;Impl&gt; pImpl;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>unique_ptr 和 shared_ptr 的一大区别在于，unique_ptr对象本身has_a 默认或自定义删除器， 而shared_ptr内部只包含一个引用计数指针，指向<br>control_block, 其内包含引用计数，weak_count, 删除器对象等等(这在unique_ptr, shared_ptr两者不同构造函数上可以看出)，所以shared_ptr在生成速度和数据结构体积上远远大于unique_ptr   </li>
+<li>默认删除器是一个函数对象，它使用delete来销毁内置于std::unique_ptr的原始指针. unique_ptr的析构函数会调用删除器的operator()， 而该方法使用C++11的特性static_assert(sizeof(资源类型))在编译阶段就确保原始指针指向的类型<em>不是一个不完整类型</em>， 根据上面widget例子来说，若Impl的定义在别的翻译单元，而析构函数在Widget.h文件定义或使用编译器自动生成的版本，则编译器会因为看不到类的定义而报错</li>
+</ul>
+<blockquote>
+<p>诸如noexcept，sizeof， decltype， typeid（不用于指针指向的多态对象）， 统称为unevaluated expression</p>
+</blockquote>
+<ul>
+<li>为了避免这种情况发生，在类定义时只声明默认构造和析构函数，具体实现放在实现文件中原始指针指向对象的类型定义之后实现, 移动赋值同理, 移动构造时，编译器自动生成的代码里，包含有抛出异常的事件，在这个事件里会生成销毁pImpl的代码。</li>
+<li>shared_ptr则没有这种要求，它只要求构造时必须看到完整定义(在clang和gcc编译器上实验，尽管在头文件中就定义了空的默认构造函数， 编译器仍然可以<strong>正常编译</strong>，代码如下), 析构函数可以由编译器正常产出， 析构时shared_ptr使用指向control block的指针调用删除器的delete方法， 过程类似于虚函数调用，在运行期才能知道是否调用成功， 在代码中具体表现为shared_ptr构造基类子对象**__shared_ptr<em><em>时会使用static_assert来判断sizeof(资源类型)， ~~析构时也有一个get_del方法，该方法返回删除器的指针，但是没有static_assert， 只有static_cast一个void</em> to 删除器的指针Del</em>~~，不清楚是不是这样解释， 源码看的一知半解， 等之后更精进了再来解决吧</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">D::D() [base object constructor]:</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        sub     rsp, 16</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        mov     rax, QWORD PTR [rbp-8]</span><br><span class="line">        mov     rdi, rax</span><br><span class="line">        call    std::shared_ptr&lt;D::Impl&gt;::shared_ptr() [complete object constructor]</span><br><span class="line">        nop</span><br><span class="line">        leave</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+<pre><code>- 所以在使用unique_ptr来实现pImpl的近似代码如下：
+</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;widget.h&quot;</span>                 <span class="comment">//跟之前一样，在“widget.cpp”中</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;gadget.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Widget</span>::Impl &#123;               <span class="comment">//跟之前一样，定义Widget::Impl</span></span><br><span class="line">    std::string name;</span><br><span class="line">    std::vector&lt;<span class="type">double</span>&gt; data;</span><br><span class="line">    Gadget g1,g2,g3;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Widget::<span class="built_in">Widget</span>()                    <span class="comment">//跟之前一样</span></span><br><span class="line">: <span class="built_in">pImpl</span>(std::<span class="built_in">make_unique</span>&lt;Impl&gt;())</span><br><span class="line">&#123;&#125;</span><br><span class="line"></span><br><span class="line">Widget::~<span class="built_in">Widget</span>()                   <span class="comment">//析构函数的定义（译者注：这里高亮）</span></span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="comment">//Widget::~Widget() = default </span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>而对std::shared_ptr而言，删除器的类型不是该智能指针的一部分，这让它会生成更大的运行时数据结构和稍微慢点的代码，但是当编译器生成的特殊成员函数被使用的时候，指向的对象不必是一个完整类型。</li>
+</ul>
+<blockquote>
+<p>关于shared_ptr和unique_ptr的具体实现，请参见<a target="_blank" rel="noopener" href="https://murphypei.github.io/blog/2022/03/shared-unique-ptr">这篇博客</a></p>
+</blockquote>
+<h2 id="1-4-特殊成员函数的生成-1-c-知识点补充"><a href="#1-4-特殊成员函数的生成-1-c-知识点补充" class="headerlink" title="1.4. 特殊成员函数的生成- 1. c++知识点补充"></a>1.4. 特殊成员函数的生成- <a href="#1-c%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E5%85%85">1. c++知识点补充</a></h2><ol>
+<li>拷贝，或者移动操作，若有一方是用户定义的，则不会生成另一方，并且对于两个移动操作来说，显式定义一方也会导致另一方不会被自动生成</li>
+<li>所以仅当下面条件成立时才会生成移动操作（当需要时）：<ul>
+<li>类中没有拷贝操作</li>
+<li>类中没有移动操作</li>
+<li>类中没有用户定义的析构，但如果出现定义析构，编译器也会自动生成拷贝操作</li>
+</ul>
+</li>
+<li>注意没有“成员函数模版阻止编译器生成特殊成员函数”的规则</li>
+</ol>
+<h2 id="1-5-volatile-vs-atomic"><a href="#1-5-volatile-vs-atomic" class="headerlink" title="1.5. volatile vs atomic"></a>1.5. volatile vs atomic</h2><h3 id="1-5-1-std-atomic"><a href="#1-5-1-std-atomic" class="headerlink" title="1.5.1. std::atomic"></a>1.5.1. std::atomic</h3><ol>
+<li>原子化读写操作，多线程访问时不会产生数据竞争，而且也可以用来当作条件变量，单纯使用时反应函数需要不断轮询，会增加线程开销，线程阻塞而不挂起，内存中的资源一直被占用</li>
+<li>会限制编译器和底层硬件对于代码执行顺序的重排，维护atomic的顺序一致性模型</li>
+<li>无法进行拷贝操作，但是可以进行load和store操作，但是若出现<strong>冗余访问</strong>或者<strong>无用存储</strong>, 编译器也会进行优化</li>
+</ol>
+<h3 id="1-5-2-keyword-volatile"><a href="#1-5-2-keyword-volatile" class="headerlink" title="1.5.2. keyword volatile"></a>1.5.2. keyword volatile</h3><p>避免编译器对于代码的优化，在变量用来存储<strong>做内存IO映射内存</strong>上报的数据时，非常有用</p>
+<ol>
+<li>std::atomic用在并发编程中，对访问特殊内存没用。</li>
+<li>volatile用于访问特殊内存，对并发编程没用。<br>因为std::atomic和volatile用于不同的目的，所以可以结合起来使用：<br><code>volatile std::atomic&lt;int&gt; vai;          //对vai的操作是原子性的，且不能被优化掉</code><br>  如果vai变量关联了内存映射I&#x2F;O的位置，被多个线程并发访问，这会很有用。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2023/11/06/effective-modern-cpp/" data-id="clomrsjxk0004z8tlc02eb277" data-title="effective_modern_cpp" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/smart-pointer/" rel="tag">smart-pointer</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/11/03/linux-high-performanceserver/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">linux-high-performanceserver</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GNU-linux/">GNU/linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/cpp-related/">cpp related</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/command-line/">command line</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/command-line/GNU-linux/">GNU/linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpp-related/">cpp related</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpp-related/">cpp-related</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cpp-related/GNU-linux/">GNU/linux</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/POSIX-socket/" rel="tag">POSIX socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/POSIX-system-call/" rel="tag">POSIX system call</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c11-14-syntax/" rel="tag">c11&#x2F;14 syntax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c11-14-thread-future/" rel="tag">c11&#x2F;14 thread&#x2F;future</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmake/" rel="tag">cmake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpp-memory-model/" rel="tag">cpp memory model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dijstra/" rel="tag">dijstra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/encounter-cpp/" rel="tag">encounter cpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/filesystem/" rel="tag">filesystem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash-table/" rel="tag">hash table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/smart-pointer/" rel="tag">smart-pointer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static-dynamic-polymorphic/" rel="tag">static&#x2F;dynamic polymorphic</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/POSIX-socket/" style="font-size: 10px;">POSIX socket</a> <a href="/tags/POSIX-system-call/" style="font-size: 10px;">POSIX system call</a> <a href="/tags/c11-14-syntax/" style="font-size: 10px;">c11/14 syntax</a> <a href="/tags/c11-14-thread-future/" style="font-size: 10px;">c11/14 thread/future</a> <a href="/tags/cmake/" style="font-size: 10px;">cmake</a> <a href="/tags/cpp-memory-model/" style="font-size: 10px;">cpp memory model</a> <a href="/tags/dijstra/" style="font-size: 10px;">dijstra</a> <a href="/tags/encounter-cpp/" style="font-size: 10px;">encounter cpp</a> <a href="/tags/filesystem/" style="font-size: 10px;">filesystem</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/smart-pointer/" style="font-size: 10px;">smart-pointer</a> <a href="/tags/static-dynamic-polymorphic/" style="font-size: 10px;">static/dynamic polymorphic</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/11/06/effective-modern-cpp/">effective_modern_cpp</a>
+          </li>
+        
+          <li>
+            <a href="/2023/11/03/linux-high-performanceserver/">linux-high-performanceserver</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/30/cmake-and-so-on/">cmake and so_on</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/19/network-high-concurrency/">network &amp; high concurrency</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/25/houjiecpp/">houjiecpp</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

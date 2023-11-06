@@ -6,17 +6,20 @@
   
   <title>houjiecpp | kuli&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="1. 2023&#x2F;08&#x2F;29 2. 2023&#x2F;08&#x2F;29 2.0.1. unicode 2.0.2. 非类型形参的局限： 2.0.3. 非类型实参的局限： 2.0.4. 编译时常量表达式 2.0.5. 隐式转换 2.0.6. 设计模式 2.0.7. 智能指针 2.0.8. 右值 2.0.9. 模板杂类 2.0.10. lambda 2.0.11. 成员函数指">
+  <meta name="description" content="1. 2023&#x2F;08&#x2F;29 2. 2023&#x2F;08&#x2F;29 2.1. unicode 2.2. 非类型形参的局限： 2.3. 非类型实参的局限： 2.4. 编译时常量表达式 2.5. 隐式转换 2.6. 设计模式 2.7. 智能指针 2.8. 右值 2.9. 模板杂类 2.10. lambda 2.11. 成员函数指针 2.12. 数据成员指针 2.13. 虚">
 <meta property="og:type" content="article">
 <meta property="og:title" content="houjiecpp">
 <meta property="og:url" content="http://example.com/2023/08/25/houjiecpp/index.html">
 <meta property="og:site_name" content="kuli&#39;s blog">
-<meta property="og:description" content="1. 2023&#x2F;08&#x2F;29 2. 2023&#x2F;08&#x2F;29 2.0.1. unicode 2.0.2. 非类型形参的局限： 2.0.3. 非类型实参的局限： 2.0.4. 编译时常量表达式 2.0.5. 隐式转换 2.0.6. 设计模式 2.0.7. 智能指针 2.0.8. 右值 2.0.9. 模板杂类 2.0.10. lambda 2.0.11. 成员函数指">
+<meta property="og:description" content="1. 2023&#x2F;08&#x2F;29 2. 2023&#x2F;08&#x2F;29 2.1. unicode 2.2. 非类型形参的局限： 2.3. 非类型实参的局限： 2.4. 编译时常量表达式 2.5. 隐式转换 2.6. 设计模式 2.7. 智能指针 2.8. 右值 2.9. 模板杂类 2.10. lambda 2.11. 成员函数指针 2.12. 数据成员指针 2.13. 虚">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://example.com/2023/08/25/houjiecpp/structure.png">
 <meta property="article:published_time" content="2023-08-25T02:48:38.000Z">
-<meta property="article:modified_time" content="2023-11-04T13:20:22.057Z">
+<meta property="article:modified_time" content="2023-11-06T09:26:44.600Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="c11&#x2F;14 syntax">
+<meta property="article:tag" content="cpp memory model">
+<meta property="article:tag" content="static&#x2F;dynamic polymorphic">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2023/08/25/houjiecpp/structure.png">
   
@@ -83,6 +86,10 @@
   <time class="dt-published" datetime="2023-08-25T02:48:38.000Z" itemprop="datePublished">2023-08-25</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/cpp-related/">cpp related</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -102,40 +109,41 @@
         <ul>
 <li><a href="#1-20230829">1. 2023&#x2F;08&#x2F;29</a></li>
 <li><a href="#2-20230829">2. 2023&#x2F;08&#x2F;29</a><ul>
-<li><a href="#201-unicode">2.0.1. unicode</a></li>
-<li><a href="#202-%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%BD%A2%E5%8F%82%E7%9A%84%E5%B1%80%E9%99%90">2.0.2. 非类型形参的局限：</a></li>
-<li><a href="#203-%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%AE%9E%E5%8F%82%E7%9A%84%E5%B1%80%E9%99%90">2.0.3. 非类型实参的局限：</a></li>
-<li><a href="#204-%E7%BC%96%E8%AF%91%E6%97%B6%E5%B8%B8%E9%87%8F%E8%A1%A8%E8%BE%BE%E5%BC%8F">2.0.4. 编译时常量表达式</a></li>
-<li><a href="#205-%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2">2.0.5. 隐式转换</a></li>
-<li><a href="#206-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F">2.0.6. 设计模式</a></li>
-<li><a href="#207-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88">2.0.7. 智能指针</a></li>
-<li><a href="#208-%E5%8F%B3%E5%80%BC">2.0.8. 右值</a></li>
-<li><a href="#209-%E6%A8%A1%E6%9D%BF%E6%9D%82%E7%B1%BB">2.0.9. 模板杂类</a></li>
-<li><a href="#2010-lambda">2.0.10. lambda</a></li>
-<li><a href="#2011-%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88">2.0.11. 成员函数指针</a></li>
-<li><a href="#2012-%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98%E6%8C%87%E9%92%88">2.0.12. 数据成员指针</a></li>
-<li><a href="#2013-%E8%99%9A%E5%87%BD%E6%95%B0">2.0.13. 虚函数</a><ul>
-<li><a href="#20131-%E4%BB%8E%E6%B1%87%E7%BC%96%E5%B1%82%E9%9D%A2%E7%90%86%E8%A7%A3%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0">2.0.13.1. 从汇编层面理解虚函数的实现</a></li>
-<li><a href="#20132-%E8%99%9A%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0">2.0.13.2. 虚析构函数</a></li>
-</ul>
-</li>
-<li><a href="#21-202391">2.1. 2023&#x2F;9&#x2F;1</a><ul>
-<li><a href="#211-stdbind">2.1.1. std::bind</a></li>
-<li><a href="#212-%E5%85%B3%E4%BA%8E%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95%E8%A1%A8%E8%BF%B0%E4%B8%8A%E5%8F%AF%E8%83%BD%E6%9C%89%E7%BA%B0%E6%BC%8F%E4%BD%86%E6%A0%B9%E6%8D%AE%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%9D%A5%E7%9C%8B%E5%BA%94%E8%AF%A5%E6%98%AF%E6%AD%A3%E7%A1%AE%E7%9A%84">2.1.2. 关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的</a><ul>
-<li><a href="#2121-%E5%80%BC%E5%88%9D%E5%A7%8B%E5%8C%96">2.1.2.1. 值初始化</a></li>
-<li><a href="#2122-%E9%BB%98%E8%AE%A4%E5%88%9D%E5%A7%8B%E5%8C%96">2.1.2.2. 默认初始化</a></li>
-<li><a href="#2123-%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96">2.1.2.3. 静态成员的初始化</a><ul>
-<li><a href="#2023111-%E6%9B%B4%E6%96%B0%E5%8A%A8%E6%80%81%E5%88%9D%E5%A7%8B%E5%8C%96">2023&#x2F;11&#x2F;1 更新动态初始化</a></li>
+<li><a href="#21-unicode">2.1. unicode</a></li>
+<li><a href="#22-%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%BD%A2%E5%8F%82%E7%9A%84%E5%B1%80%E9%99%90">2.2. 非类型形参的局限：</a></li>
+<li><a href="#23-%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%AE%9E%E5%8F%82%E7%9A%84%E5%B1%80%E9%99%90">2.3. 非类型实参的局限：</a></li>
+<li><a href="#24-%E7%BC%96%E8%AF%91%E6%97%B6%E5%B8%B8%E9%87%8F%E8%A1%A8%E8%BE%BE%E5%BC%8F">2.4. 编译时常量表达式</a></li>
+<li><a href="#25-%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2">2.5. 隐式转换</a></li>
+<li><a href="#26-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F">2.6. 设计模式</a></li>
+<li><a href="#27-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88">2.7. 智能指针</a></li>
+<li><a href="#28-%E5%8F%B3%E5%80%BC">2.8. 右值</a></li>
+<li><a href="#29-%E6%A8%A1%E6%9D%BF%E6%9D%82%E7%B1%BB">2.9. 模板杂类</a></li>
+<li><a href="#210-lambda">2.10. lambda</a></li>
+<li><a href="#211-%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88">2.11. 成员函数指针</a></li>
+<li><a href="#212-%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98%E6%8C%87%E9%92%88">2.12. 数据成员指针</a></li>
+<li><a href="#213-%E8%99%9A%E5%87%BD%E6%95%B0">2.13. 虚函数</a><ul>
+<li><a href="#2131-%E4%BB%8E%E6%B1%87%E7%BC%96%E5%B1%82%E9%9D%A2%E7%90%86%E8%A7%A3%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0">2.13.1. 从汇编层面理解虚函数的实现</a></li>
+<li><a href="#2132-%E8%99%9A%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0">2.13.2. 虚析构函数</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#213-internal-linkage--external-linkage">2.1.3. internal linkage &amp;&amp; external linkage</a></li>
+<li><a href="#3-202391">3. 2023&#x2F;9&#x2F;1</a><ul>
+<li><a href="#31-stdbind">3.1. std::bind</a></li>
+<li><a href="#32-%E5%85%B3%E4%BA%8E%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95%E8%A1%A8%E8%BF%B0%E4%B8%8A%E5%8F%AF%E8%83%BD%E6%9C%89%E7%BA%B0%E6%BC%8F%E4%BD%86%E6%A0%B9%E6%8D%AE%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%9D%A5%E7%9C%8B%E5%BA%94%E8%AF%A5%E6%98%AF%E6%AD%A3%E7%A1%AE%E7%9A%84">3.2. 关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的</a><ul>
+<li><a href="#321-%E5%80%BC%E5%88%9D%E5%A7%8B%E5%8C%96">3.2.1. 值初始化</a></li>
+<li><a href="#322-%E9%BB%98%E8%AE%A4%E5%88%9D%E5%A7%8B%E5%8C%96">3.2.2. 默认初始化</a></li>
+<li><a href="#323-%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96">3.2.3. 静态成员的初始化</a><ul>
+<li><a href="#3231-2023111-%E6%9B%B4%E6%96%B0%E5%8A%A8%E6%80%81%E5%88%9D%E5%A7%8B%E5%8C%96">3.2.3.1. 2023&#x2F;11&#x2F;1 更新动态初始化</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#3-%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%BB%BB%E5%8A%A1">3. 未完成的学习任务</a></li>
+<li><a href="#33-internal-linkage--external-linkage">3.3. internal linkage &amp;&amp; external linkage</a></li>
+<li><a href="#34-cc99ansi-c-%E5%92%8C-gnu-c-%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB">3.4. C、C99、ANSI C 和 GNU C 之间的区别</a></li>
+</ul>
+</li>
+<li><a href="#4-%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%BB%BB%E5%8A%A1">4. 未完成的学习任务</a></li>
 </ul>
 <h1 id="1-2023-08-29"><a href="#1-2023-08-29" class="headerlink" title="1. 2023&#x2F;08&#x2F;29"></a>1. 2023&#x2F;08&#x2F;29</h1><ul>
 <li><p>析构函数和复制构造函数不能是模板。若声明了可用复制构造函数的类型签名实例化的模板构造函数，则替而使用隐式声明的复制构造函数。</p>
@@ -150,7 +158,7 @@
 <li><input disabled="" type="checkbox"> 函数模板重载</li>
 <li>重载运算符为成员函数和友元函数时关键的区别在于成员函数具有this指针，而友元函数没有this指针。</li>
 </ul>
-<h1 id="2-2023-08-29"><a href="#2-2023-08-29" class="headerlink" title="2. 2023&#x2F;08&#x2F;29"></a>2. 2023&#x2F;08&#x2F;29</h1><h3 id="2-0-1-unicode"><a href="#2-0-1-unicode" class="headerlink" title="2.0.1. unicode"></a>2.0.1. unicode</h3><ol>
+<h1 id="2-2023-08-29"><a href="#2-2023-08-29" class="headerlink" title="2. 2023&#x2F;08&#x2F;29"></a>2. 2023&#x2F;08&#x2F;29</h1><h2 id="2-1-unicode"><a href="#2-1-unicode" class="headerlink" title="2.1. unicode"></a>2.1. unicode</h2><ol>
 <li><p>字符集定义了字符和二进制的对应关系，为每个字符分配了唯一的编号。可以将字符集理解成一个很大的表格，它列出了所有字符和二进制的对应关系，<br>计算机显示文字或者存储文字，就是一个查表的过程。</p>
 </li>
 <li><p>而字符编码规定了如何将字符的编号存储到计算机中。如果使用了类似 GB2312 和 GBK 的变长存储方案（不同的字符占用的字节数不一样），那么为了区分一个字符</p>
@@ -162,7 +170,7 @@
 <li>字面常量(literal constant)即无需定义可以直接写出来的量。字面常量的值一望便知，但是他的数据类型往往不能被准确分辨（尤其是使用auto时）。</li>
 <li>编译期可知的值“享有特权”，它们可能被存放到只读存储空间中。</li>
 </ul>
-<h3 id="2-0-2-非类型形参的局限："><a href="#2-0-2-非类型形参的局限：" class="headerlink" title="2.0.2. 非类型形参的局限："></a>2.0.2. 非类型形参的局限：</h3><ol>
+<h2 id="2-2-非类型形参的局限："><a href="#2-2-非类型形参的局限：" class="headerlink" title="2.2. 非类型形参的局限："></a>2.2. 非类型形参的局限：</h2><ol>
 <li>浮点数不可以作为非类型形参，包括float，double。具体原因可能是历史因素，也许未来C++会支持浮点数；</li>
 <li>类不可以作为非类型形参；</li>
 <li>字符串不可以作为非类型形参；</li>
@@ -170,7 +178,7 @@
 <li>指向对象或函数的指针与引用（左值引用）可以作为形参。</li>
 <li>this is [a link][link-id]<br>[link-id]: <a target="_blank" rel="noopener" href="https://github.com/">https://github.com/</a></li>
 </ol>
-<h3 id="2-0-3-非类型实参的局限："><a href="#2-0-3-非类型实参的局限：" class="headerlink" title="2.0.3. 非类型实参的局限："></a>2.0.3. 非类型实参的局限：</h3><ol>
+<h2 id="2-3-非类型实参的局限："><a href="#2-3-非类型实参的局限：" class="headerlink" title="2.3. 非类型实参的局限："></a>2.3. 非类型实参的局限：</h2><ol>
 <li>实参必须是编译时常量表达式，不能使用非const的局部变量，局部对象地址及动态对象；</li>
 <li>非const的全局指针，全局对象&#x2F;全局变量（下面可能有个特例）都不是常量表达式；</li>
 <li>由于形参的已经做了限定，字符串，浮点型即使是常量表达式也不可以作为非类型实参 ；</li>
@@ -188,7 +196,7 @@
 <li>如果非类型形参类型为对象指针，则必须传入完整对象的地址，不能是指向该对象的指针</li>
 <li>如下，如果数组类型形参不是引用传递而是值传递，数组会自动降一维，成为一个指向一维数组的指针<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="type">size_t</span> w, <span class="type">size_t</span> h&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">double</span> (&amp;s)[w][h])</span></span>&#123;cout&lt;&lt;s[<span class="number">0</span>]&lt;&lt;endl;&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h3 id="2-0-4-编译时常量表达式"><a href="#2-0-4-编译时常量表达式" class="headerlink" title="2.0.4. 编译时常量表达式"></a>2.0.4. 编译时常量表达式</h3><ul>
+<h2 id="2-4-编译时常量表达式"><a href="#2-4-编译时常量表达式" class="headerlink" title="2.4. 编译时常量表达式"></a>2.4. 编译时常量表达式</h2><ul>
 <li>整形常量为如果被常量表达式初始化则为常量表达式 ，也可以用于初始化其他常量表达式，其他类型目前未知</li>
 <li>constexpr 所表示的对象为const，被放置在只读内存中，是在编译期就可以被处理识别的值, 并且对象一定要被正确初始化</li>
 <li>constexpr 所表示的函数的参数和返回值都应为字面值或编译期常量（该常量也应被加上constexpr说明符），当多个不可知量调用constexpr函数时，该函数所表现出的形式为普通函数，所以constexpr的返回值不一定是const</li>
@@ -205,7 +213,7 @@
 <blockquote>
 <p>个人对于常量表达式的理解目前仍旧比较浅显，cppreference关于constexpr的叙述看的好像明白又好像完全不懂…</p>
 </blockquote>
-<h3 id="2-0-5-隐式转换"><a href="#2-0-5-隐式转换" class="headerlink" title="2.0.5. 隐式转换"></a>2.0.5. 隐式转换</h3><ul>
+<h2 id="2-5-隐式转换"><a href="#2-5-隐式转换" class="headerlink" title="2.5. 隐式转换"></a>2.5. 隐式转换</h2><ul>
 <li>常见的隐式转换有<ol>
 <li>整形之间以及整形浮点数（算术类型）</li>
 <li>nullptr和其他类型之间的转换</li>
@@ -216,7 +224,7 @@
 <li>一个隐式类型转换序列包括一个初始标准转换序列、一个用户定义转换序列、一个第二标准转换序列,也就是说不存在什么两步转换问题，本身转换序列最少可以转换1次，最多可以三次。两次转换当然没问题了。唯一会触发问题的是出现了两次用户定义转换，因为隐式转换序列里只允许一次用户定义转换，语言标准也规定了不允许出现多余一次的用户定义转换：</li>
 </ul>
 <hr>
-<h3 id="2-0-6-设计模式"><a href="#2-0-6-设计模式" class="headerlink" title="2.0.6. 设计模式"></a>2.0.6. 设计模式</h3><ul>
+<h2 id="2-6-设计模式"><a href="#2-6-设计模式" class="headerlink" title="2.6. 设计模式"></a>2.6. 设计模式</h2><ul>
 <li><p>观察者模式是一种行为设计模式， 允许你定义一种订阅机制， 可在对象事件发生时通知多个 “观察” 该对象的其他对象。</p>
 <p><img src="/2023/08/25/houjiecpp/structure.png" alt="observer示例"></p>
 </li>
@@ -224,10 +232,10 @@
 </li>
 <li></li>
 </ul>
-<h3 id="2-0-7-智能指针"><a href="#2-0-7-智能指针" class="headerlink" title="2.0.7. 智能指针"></a>2.0.7. 智能指针</h3><ul>
+<h2 id="2-7-智能指针"><a href="#2-7-智能指针" class="headerlink" title="2.7. 智能指针"></a>2.7. 智能指针</h2><ul>
 <li>shared_ptr的析构会将引用计数减一，但lambda闭包中的ptr还持有一个引用,引用计数不会变为0</li>
 </ul>
-<h3 id="2-0-8-右值"><a href="#2-0-8-右值" class="headerlink" title="2.0.8. 右值"></a>2.0.8. 右值</h3><ul>
+<h2 id="2-8-右值"><a href="#2-8-右值" class="headerlink" title="2.8. 右值"></a>2.8. 右值</h2><ul>
 <li>std::move除了转换它的实参到右值以外什么也不做，有一些提议说它的名字叫rvalue_cast之类可能会更好。虽然可能确实是这样，但是它的名字已经是std::move，所以记住std::move做什么和不做什么很重要。它只进行转换，不移动任何东西。</li>
 <li>右值可以用来初始化右值引用，这种情况下该右值所标识的对象的生存期被延长到该引用的作用域结尾。</li>
 <li>static_cast<T>(v)<ul>
@@ -237,7 +245,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="2-0-9-模板杂类"><a href="#2-0-9-模板杂类" class="headerlink" title="2.0.9. 模板杂类"></a>2.0.9. 模板杂类</h3><ul>
+<h2 id="2-9-模板杂类"><a href="#2-9-模板杂类" class="headerlink" title="2.9. 模板杂类"></a>2.9. 模板杂类</h2><ul>
 <li><p>c++模板是图灵完全的，可以在编译期对模板类进行求值,要进行编译期编程，最主要的一点，是需要把计算转变成类型推导。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/fegus/article/details/130338576?ops_request_misc=&request_id=38815c79755449fe82293d93350e9293&biz_id=&utm_medium=distribute.pc_search_result.none-task-blog-2~blog~koosearch~default-9-130338576-null-null.268%5Ev1%5Econtrol&utm_term=%E7%8E%B0%E4%BB%A3&spm=1018.2226.3001.4450">现代c++编程实战中关于模板编译期计算的讲解</a></p>
 </li>
 <li><p>T&amp;&amp; 当T作为成员函数模板形参时，表现出通用引用，或转发引用，根据传递的左值或者右值来决定是左值还是右值引用，而如同complex&amp;&amp;此类直接指定类名或者在模板类中指定T，亦或者将T&amp;&amp;前加上cv限定，一般都属于右值引用</p>
@@ -272,7 +280,7 @@
 </blockquote>
 </li>
 </ul>
-<h3 id="2-0-10-lambda"><a href="#2-0-10-lambda" class="headerlink" title="2.0.10. lambda"></a>2.0.10. lambda</h3><ul>
+<h2 id="2-10-lambda"><a href="#2-10-lambda" class="headerlink" title="2.10. lambda"></a>2.10. lambda</h2><ul>
 <li>lambda主体不能捕捉静态存储期限变量</li>
 <li>lambda主体在读取被常量表达式初始化并被const修饰的整形或枚举常量或者constexpr修饰的常量的值时，可以不进行捕获</li>
 <li>如果存在捕获默认项，则当前对象（*this）可以被隐式捕获。如果隐式捕获，则始终通过引用进行捕获，即使捕获默认项是&#x3D;。</li>
@@ -284,12 +292,12 @@
 </ul>
 </li>
 </ul>
-<h3 id="2-0-11-成员函数指针"><a href="#2-0-11-成员函数指针" class="headerlink" title="2.0.11. 成员函数指针"></a>2.0.11. 成员函数指针</h3><ul>
+<h2 id="2-11-成员函数指针"><a href="#2-11-成员函数指针" class="headerlink" title="2.11. 成员函数指针"></a>2.11. 成员函数指针</h2><ul>
 <li>指向作为类 C 的成员的非静态成员函数 f 的指针，能准确地以表达式 &amp;C::f 初始化。在 C 的成员函数内，如 &amp;(C::f) 或 &amp;f，这样的表达式不构成成员函数指针。</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">C</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123; std::cout &lt;&lt; n &lt;&lt; <span class="string">&#x27;\n&#x27;</span>; &#125;</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">void</span> (C::* p)(<span class="type">int</span>) = &amp;C::f; <span class="comment">// 指向类 C 的成员函数 f 的指针</span></span><br><span class="line">    C c;</span><br><span class="line">    (c.*p)(<span class="number">1</span>);                  <span class="comment">// 打印 1</span></span><br><span class="line">    C* cp = &amp;c;</span><br><span class="line">    (cp-&gt;*p)(<span class="number">2</span>);                <span class="comment">// 打印 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-0-12-数据成员指针"><a href="#2-0-12-数据成员指针" class="headerlink" title="2.0.12. 数据成员指针"></a>2.0.12. 数据成员指针</h3><ul>
+<h2 id="2-12-数据成员指针"><a href="#2-12-数据成员指针" class="headerlink" title="2.12. 数据成员指针"></a>2.12. 数据成员指针</h2><ul>
 <li><p>指向作为类 C 的成员的非静态数据成员 m 的指针，能准确地以表达式 &amp;C::m 初始化。在 C 的成员函数中，如 &amp;(C::m) 或 &amp;m 这样的表达式不构成指向成员指针</p>
 </li>
 <li><p>类定义是一种类型声明，存在于代码块中，并没有分配内存空间；对类的数据成员取地址，得到的是类的数据成员在类内的相对偏移量；</p>
@@ -297,7 +305,7 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">C</span> &#123; <span class="type">int</span> m; &#125;;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> C::* p = &amp;C::m;          <span class="comment">// 指向类 C 的数据成员 m</span></span><br><span class="line">    C c = &#123;<span class="number">7</span>&#125;;</span><br><span class="line">    std::cout &lt;&lt; c.*p &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;   <span class="comment">// 打印 7</span></span><br><span class="line">    C* cp = &amp;c;</span><br><span class="line">    cp-&gt;m = <span class="number">10</span>;</span><br><span class="line">    std::cout &lt;&lt; cp-&gt;*p &lt;&lt; <span class="string">&#x27;\n&#x27;</span>; <span class="comment">// 打印 10</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-0-13-虚函数"><a href="#2-0-13-虚函数" class="headerlink" title="2.0.13. 虚函数"></a>2.0.13. 虚函数</h3><h4 id="2-0-13-1-从汇编层面理解虚函数的实现"><a href="#2-0-13-1-从汇编层面理解虚函数的实现" class="headerlink" title="2.0.13.1. 从汇编层面理解虚函数的实现"></a>2.0.13.1. 从汇编层面理解虚函数的实现</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Parent</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">parent_virtual</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">parent_virtual2</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Child</span> : Parent&#123;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">parent_virtual</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">parent_virtual2</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Parent* p1 = <span class="keyword">new</span> Child;</span><br><span class="line">    p1-&gt;<span class="built_in">parent_virtual2</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-13-虚函数"><a href="#2-13-虚函数" class="headerlink" title="2.13. 虚函数"></a>2.13. 虚函数</h2><h3 id="2-13-1-从汇编层面理解虚函数的实现"><a href="#2-13-1-从汇编层面理解虚函数的实现" class="headerlink" title="2.13.1. 从汇编层面理解虚函数的实现"></a>2.13.1. 从汇编层面理解虚函数的实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Parent</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">parent_virtual</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">parent_virtual2</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Child</span> : Parent&#123;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">parent_virtual</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">parent_virtual2</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Parent* p1 = <span class="keyword">new</span> Child;</span><br><span class="line">    p1-&gt;<span class="built_in">parent_virtual2</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>经<a target="_blank" rel="noopener" href="https://godbolt.org/">x86-64_gcc7.5</a>编译器编译后， 汇编代码如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line">square(int):</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     DWORD PTR [rbp-4], edi</span><br><span class="line">        mov     eax, DWORD PTR [rbp-4]</span><br><span class="line">        imul    eax, DWORD PTR [rbp-4]</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Parent::parent_virtual():</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        nop</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Parent::parent_virtual2():</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        nop</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Child::parent_virtual():</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        nop</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Child::parent_virtual2():</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        nop</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Parent::Parent() [base object constructor]:</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        mov     edx, OFFSET FLAT:vtable for Parent+16</span><br><span class="line">        mov     rax, QWORD PTR [rbp-8]</span><br><span class="line">        mov     QWORD PTR [rax], rdx</span><br><span class="line">        nop</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Child::Child() [base object constructor]:</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        sub     rsp, 16</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        mov     rax, QWORD PTR [rbp-8]</span><br><span class="line">        mov     rdi, rax</span><br><span class="line">        call    Parent::Parent() [base object constructor]</span><br><span class="line">        mov     edx, OFFSET FLAT:vtable for Child+16</span><br><span class="line">        mov     rax, QWORD PTR [rbp-8]</span><br><span class="line">        mov     QWORD PTR [rax], rdx</span><br><span class="line">        nop</span><br><span class="line">        leave</span><br><span class="line">        ret</span><br><span class="line">main:</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        push    rbx</span><br><span class="line">        sub     rsp, 24</span><br><span class="line">        mov     edi, 8</span><br><span class="line">        call    operator new(unsigned long)</span><br><span class="line">        mov     rbx, rax</span><br><span class="line">        mov     rdi, rbx</span><br><span class="line">        call    Child::Child() [complete object constructor]</span><br><span class="line">        mov     QWORD PTR [rbp-24], rbx</span><br><span class="line">        mov     rax, QWORD PTR [rbp-24]</span><br><span class="line">        mov     rax, QWORD PTR [rax]</span><br><span class="line">        add     rax, 8</span><br><span class="line">        mov     rax, QWORD PTR [rax]</span><br><span class="line">        mov     rdx, QWORD PTR [rbp-24]</span><br><span class="line">        mov     rdi, rdx</span><br><span class="line">        call    rax</span><br><span class="line">        mov     eax, 0</span><br><span class="line">        add     rsp, 24</span><br><span class="line">        pop     rbx</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">vtable for Child:</span><br><span class="line">        .quad   0</span><br><span class="line">        .quad   typeinfo for Child</span><br><span class="line">        .quad   Child::parent_virtual()</span><br><span class="line">        .quad   Child::parent_virtual2()</span><br><span class="line">vtable for Parent:</span><br><span class="line">        .quad   0</span><br><span class="line">        .quad   typeinfo for Parent</span><br><span class="line">        .quad   Parent::parent_virtual()</span><br><span class="line">        .quad   Parent::parent_virtual2()</span><br><span class="line">typeinfo for Child:</span><br><span class="line">        .quad   vtable for __cxxabiv1::__si_class_type_info+16</span><br><span class="line">        .quad   typeinfo name for Child</span><br><span class="line">        .quad   typeinfo for Parent</span><br><span class="line">typeinfo name for Child:</span><br><span class="line">        .string &quot;5Child&quot;</span><br><span class="line">typeinfo for Parent:</span><br><span class="line">        .quad   vtable for __cxxabiv1::__class_type_info+16</span><br><span class="line">        .quad   typeinfo name for Parent</span><br><span class="line">typeinfo name for Parent:</span><br><span class="line">        .string &quot;6Parent&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>以下是对主函数汇编段代码的解释：</p>
@@ -348,7 +356,7 @@
 </blockquote>
 </li>
 </ul>
-<h4 id="2-0-13-2-虚析构函数"><a href="#2-0-13-2-虚析构函数" class="headerlink" title="2.0.13.2. 虚析构函数"></a>2.0.13.2. 虚析构函数</h4><ul>
+<h3 id="2-13-2-虚析构函数"><a href="#2-13-2-虚析构函数" class="headerlink" title="2.13.2. 虚析构函数"></a>2.13.2. 虚析构函数</h3><ul>
 <li><p>通过指向基类的指针删除对象会引发未定义行为，除非基类的析构函数是虚函数：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Base</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">Base</span>() &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Derived</span> : <span class="keyword">public</span> Base &#123;&#125;;</span><br><span class="line"> </span><br><span class="line">Base* b = <span class="keyword">new</span> Derived;</span><br><span class="line"><span class="keyword">delete</span> b; <span class="comment">// 安全</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 </li>
@@ -358,11 +366,11 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">AbstractBase</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">AbstractBase</span>() = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line">AbstractBase::~<span class="built_in">AbstractBase</span>() &#123;&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Derived</span> : <span class="keyword">public</span> AbstractBase &#123;&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// AbstractBase obj; // 编译错误</span></span><br><span class="line">Derived obj;         <span class="comment">// OK</span></span><br></pre></td></tr></table></figure>
 
 <p>几个讲解虚函数讲的不错的博客：<br><a target="_blank" rel="noopener" href="https://jacktang816.github.io/post/virtualfunction/">虚函数的内存分布</a><br><a target="_blank" rel="noopener" href="http://www.fmddlmyy.cn/text15.html">C++基本概念在编译器中的实现</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FJfSkrRKvuOmAfqqgf_e8Q">多态实现-虚函数、函数指针以及变体</a></p>
-<h2 id="2-1-2023-9-1"><a href="#2-1-2023-9-1" class="headerlink" title="2.1. 2023&#x2F;9&#x2F;1"></a>2.1. 2023&#x2F;9&#x2F;1</h2><h3 id="2-1-1-std-bind"><a href="#2-1-1-std-bind" class="headerlink" title="2.1.1. std::bind"></a>2.1.1. std::bind</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;<span class="type">double</span>&gt; data;               <span class="comment">//同上</span></span><br><span class="line"></span><br><span class="line">…                                       <span class="comment">//同上</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> func =</span><br><span class="line">    std::<span class="built_in">bind</span>(                              <span class="comment">//C++11模拟初始化捕获</span></span><br><span class="line">        [](<span class="type">const</span> std::vector&lt;<span class="type">double</span>&gt;&amp; data) <span class="comment">//译者注：本行高亮</span></span><br><span class="line">        &#123; <span class="comment">/*使用data*/</span> &#125;,</span><br><span class="line">        std::<span class="built_in">move</span>(data)                     <span class="comment">//译者注：本行高亮</span></span><br><span class="line">    );</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="3-2023-9-1"><a href="#3-2023-9-1" class="headerlink" title="3. 2023&#x2F;9&#x2F;1"></a>3. 2023&#x2F;9&#x2F;1</h1><h2 id="3-1-std-bind"><a href="#3-1-std-bind" class="headerlink" title="3.1. std::bind"></a>3.1. std::bind</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;<span class="type">double</span>&gt; data;               <span class="comment">//同上</span></span><br><span class="line"></span><br><span class="line">…                                       <span class="comment">//同上</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> func =</span><br><span class="line">    std::<span class="built_in">bind</span>(                              <span class="comment">//C++11模拟初始化捕获</span></span><br><span class="line">        [](<span class="type">const</span> std::vector&lt;<span class="type">double</span>&gt;&amp; data) <span class="comment">//译者注：本行高亮</span></span><br><span class="line">        &#123; <span class="comment">/*使用data*/</span> &#125;,</span><br><span class="line">        std::<span class="built_in">move</span>(data)                     <span class="comment">//译者注：本行高亮</span></span><br><span class="line">    );</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <ul>
 <li>std::bind为每个实参创建了bind对象里的<strong>副本</strong>，每次调用bind对象时，调用的是传递给lambda表达式的本地副本。在如上的例子中，std::move(data)使用移动构造创建了本地副本（左值），之后每次调用函数副本时，调用的都是该副本</li>
 </ul>
-<h3 id="2-1-2-关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的"><a href="#2-1-2-关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的" class="headerlink" title="2.1.2. 关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的"></a>2.1.2. 关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的</h3><h4 id="2-1-2-1-值初始化"><a href="#2-1-2-1-值初始化" class="headerlink" title="2.1.2.1. 值初始化"></a>2.1.2.1. 值初始化</h4><ul>
+<h2 id="3-2-关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的"><a href="#3-2-关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的" class="headerlink" title="3.2. 关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的"></a>3.2. 关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的</h2><h3 id="3-2-1-值初始化"><a href="#3-2-1-值初始化" class="headerlink" title="3.2.1. 值初始化"></a>3.2.1. 值初始化</h3><ul>
 <li><p>形式: T() &#x2F; T{}</p>
 </li>
 <li><p>若T为类对象且有用户提供（<em>除了在类定义内直接显式指定default的默认构造函数都可以称为用户提供的默认构造函数</em>）的默认构造函数，则对对象进行<strong>默认初始化</strong>；</p>
@@ -379,7 +387,7 @@
 <li><p>所有标准容器（std::vector、std::list 等）在以单个 size_type 实参进行构造或由对 resize() 的调用而增长时值初始化它们的各个元素，除非它们的分配器定制 construct 的行为。</p>
 </li>
 </ul>
-<h4 id="2-1-2-2-默认初始化"><a href="#2-1-2-2-默认初始化" class="headerlink" title="2.1.2.2. 默认初始化"></a>2.1.2.2. 默认初始化</h4><ul>
+<h3 id="3-2-2-默认初始化"><a href="#3-2-2-默认初始化" class="headerlink" title="3.2.2. 默认初始化"></a>3.2.2. 默认初始化</h3><ul>
 <li>形式： T obj&#x2F; new T;</li>
 <li>调用无参默认构造函数，并对没有<strong>在成员初始化列表进行指明</strong>或者<strong>没有默认成员初始化器</strong>的非静态成员和基类成员进行默认初始化</li>
 <li>注意： <strong>对自动&#x2F;动态存储期非类类型成员进行默认初始化时会获得不确定的值</strong>，这也是我想讨论的重点，比如对int成员变量进行默认初始化之后，使用其赋值会导致UB</li>
@@ -389,7 +397,7 @@
 <blockquote>
 <p>若用clang编译器进行编译，输出t1.mem会发现是随机值，用gcc编译器进行编译会发现编译器给出‘uninitiated value’警告但仍然进行了零初始化，若改写为T1 t1{}，则都能正常编译并对进行mem零初始化，这就是我认为值初始化和默认初始化的最大区别所在；</p>
 </blockquote>
-<h4 id="2-1-2-3-静态成员的初始化"><a href="#2-1-2-3-静态成员的初始化" class="headerlink" title="2.1.2.3. 静态成员的初始化"></a>2.1.2.3. 静态成员的初始化</h4><ul>
+<h3 id="3-2-3-静态成员的初始化"><a href="#3-2-3-静态成员的初始化" class="headerlink" title="3.2.3. 静态成员的初始化"></a>3.2.3. 静态成员的初始化</h3><ul>
 <li>具有static(<em>全局变量或static声明</em>)或 thread 存储期限的<strong>非局部变量</strong>在程序开始前被初始化，存放在全局区，先进行<strong>静态初始化</strong>，再进行<strong>动态初始化</strong>, 全局区分为已被初始化的段(.data段)，和未被初始化的段(.bss段)<ul>
 <li>静态初始化一般来说就是指零初始化和常量初始化，动态初始化在 <a href="%5Bhttps://%5D(https://en.cppreference.com/w/cpp/language/initialization#Non-local_variables)">cppreference</a>中并没给出明确定义，网络上对于这方面的相关资料也甚少，但值得注意的是，<strong>若没有被常量初始化的静态非局部变量在其他初始化进行前都会进行零初始化</strong>，之后会根据变量的定义来判断是否改变变量的值，但变量此时必须出现定义，若无定义则会报<strong>undefined reference</strong> 错误！！</li>
 <li>动态初始化一般来说（有别的像无序或部分有序，太复杂）是按照静态非局部变量的定义顺序来进行初始化的</li>
@@ -404,7 +412,7 @@
 <li>静态数据成员(static data  members) 在声明<strong>内联或constexpr</strong>时指定initialzer , 在类外不需要重定义，甚至在odr-use时也不需要定义，然而对于普通const成员来说，只有int类型的数据才可以拥有initializer，并且在odr-use时也需要在类外重新声明，但这时不能给出初始化器</li>
 <li>总结就是类静态成员在类中声明时是不会默认初始化的，可以在类外定义进行动态初始化，在类外的静态数据可以直接默认初始化.</li>
 </ul>
-<h5 id="2023-11-1-更新动态初始化"><a href="#2023-11-1-更新动态初始化" class="headerlink" title="2023&#x2F;11&#x2F;1 更新动态初始化"></a>2023&#x2F;11&#x2F;1 更新动态初始化</h5><p>在动手查看过各静态变量汇编层面的动态初始化后，对动态初始化有了更多的认识<br>代码文件及汇编代码在<a target="_blank" rel="noopener" href="https://godbolt.org/z/METvfhPj3">complier explore</a>，编译器为x86-64 clang9.0;</p>
+<h4 id="3-2-3-1-2023-11-1-更新动态初始化"><a href="#3-2-3-1-2023-11-1-更新动态初始化" class="headerlink" title="3.2.3.1. 2023&#x2F;11&#x2F;1 更新动态初始化"></a>3.2.3.1. 2023&#x2F;11&#x2F;1 更新动态初始化</h4><p>在动手查看过各静态变量汇编层面的动态初始化后，对动态初始化有了更多的认识<br>代码文件及汇编代码在<a target="_blank" rel="noopener" href="https://godbolt.org/z/METvfhPj3">complier explore</a>，编译器为x86-64 clang9.0;</p>
 <ol>
 <li>对于未初始化的普通数据类型静态或全局变量（即没有初始化器）来说， 其被储存在.bss段中且这些0变量本身并没有保存在可执行文件或者动态链接库文件中，但是其总内存段大小和起止位置在加载件时被统计出来。<ul>
 <li>C++ name-mangling机制把<strong>这类数据以及局部静态未初始化或者零或者动态初始化变量</strong>命名为_ZZ3fooiE开头的变量，用于表示一个静态变量的实际存储位置，根据下面对于动态初始化局部静态变量的汇编代码可以看出，编译器它调用了一些C++运行时库的函数，如__cxa_guard_acquire和__cxa_guard_release，来保证初始化的线程安全和一次性 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cmp     byte ptr [guard variable for foo(int)::staticLocalInitVar], 0</span><br><span class="line">jne     .LBB1_3</span><br><span class="line">movabs  rdi, offset guard variable for foo(int)::staticLocalInitVar</span><br><span class="line">call    __cxa_guard_acquire</span><br><span class="line">cmp     eax, 0</span><br><span class="line">je      .LBB1_3</span><br><span class="line">call    fd()</span><br><span class="line">mov     dword ptr [_ZZ3fooiE18staticLocalInitVar], eax</span><br><span class="line">movabs  rdi, offset guard variable for foo(int)::staticLocalInitVar</span><br><span class="line">call    __cxa_guard_release</span><br></pre></td></tr></table></figure></li>
@@ -428,7 +436,7 @@
 <p>简而言之，d1在程序开始前被赋0，这是静态初始化，之后被赋1，这是动态初始化，但由于某些规则该变量的动态初始化可以被提至编译时间，也就是静态初始化为1，所以d2的值也是不确定的，虽然在本地表现出被动态初始化为1的结果</p>
 </blockquote>
 <p>-[] 依然困惑于动态初始化的局部静态变量，在汇编码中没有找到其在.data段被分配内存，莫非仍然在.bss段被分配内存？</p>
-<h3 id="2-1-3-internal-linkage-external-linkage"><a href="#2-1-3-internal-linkage-external-linkage" class="headerlink" title="2.1.3. internal linkage &amp;&amp; external linkage"></a>2.1.3. internal linkage &amp;&amp; external linkage</h3><ul>
+<h2 id="3-3-internal-linkage-external-linkage"><a href="#3-3-internal-linkage-external-linkage" class="headerlink" title="3.3. internal linkage &amp;&amp; external linkage"></a>3.3. internal linkage &amp;&amp; external linkage</h2><ul>
 <li>#pragma once 只能作用于某个具体的文件，而无法向 #ifndef 那样仅作用于指定的一段代码</li>
 <li>具有内部链接性质的变量可以在头文件中定义，这样会在每个翻译单元内定义不同实体，但由于该变量只在单文件中可见于是不会引发多重定义的问题， 但是会引发代码冗余</li>
 <li>具有外部链接性质的变量或者函数若声明inline，则会在编译时将变量名替换为变量值 &#x2F; 函数名替换为函数体， 此时可以在头文件中定义</li>
@@ -436,7 +444,20 @@
 <li>匿名命名空间也不要在头文件定义，因为每个引入该命名空间的源文件都会为自己创建一份独特命名的命名空间，可能会导致很多意外情况发生</li>
 </ul>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/shaochuanhe/articles/14238153.html">讲述c++编译时会出现多重定义，链接错误等error原因的博客</a></p>
-<h1 id="3-未完成的学习任务"><a href="#3-未完成的学习任务" class="headerlink" title="3. 未完成的学习任务"></a>3. 未完成的学习任务</h1><ul>
+<h2 id="3-4-C、C99、ANSI-C-和-GNU-C-之间的区别"><a href="#3-4-C、C99、ANSI-C-和-GNU-C-之间的区别" class="headerlink" title="3.4. C、C99、ANSI C 和 GNU C 之间的区别"></a>3.4. C、C99、ANSI C 和 GNU C 之间的区别</h2><p>标准化之前的一切一般被称为“K&amp;R C”，以著名的书（第一版和第二版）命名，C语言的发明者丹尼斯·里奇（Dennis Ritchie）是作者之一。这就是 1972 年至 1989 年的“C 语言”。</p>
+<p>第一个 C 标准于 1989 年由美国国家标准协会 ANSI 在全国发布。此版本称为 C89 或 ANSI-C。从 1989 年到 1990 年，这就是“C 语言”。</p>
+<p>次年，美国标准被国际接受并由 ISO 发布（ISO 9899:1990）。此版本称为 C90。从技术上来说，它与C89&#x2F;ANSI-C是相同的标准。从形式上来说，它取代了 C89&#x2F;ANSI-C，使它们变得过时。从 1990 年到 1999 年，C90 是“C 语言”。</p>
+<p>请注意，自 1989 年以来，ANSI 与 C 语言没有任何关系，只是作为 ISO 标准的众多实例之一。现在在美国通过INCITS完成，C 标准在美国的正式名称为 INCITS&#x2F;ISO&#x2F;IEC 9899。就像在欧洲称为 EN&#x2F;ISO&#x2F;IEC 一样。</p>
+<p>仍在谈论“ANSI C”的程序员通常不知道它的含义。ISO 通过 ISO 9899 标准“拥有”C 语言。</p>
+<p>1995 年发布了一个小更新，有时称为“C95”。这不是重大修订，而是正式命名为 ISO&#x2F;IEC 9899:1990&#x2F;Amd.1:1995 的技术修订。主要的变化是引入了广泛的字符支持。</p>
+<p>1999年，C标准进行了重大修订（ISO 9899:1999）。该版本的标准称为 C99。从 1999 年到 2011 年，这就是“C 语言”。</p>
+<p>2011年，C标准再次发生变更（ISO 9899:2011）。这个版本称为C11。该语言中添加了各种新功能，例如_Generic、和线程支持。_Static_assert此次更新重点关注多核、多处理和表达测序。从 2011 年到 2017 年，这就是“C 语言”。</p>
+<p>2017年，C11进行了改版，解决了各种缺陷报告。该标准非正式地称为 C17 或 C18。它于 2017 年完成（并使用__STDC_VERSION__&#x3D; 201710L），但由 ISO 发布为 9899:2018，因此 C17&#x2F;C18 之间存在歧义。它不包含任何新功能，仅包含更正。它是 C 语言的当前版本。</p>
+<p>该委员会正在制定一项名为“C23”&#x2F;“C2X”的草案，计划于 2023 年发布（但官僚主义的车轮磨得很慢，请检查ISO 的状态）。最后的工作草案 N3096 可在此处找到。</p>
+<p>其中包含许多小缺陷报告修复，例如 C17&#x2F;C18，但也包含许多重大更改和新功能。这是一个主要版本。</p>
+<p>“C99 strict”可能是指强制编译器严格遵循标准的编译器设置。C 标准中有一个术语“conformedimplementation” 。本质上它的意思是：“这个编译器实际上正确地实现了C语言”。正确实现 C 语言的程序正式称为严格符合程序。此类程序也可能不包含任何形式的定义不明确的行为。</p>
+<p>“GNU C”有两个含义。作为 GNU 编译器集合 (GCC) 一部分的 C 编译器本身。或者它可能意味着 GCC C 编译器使用的非标准默认设置。如果您使用它进行编译，gcc program.c那么您就不会根据 C 标准进行编译，而是根据非标准 GNU 设置进行编译，这可能被称为“GNU C”。例如，整个 Linux 内核是用非标准 GNU C 编写的，而不是用标准 C 编写的。</p>
+<h1 id="4-未完成的学习任务"><a href="#4-未完成的学习任务" class="headerlink" title="4. 未完成的学习任务"></a>4. 未完成的学习任务</h1><ul>
 <li><input disabled="" type="checkbox"> c++程序加载时的内存模型(编译期内存的分配以及运行期内存的分配)<br><a target="_blank" rel="noopener" href="https://ctfbook.ph0en1x.com/reverse/zhan-3001-zhan-zheng-yu-han-shu-diao-yong">栈、栈帧与函数调用</a><br><a target="_blank" rel="noopener" href="https://www.tenouk.com/ModuleW.html">COMPILER, ASSEMBLER, LINKER AND LOADER: A BRIEF STORY</a></li>
 </ul>
 
@@ -447,6 +468,8 @@
       
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c11-14-syntax/" rel="tag">c11&#x2F;14 syntax</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpp-memory-model/" rel="tag">cpp memory model</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/static-dynamic-polymorphic/" rel="tag">static&#x2F;dynamic polymorphic</a></li></ul>
+
     </footer>
   </div>
   
@@ -479,12 +502,33 @@
           <aside id="sidebar">
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GNU-linux/">GNU/linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/cpp-related/">cpp related</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/command-line/">command line</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/command-line/GNU-linux/">GNU/linux</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpp-related/">cpp related</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpp-related/">cpp-related</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/cpp-related/GNU-linux/">GNU/linux</a></li></ul></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/POSIX-socket/" rel="tag">POSIX socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/POSIX-system-call/" rel="tag">POSIX system call</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c11-14-syntax/" rel="tag">c11&#x2F;14 syntax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c11-14-thread-future/" rel="tag">c11&#x2F;14 thread&#x2F;future</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmake/" rel="tag">cmake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpp-memory-model/" rel="tag">cpp memory model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dijstra/" rel="tag">dijstra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/encounter-cpp/" rel="tag">encounter cpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/filesystem/" rel="tag">filesystem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash-table/" rel="tag">hash table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/smart-pointer/" rel="tag">smart-pointer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static-dynamic-polymorphic/" rel="tag">static&#x2F;dynamic polymorphic</a></li></ul>
+    </div>
+  </div>
+
 
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/POSIX-socket/" style="font-size: 10px;">POSIX socket</a> <a href="/tags/POSIX-system-call/" style="font-size: 10px;">POSIX system call</a> <a href="/tags/c11-14-syntax/" style="font-size: 10px;">c11/14 syntax</a> <a href="/tags/c11-14-thread-future/" style="font-size: 10px;">c11/14 thread/future</a> <a href="/tags/cmake/" style="font-size: 10px;">cmake</a> <a href="/tags/cpp-memory-model/" style="font-size: 10px;">cpp memory model</a> <a href="/tags/dijstra/" style="font-size: 10px;">dijstra</a> <a href="/tags/encounter-cpp/" style="font-size: 10px;">encounter cpp</a> <a href="/tags/filesystem/" style="font-size: 10px;">filesystem</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/smart-pointer/" style="font-size: 10px;">smart-pointer</a> <a href="/tags/static-dynamic-polymorphic/" style="font-size: 10px;">static/dynamic polymorphic</a>
+    </div>
+  </div>
+
   
     
   <div class="widget-wrap">
@@ -503,6 +547,10 @@
       <ul>
         
           <li>
+            <a href="/2023/11/06/effective-modern-cpp/">effective_modern_cpp</a>
+          </li>
+        
+          <li>
             <a href="/2023/11/03/linux-high-performanceserver/">linux-high-performanceserver</a>
           </li>
         
@@ -516,10 +564,6 @@
         
           <li>
             <a href="/2023/08/25/houjiecpp/">houjiecpp</a>
-          </li>
-        
-          <li>
-            <a href="/2023/08/24/cplus-learning/">cplus_learning</a>
           </li>
         
       </ul>
