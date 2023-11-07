@@ -6,10 +6,12 @@
   
   <title>kuli&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
+  <meta name="description" content="c++ 学习爱好者，欢迎交流">
+<meta property="og:type" content="website">
 <meta property="og:title" content="kuli&#39;s blog">
 <meta property="og:url" content="http://example.com/index.html">
 <meta property="og:site_name" content="kuli&#39;s blog">
+<meta property="og:description" content="c++ 学习爱好者，欢迎交流">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
@@ -45,6 +47,10 @@
       <h1 id="logo-wrap">
         <a href="/" id="logo">kuli&#39;s blog</a>
       </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Men are brave</a>
+        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -110,6 +116,7 @@
 <li><a href="#152-keyword-volatile">1.5.2. keyword volatile</a></li>
 </ul>
 </li>
+<li><a href="#move%E6%93%8D%E4%BD%9C">move操作</a></li>
 </ul>
 </li>
 </ul>
@@ -176,6 +183,10 @@
 <ol>
 <li>std::atomic用在并发编程中，对访问特殊内存没用。</li>
 <li>volatile用于访问特殊内存，对并发编程没用。<br>因为std::atomic和volatile用于不同的目的，所以可以结合起来使用：<br><code>volatile std::atomic&lt;int&gt; vai;          //对vai的操作是原子性的，且不能被优化掉</code><br>  如果vai变量关联了内存映射I&#x2F;O的位置，被多个线程并发访问，这会很有用。</li>
+</ol>
+<h2 id="move操作"><a href="#move操作" class="headerlink" title="move操作"></a>move操作</h2><ol>
+<li>std::move只是强制将左值&#x2F;右值统统转换为右值<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">std::remove_reference&lt;T&gt;::<span class="function">type &amp;&amp; <span class="title">move</span><span class="params">(T&amp;&amp; param)</span></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> Returntype =  std::remove_reference&lt;T&gt;::type&amp;&amp;;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;Returntype&gt;(param);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></li>
+<li>虽然string提供了<strong>常数时间</strong>的移动操作和<strong>线性时间</strong>的复制操作由于string的小字符串优化(SSO,指的是当字符串的长度小于某数时，编译器会将其存入缓冲区中，而不是在堆上分配内存，这个长度每个编译器的实现略有区别)，所以此时对字符串的移动操作不一定比复制操作时间快很多</li>
 </ol>
 
       
@@ -251,6 +262,68 @@
 <p><strong>进一步-VFS虚拟文件系统</strong></p>
 <h2 id="Linux中的文件描述符与打开文件之间的关系"><a href="#Linux中的文件描述符与打开文件之间的关系" class="headerlink" title="Linux中的文件描述符与打开文件之间的关系"></a>Linux中的文件描述符与打开文件之间的关系</h2><p>两个不同的文件描述符，若指向同一个打开文件句柄，将共享同一文件偏移量</p>
 <p><a target="_blank" rel="noopener" href="https://www.linuxprobe.com/linux-file-descriptor.html">详情</a></p>
+<h2 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h2><table>
+<thead>
+<tr>
+<th>常用信号</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>信号</td>
+<td>含义</td>
+<td>默认行为</td>
+</tr>
+<tr>
+<td>SIGINT</td>
+<td>键盘输入以中断进程(Ctrl + C)</td>
+<td>term(终止进程)</td>
+</tr>
+<tr>
+<td>SIGQUIT</td>
+<td>键盘输入使进程退出(Ctrl + )</td>
+<td>core（结束进程并生成核心转储文件）</td>
+</tr>
+<tr>
+<td>SIGSTOP</td>
+<td>暂停进程(Ctrl + S), 该信号不得被捕获或者忽略</td>
+<td>stop（暂停进程）</td>
+</tr>
+<tr>
+<td>SIGCHLD</td>
+<td>子进程状态发生变化（退出或者暂停）</td>
+<td>ign(忽略信号)</td>
+</tr>
+</tbody></table>
+<ol>
+<li>信号处理函数指针__sighandler_t<ul>
+<li>系统定义两种处理函数<ul>
+<li>SIG_DFL (__sighandler_t) 0 采用信号默认处理方式 &#x2F;<em>整形-&gt;函数指针强制类型转换</em>&#x2F;</li>
+<li>SIG_IGN (__sighandler_t) 1 忽略信号</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>自定义信号处理函数：sigaction系统调用<br>参数：<ul>
+<li>sig，要捕获的信号</li>
+<li>act，struct sigaction*<ul>
+<li>结构体中的sa_handler是信号处理函数指针，用于指定函数处理函数</li>
+<li>sa_mask，类型为信号集sigset_t，用于设定增加的信号掩码（在原进程基础上）</li>
+<li>sa_flags, 整形数据，用于设置程序接收到信号时的行为<ul>
+<li>如SA_RESTART, 含义是重新调用被该信号终止的系统调用<br>成功返回0，失败返回-1并设置errno</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>struct sigset 用于表示一组信号集，其中定义了一个长整型数组，每个元素的每个位都代表着一个信号</li>
+<li>sigprocmask函数也可以用sigset来指定新的进程掩码，通过how参数可以设置新掩码集和当前掩码集的交互方式</li>
+<li>可以使用sigpending函数获取被挂起的信号集，当通过设置进程掩码导致新的信号被屏蔽时，新的信号会被操作系统设置为挂起的信号，若取消对信号的屏蔽，则可以立刻被进程接收到 </li>
+<li>fork出的子线程会继承父线程的信号集合，但会拥有空的挂起信号集</li>
+<li></li>
+</ol>
 
       
     </div>

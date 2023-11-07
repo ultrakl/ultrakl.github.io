@@ -6,15 +6,15 @@
   
   <title>effective_modern_cpp | kuli&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="1. c++知识点补充 1.1. 杂项 1.2. c++异常处理 1.3. 智能指针 1.4. 特殊成员函数的生成- 1. c++知识点补充 1.5. volatile vs atomic 1.5.1. std::atomic 1.5.2. keyword volatile      1. c++知识点补充1.1. 杂项 c++11 lambda表达式不支持移动捕获和初始化捕获，c++14起开始">
+  <meta name="description" content="1. c++知识点补充 1.1. 杂项 1.2. c++异常处理 1.3. 智能指针 1.4. 特殊成员函数的生成- 1. c++知识点补充 1.5. volatile vs atomic 1.5.1. std::atomic 1.5.2. keyword volatile   move操作    1. c++知识点补充1.1. 杂项 c++11 lambda表达式不支持移动捕获和初始化捕获，c">
 <meta property="og:type" content="article">
 <meta property="og:title" content="effective_modern_cpp">
 <meta property="og:url" content="http://example.com/2023/11/06/effective-modern-cpp/index.html">
 <meta property="og:site_name" content="kuli&#39;s blog">
-<meta property="og:description" content="1. c++知识点补充 1.1. 杂项 1.2. c++异常处理 1.3. 智能指针 1.4. 特殊成员函数的生成- 1. c++知识点补充 1.5. volatile vs atomic 1.5.1. std::atomic 1.5.2. keyword volatile      1. c++知识点补充1.1. 杂项 c++11 lambda表达式不支持移动捕获和初始化捕获，c++14起开始">
+<meta property="og:description" content="1. c++知识点补充 1.1. 杂项 1.2. c++异常处理 1.3. 智能指针 1.4. 特殊成员函数的生成- 1. c++知识点补充 1.5. volatile vs atomic 1.5.1. std::atomic 1.5.2. keyword volatile   move操作    1. c++知识点补充1.1. 杂项 c++11 lambda表达式不支持移动捕获和初始化捕获，c">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-11-06T09:30:50.000Z">
-<meta property="article:modified_time" content="2023-11-06T10:38:31.708Z">
+<meta property="article:modified_time" content="2023-11-06T11:41:36.995Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="smart-pointer">
 <meta name="twitter:card" content="summary">
@@ -50,6 +50,10 @@
       <h1 id="logo-wrap">
         <a href="/" id="logo">kuli&#39;s blog</a>
       </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Men are brave</a>
+        </h2>
       
     </div>
     <div id="header-inner" class="inner">
@@ -113,6 +117,7 @@
 <li><a href="#152-keyword-volatile">1.5.2. keyword volatile</a></li>
 </ul>
 </li>
+<li><a href="#move%E6%93%8D%E4%BD%9C">move操作</a></li>
 </ul>
 </li>
 </ul>
@@ -179,6 +184,10 @@
 <ol>
 <li>std::atomic用在并发编程中，对访问特殊内存没用。</li>
 <li>volatile用于访问特殊内存，对并发编程没用。<br>因为std::atomic和volatile用于不同的目的，所以可以结合起来使用：<br><code>volatile std::atomic&lt;int&gt; vai;          //对vai的操作是原子性的，且不能被优化掉</code><br>  如果vai变量关联了内存映射I&#x2F;O的位置，被多个线程并发访问，这会很有用。</li>
+</ol>
+<h2 id="move操作"><a href="#move操作" class="headerlink" title="move操作"></a>move操作</h2><ol>
+<li>std::move只是强制将左值&#x2F;右值统统转换为右值<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">std::remove_reference&lt;T&gt;::<span class="function">type &amp;&amp; <span class="title">move</span><span class="params">(T&amp;&amp; param)</span></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> Returntype =  std::remove_reference&lt;T&gt;::type&amp;&amp;;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;Returntype&gt;(param);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></li>
+<li>虽然string提供了<strong>常数时间</strong>的移动操作和<strong>线性时间</strong>的复制操作由于string的小字符串优化(SSO,指的是当字符串的长度小于某数时，编译器会将其存入缓冲区中，而不是在堆上分配内存，这个长度每个编译器的实现略有区别)，所以此时对字符串的移动操作不一定比复制操作时间快很多</li>
 </ol>
 
       
