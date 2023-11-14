@@ -1,18 +1,28 @@
+
+
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
   
-  <title>network &amp; high concurrency | kuli&#39;s blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="1. 网络编程 1.1. 字符串处理函数 1.2. IO模型 1.3. IO复用   2. pthread - 符合POSIX标准的线程库 2.1. 线程的取消 2.2. 线程的加入 2.3. 一些关于编程的底层知识补充   3. 并发编程 3.1. std::thread 3.2. std::future 3.3. condition_variable &amp; mutex 3.4. loc">
+    <meta name="description" content="1. 网络编程 1.1. 字符串处理函数 1.2. IO模型 1.3. IO复用   2. pthread - 符合POSIX标准的线程库 2.1. 线程的取消 2.2. 线程的加入 2.3. 一些关于编程的底层知识补充   3. 并发编程 3.1. std::thread 3.2. std::future 3.3. condition_variable &amp; mutex 3.4. loc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="network &amp; high concurrency">
 <meta property="og:url" content="http://example.com/2023/09/19/network-high-concurrency/index.html">
 <meta property="og:site_name" content="kuli&#39;s blog">
 <meta property="og:description" content="1. 网络编程 1.1. 字符串处理函数 1.2. IO模型 1.3. IO复用   2. pthread - 符合POSIX标准的线程库 2.1. 线程的取消 2.2. 线程的加入 2.3. 一些关于编程的底层知识补充   3. 并发编程 3.1. std::thread 3.2. std::future 3.3. condition_variable &amp; mutex 3.4. loc">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/arp%E6%8A%A5%E6%96%87.png">
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/ethernetframe.png">
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/Snipaste_2023-09-22_22-37-24.png">
@@ -24,97 +34,254 @@
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="POSIX socket">
 <meta property="article:tag" content="c11&#x2F;14 thread&#x2F;future">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/2023/09/19/network-high-concurrency/arp%E6%8A%A5%E6%96%87.png">
   
-    <link rel="alternate" href="/atom.xml" title="kuli's blog" type="application/atom+xml">
   
   
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+  <title>network &amp; high concurrency - kuli&#39;s blog</title>
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
   
 <meta name="generator" content="Hexo 6.3.0"></head>
 
+
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">kuli&#39;s blog</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">Men are brave</a>
-        </h2>
-      
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="network &amp; high concurrency"></span>
+          
+        </div>
+
         
-          <a class="main-nav-link" href="/">Home</a>
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-19 17:39" pubdate>
+          2023年9月19日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
         
-          <a class="main-nav-link" href="/archives">Archives</a>
+          7.8k 字
         
-      </nav>
-      <nav id="sub-nav">
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
         
         
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
         
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+          65 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
       </div>
+
+      
     </div>
   </div>
-</header>
+</div>
 
-      <div class="outer">
-        <section id="main"><article id="post-network-high-concurrency" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/09/19/network-high-concurrency/" class="article-date">
-  <time class="dt-published" datetime="2023-09-19T09:39:14.000Z" itemprop="datePublished">2023-09-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/GNU-linux/">GNU/linux</a>►<a class="article-category-link" href="/categories/cpp-related/">cpp related</a>
-  </div>
+</div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      network &amp; high concurrency
-    </h1>
-  
+  </header>
 
-      </header>
+  <main>
     
-    <div class="e-content article-entry" itemprop="articleBody">
       
-        <ul>
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">network &amp; high concurrency</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <ul>
 <li><a href="#1-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B">1. 网络编程</a><ul>
 <li><a href="#11-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0">1.1. 字符串处理函数</a></li>
 <li><a href="#12-io%E6%A8%A1%E5%9E%8B">1.2. IO模型</a></li>
@@ -183,10 +350,10 @@
 </tr>
 </tbody></table>
 <ol>
-<li>ARP协议主要用来向自己所在的网络广播一个ARP请求,该请求包含目标机器的网络地址。此网络上的其他机器都将收到这个请求，但只有被请求的目标机器会回应一个ARP应答，其中包含自己的物理地址<br> <img src="/2023/09/19/network-high-concurrency/arp%E6%8A%A5%E6%96%87.png" alt="arp报文"><br> <img src="/2023/09/19/network-high-concurrency/ethernetframe.png" alt="以太网帧"></li>
-<li>使用telnet在同网络机器中进行远程连接，在一台机器上使用tcpdump进行以太网帧捕捉，捕捉结果显示类型为ARP，ARP报文长度为28字节，被封装在以太网帧中，并且根据以太网帧头部信息长度和ARP报文长度来看，帧总长应为46字节，这里显示42字节表示不考虑尾部4字节的CRC字段（对头部和数据进行循环冗余校验）<br> <img src="/2023/09/19/network-high-concurrency/Snipaste_2023-09-22_22-37-24.png" alt="tcpdump检测结果"></li>
+<li>ARP协议主要用来向自己所在的网络广播一个ARP请求,该请求包含目标机器的网络地址。此网络上的其他机器都将收到这个请求，但只有被请求的目标机器会回应一个ARP应答，其中包含自己的物理地址<br> <img src="/2023/09/19/network-high-concurrency/arp%E6%8A%A5%E6%96%87.png" srcset="/img/loading.gif" lazyload alt="arp报文"><br> <img src="/2023/09/19/network-high-concurrency/ethernetframe.png" srcset="/img/loading.gif" lazyload alt="以太网帧"></li>
+<li>使用telnet在同网络机器中进行远程连接，在一台机器上使用tcpdump进行以太网帧捕捉，捕捉结果显示类型为ARP，ARP报文长度为28字节，被封装在以太网帧中，并且根据以太网帧头部信息长度和ARP报文长度来看，帧总长应为46字节，这里显示42字节表示不考虑尾部4字节的CRC字段（对头部和数据进行循环冗余校验）<br> <img src="/2023/09/19/network-high-concurrency/Snipaste_2023-09-22_22-37-24.png" srcset="/img/loading.gif" lazyload alt="tcpdump检测结果"></li>
 <li>无状态（ stateless ）是指IP通信双方不同步传输数据的状态信息，因此所有IP数据报的发送、传输和接收都是相互独立、没有上下文关系的。这种服务最大的缺点是无法处理乱序<br>和重复的 IP 数据报 。 比如发送端发送出的第 N 个 IP 数据报可能比第 N + 1个IP数据报后到</li>
-<li>计算机电路先处理低位字节，效率比较高，因为计算都是从低位开始的。所以，计算机的内部处理都是小端字节序。在计算机内部，小端序被广泛应用于现代 CPU 内部存储数据；而在其他场景，比如网络传输和文件存储则使用大端序。<br><img src="/2023/09/19/network-high-concurrency/v2-233887068992518bb4eec56de043d1b2_r.jpg" alt="大端序和小端序"></li>
+<li>计算机电路先处理低位字节，效率比较高，因为计算都是从低位开始的。所以，计算机的内部处理都是小端字节序。在计算机内部，小端序被广泛应用于现代 CPU 内部存储数据；而在其他场景，比如网络传输和文件存储则使用大端序。<br><img src="/2023/09/19/network-high-concurrency/v2-233887068992518bb4eec56de043d1b2_r.jpg" srcset="/img/loading.gif" lazyload alt="大端序和小端序"></li>
 <li>tcp&#x2F;ip新感悟<ul>
 <li>tcp通信双方在连接初始化，即发送同步报文段中要确定MSS及扩大窗口因子的大小，这样可以有效防止ip模块进行分片处理</li>
 <li>http和udp都是无状态协议，即每个http请求之间没有上下文关系，解决办法为设置cookie，服务器向客户端发送cookie，客户端每次请求时都会带上cookie（通过HTTP头部字段cookie），这样服务器就可以区别不同客户</li>
@@ -225,7 +392,7 @@
 <h3 id="2-pthread-符合POSIX标准的线程库"><a href="#2-pthread-符合POSIX标准的线程库" class="headerlink" title="2. pthread - 符合POSIX标准的线程库"></a>2. pthread - 符合POSIX标准的线程库</h3><h4 id="2-1-线程的取消"><a href="#2-1-线程的取消" class="headerlink" title="2.1. 线程的取消"></a>2.1. 线程的取消</h4><ol>
 <li>如果想在线程执行时取消该线程。可以使用pthread_cancel(thread)来完成此操作,该函数向指定线程发出一个取消请求，。但是，请记住需要启用 pthread 取消支持。此外，还有取消时的清理代码。</li>
 </ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">thread_cleanup_push</span>(my_thread_cleanup_handler, resources);</span><br><span class="line"><span class="built_in">pthread_setcancelstate</span>(PTHREAD_CANCEL_ENABLE, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">my_thread_cleanup_handler</span><span class="params">(<span class="type">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// free</span></span><br><span class="line">  <span class="comment">// close, fclose</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-built_in">thread_cleanup_push</span>(my_thread_cleanup_handler, resources);<br><span class="hljs-built_in">pthread_setcancelstate</span>(PTHREAD_CANCEL_ENABLE, <span class="hljs-number">0</span>);<br><br><span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title">my_thread_cleanup_handler</span><span class="hljs-params">(<span class="hljs-type">void</span> *arg)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-comment">// free</span><br>  <span class="hljs-comment">// close, fclose</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <ol start="2">
 <li>一个线程的取消类型，由**pthread_setcanceltype(3)**确定，可以是异步的(PTHREAD_CANCEL_ASYNCHRONOUS)或延迟的(PTHREAD_CANCEL_DEFERRED)（新线程的默认值）。异步可取消性意味着线程可以随时被取消（通常是立即，但系统不保证这一点）。延迟可取消性意味着取消将被延迟，直到线程下次调用一个是取消点(cancel_point)的函数。</li>
 <li>线程的可取消状态由**pthread_setcancelstate(3)**确定，可以启用（新线程的默认值）或禁用。如果线程已禁用取消，则取消请求将保持排队状态，直到线程启用取消。如果线程已启用取消，则其可取消性类型确定何时发生取消。</li>
@@ -284,7 +451,7 @@
 <li>thread作为软件线程的句柄可调用native_handle来返回tid，之后可以通过其他方法来设置线程优先级和调度策略，<strong>这是future做不到的</strong></li>
 <li>为了防止线程终止，可以构造RAII类型对象，在析构时通过构造实参指定的join或者detach来指定析构方法</li>
 </ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ThreadRAII</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">enum class</span> <span class="title class_">DtorAction</span> &#123; join, detach &#125;;         <span class="comment">//跟之前一样</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">ThreadRAII</span>(std::thread&amp;&amp; t, DtorAction a)       <span class="comment">//跟之前一样</span></span><br><span class="line">    : <span class="built_in">action</span>(a), <span class="built_in">t</span>(std::<span class="built_in">move</span>(t)) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    ~<span class="built_in">ThreadRAII</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        …                                           <span class="comment">//跟之前一样</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">ThreadRAII</span>(ThreadRAII&amp;&amp;) = <span class="keyword">default</span>;             <span class="comment">//支持移动</span></span><br><span class="line">    ThreadRAII&amp; <span class="keyword">operator</span>=(ThreadRAII&amp;&amp;) = <span class="keyword">default</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">std::thread&amp; <span class="title">get</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> t; &#125;                <span class="comment">//跟之前一样</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>: <span class="comment">// as before</span></span><br><span class="line">    DtorAction action;</span><br><span class="line">    std::thread t;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ThreadRAII</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">enum class</span> <span class="hljs-title class_">DtorAction</span> &#123; join, detach &#125;;         <span class="hljs-comment">//跟之前一样</span><br><br>    <span class="hljs-built_in">ThreadRAII</span>(std::thread&amp;&amp; t, DtorAction a)       <span class="hljs-comment">//跟之前一样</span><br>    : <span class="hljs-built_in">action</span>(a), <span class="hljs-built_in">t</span>(std::<span class="hljs-built_in">move</span>(t)) &#123;&#125;<br><br>    ~<span class="hljs-built_in">ThreadRAII</span>()<br>    &#123;<br>        …                                           <span class="hljs-comment">//跟之前一样</span><br>    &#125;<br><br>    <span class="hljs-built_in">ThreadRAII</span>(ThreadRAII&amp;&amp;) = <span class="hljs-keyword">default</span>;             <span class="hljs-comment">//支持移动</span><br>    ThreadRAII&amp; <span class="hljs-keyword">operator</span>=(ThreadRAII&amp;&amp;) = <span class="hljs-keyword">default</span>;<br><br>    <span class="hljs-function">std::thread&amp; <span class="hljs-title">get</span><span class="hljs-params">()</span> </span>&#123; <span class="hljs-keyword">return</span> t; &#125;                <span class="hljs-comment">//跟之前一样</span><br><br><span class="hljs-keyword">private</span>: <span class="hljs-comment">// as before</span><br>    DtorAction action;<br>    std::thread t;<br>&#125;;<br><br></code></pre></td></tr></table></figure>
 <blockquote>
 <p>按理来说当显式生成析构函数时，编译器不会再主动生成移动构造和移动赋值函数，但当对象是可以逐成员移动时，我们可以显式default声明移动函数来保证移动操作是可以被执行的  </p>
 </blockquote>
@@ -295,9 +462,9 @@
 <li>与thread不同，在使用默认策略启动时，不一定会使用异步执行，这种调用方式将线程管理的职责转交给C++标准库的开发者。举个例子，这种调用方式会减少抛出资源超额异常的可能性</li>
 <li>std::launch::deferred启动策略意味着f仅当在std::async返回的future上调用get或者wait时才执行。这表示f推迟到存在这样的调用时才执行</li>
 <li>默认启动策略的调度灵活性导致使用thread_local变量比较麻烦，因为这意味着如果f读写了线程本地存储（thread-local storage，TLS），不可能预测到哪个线程的变量被访问<br>可以使用 <code>fut.wait_for(0s) == std::future_status::deferred</code> 检查函数是否被延时</li>
-<li>future是通信信道的一端，被调用者通过该信道将结果发送给调用者。被调用者（通常是异步执行）将计算结果写入通信信道中（通常通过std::promise对象），调用者使用future读取结果, 除了这种普通用途外还可以将promise模板实参设为void，用来当作<strong>条件变量</strong>通知future对象，future所在线程调用wait方法将会阻塞直到结果返回，这种方法好处在于不再需要互斥锁，条件变量，或者原子变量，并且可以用来设置线程优先级，使得线程在创建时不会自动运行，处于挂起状态，坏处在于通道的值只能设置一次，线程也只能被挂起一次。<br>  <img src="/2023/09/19/network-high-concurrency/item38_fig1.png" alt="future信道"></li>
+<li>future是通信信道的一端，被调用者通过该信道将结果发送给调用者。被调用者（通常是异步执行）将计算结果写入通信信道中（通常通过std::promise对象），调用者使用future读取结果, 除了这种普通用途外还可以将promise模板实参设为void，用来当作<strong>条件变量</strong>通知future对象，future所在线程调用wait方法将会阻塞直到结果返回，这种方法好处在于不再需要互斥锁，条件变量，或者原子变量，并且可以用来设置线程优先级，使得线程在创建时不会自动运行，处于挂起状态，坏处在于通道的值只能设置一次，线程也只能被挂起一次。<br>  <img src="/2023/09/19/network-high-concurrency/item38_fig1.png" srcset="/img/loading.gif" lazyload alt="future信道"></li>
 <li>因为与被调用者关联的对象和与调用者关联的对象都不适合存储这个结果，所以调用结果必须存储在两者之外的位置。此位置称为共享状态（shared state）。共享状态通常是基于堆的对象，一般来说对于future对象拥有这个共享状态的控制权，或者说引用了共享状态，析构时引用该状态的future会自动阻塞并且等待任务完成</li>
-<li>future不能被拷贝，但他却可以用来构造shared_future，之后转交共享状态的控制权，shared_future在并发访问时可以用来为每个线程构造副本来共享共享状态的拥有权，设置std::promise::set_value()可以在多线程使用wait来唤起多个线程<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">std::promise&lt;<span class="type">void</span>&gt; p;                   <span class="comment">//跟之前一样</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">detect</span><span class="params">()</span>                           <span class="comment">//现在针对多个反映线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> sf = p.<span class="built_in">get_future</span>().<span class="built_in">share</span>();   <span class="comment">//sf的类型是std::shared_future&lt;void&gt;</span></span><br><span class="line">    std::vector&lt;std::thread&gt; vt;        <span class="comment">//反应线程容器</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; threadsToRun; ++i) &#123;</span><br><span class="line">        vt.<span class="built_in">emplace_back</span>([sf]&#123; sf.<span class="built_in">wait</span>();    <span class="comment">//在sf的局部副本上wait；</span></span><br><span class="line">                              <span class="built_in">react</span>(); &#125;);  <span class="comment">//emplace_back见条款42</span></span><br><span class="line">    &#125;</span><br><span class="line">    …                                   <span class="comment">//如果这个“…”抛出异常，detect挂起！</span></span><br><span class="line">    p.<span class="built_in">set_value</span>();                      <span class="comment">//所有线程解除挂起</span></span><br><span class="line">    …</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; t : vt) &#123;                <span class="comment">//使所有线程不可结合；</span></span><br><span class="line">        t.<span class="built_in">join</span>();                       <span class="comment">//“auto&amp;”见条款2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>future不能被拷贝，但他却可以用来构造shared_future，之后转交共享状态的控制权，shared_future在并发访问时可以用来为每个线程构造副本来共享共享状态的拥有权，设置std::promise::set_value()可以在多线程使用wait来唤起多个线程<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c++">std::promise&lt;<span class="hljs-type">void</span>&gt; p;                   <span class="hljs-comment">//跟之前一样</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">detect</span><span class="hljs-params">()</span>                           <span class="hljs-comment">//现在针对多个反映线程</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">auto</span> sf = p.<span class="hljs-built_in">get_future</span>().<span class="hljs-built_in">share</span>();   <span class="hljs-comment">//sf的类型是std::shared_future&lt;void&gt;</span><br>    std::vector&lt;std::thread&gt; vt;        <span class="hljs-comment">//反应线程容器</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; threadsToRun; ++i) &#123;<br>        vt.<span class="hljs-built_in">emplace_back</span>([sf]&#123; sf.<span class="hljs-built_in">wait</span>();    <span class="hljs-comment">//在sf的局部副本上wait；</span><br>                              <span class="hljs-built_in">react</span>(); &#125;);  <span class="hljs-comment">//emplace_back见条款42</span><br>    &#125;<br>    …                                   <span class="hljs-comment">//如果这个“…”抛出异常，detect挂起！</span><br>    p.<span class="hljs-built_in">set_value</span>();                      <span class="hljs-comment">//所有线程解除挂起</span><br>    …<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; t : vt) &#123;                <span class="hljs-comment">//使所有线程不可结合；</span><br>        t.<span class="hljs-built_in">join</span>();                       <span class="hljs-comment">//“auto&amp;”见条款2</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
 <h4 id="3-3-condition-variable-mutex"><a href="#3-3-condition-variable-mutex" class="headerlink" title="3.3. condition_variable &amp; mutex"></a>3.3. condition_variable &amp; mutex</h4><ol>
 <li>cv.Wait(lock<which is basically unique_lock>, bool function)会导致当前线程阻塞，直到条件变量被通知或发生假唤醒，或者循环直到满足某个谓词</li>
@@ -307,157 +474,386 @@
 <li>wait function causes the current thread to block until the condition variable is notified or a spurious wakeup occurs, optionally looping until some predicate is satisfied</li>
 </ol>
 
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
       
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/09/19/network-high-concurrency/" data-id="cloy78eo30004hctlhlj1d25z" data-title="network &amp; high concurrency" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/POSIX-socket/" rel="tag">POSIX socket</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c11-14-thread-future/" rel="tag">c11&#x2F;14 thread&#x2F;future</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
 
-    </footer>
-  </div>
+<span class="category-chains">
+  
   
     
-<nav id="article-nav">
+      <span class="category-chain">
+        
+  <a href="/categories/cpp-related/" class="category-chain-item">cpp related</a>
   
-    <a href="/2023/09/30/cmake-and-so-on/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
+  
+
+      </span>
+    
+  
+    
+      <span class="category-chain">
         
-          cmake and so_on
-        
+  <a href="/categories/GNU-linux/" class="category-chain-item">GNU/linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/linux/" class="print-no-link">#linux</a>
+      
+        <a href="/tags/POSIX-socket/" class="print-no-link">#POSIX socket</a>
+      
+        <a href="/tags/c11-14-thread-future/" class="print-no-link">#c11/14 thread/future</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>network &amp; high concurrency</div>
+      <div>http://example.com/2023/09/19/network-high-concurrency/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年9月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/09/30/cmake-and-so-on/" title="cmake and so_on">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">cmake and so_on</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/08/25/houjiecpp/" title="houjiecpp">
+                        <span class="hidden-mobile">houjiecpp</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
       </div>
-    </a>
-  
-  
-    <a href="/2023/08/25/houjiecpp/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">houjiecpp</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GNU-linux/">GNU/linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/command-line/">command line</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpp-related/">cpp related</a></li></ul>
     </div>
-  </div>
 
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/POSIX-socket/" rel="tag">POSIX socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/POSIX-system-call/" rel="tag">POSIX system call</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c11-14-syntax/" rel="tag">c11&#x2F;14 syntax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c11-14-thread-future/" rel="tag">c11&#x2F;14 thread&#x2F;future</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmake/" rel="tag">cmake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpp-memory-model/" rel="tag">cpp memory model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dijstra/" rel="tag">dijstra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/encounter-cpp/" rel="tag">encounter cpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/filesystem/" rel="tag">filesystem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash-table/" rel="tag">hash table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/smart-pointer/" rel="tag">smart-pointer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static-dynamic-polymorphic/" rel="tag">static&#x2F;dynamic polymorphic</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/POSIX-socket/" style="font-size: 10px;">POSIX socket</a> <a href="/tags/POSIX-system-call/" style="font-size: 10px;">POSIX system call</a> <a href="/tags/c11-14-syntax/" style="font-size: 10px;">c11/14 syntax</a> <a href="/tags/c11-14-thread-future/" style="font-size: 10px;">c11/14 thread/future</a> <a href="/tags/cmake/" style="font-size: 10px;">cmake</a> <a href="/tags/cpp-memory-model/" style="font-size: 10px;">cpp memory model</a> <a href="/tags/dijstra/" style="font-size: 10px;">dijstra</a> <a href="/tags/encounter-cpp/" style="font-size: 10px;">encounter cpp</a> <a href="/tags/filesystem/" style="font-size: 10px;">filesystem</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/smart-pointer/" style="font-size: 10px;">smart-pointer</a> <a href="/tags/static-dynamic-polymorphic/" style="font-size: 10px;">static/dynamic polymorphic</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2023/11/06/effective-modern-cpp/">effective_modern_cpp</a>
-          </li>
-        
-          <li>
-            <a href="/2023/11/03/linux-high-performanceserver/">linux-high-performanceserver</a>
-          </li>
-        
-          <li>
-            <a href="/2023/09/30/cmake-and-so-on/">cmake and so_on</a>
-          </li>
-        
-          <li>
-            <a href="/2023/09/19/network-high-concurrency/">network &amp; high concurrency</a>
-          </li>
-        
-          <li>
-            <a href="/2023/08/25/houjiecpp/">houjiecpp</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
+    <div class="side-col d-none d-lg-block col-lg-2">
       
-      &copy; 2023 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
 
     </div>
-    <nav id="mobile-nav">
+  </div>
+</div>
+
+
+
+
+
   
-    <a href="/" class="mobile-nav-link">Home</a>
+
+
+
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+
+
+
   
-</nav>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
     
 
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-<script src="/js/jquery-3.6.4.min.js"></script>
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
 
 
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
 
-<script src="/js/script.js"></script>
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
 
 
 
 
 
-  </div>
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>

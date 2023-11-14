@@ -1,18 +1,28 @@
+
+
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
   
-  <title>houjiecpp | kuli&#39;s blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="1. 2023&#x2F;08&#x2F;29 2. 2023&#x2F;08&#x2F;29 2.1. unicode 2.2. 非类型形参的局限： 2.3. 非类型实参的局限： 2.4. 编译时常量表达式 2.5. 隐式转换 2.6. 设计模式 2.7. 智能指针 2.8. 右值 2.9. 模板杂类 2.10. lambda 2.11. 成员函数指针 2.12. 数据成员指针 2.13. 虚">
+    <meta name="description" content="1. 2023&#x2F;08&#x2F;29 2. 2023&#x2F;08&#x2F;29 2.1. unicode 2.2. 非类型形参的局限： 2.3. 非类型实参的局限： 2.4. 编译时常量表达式 2.5. 隐式转换 2.6. 设计模式 2.7. 智能指针 2.8. 右值 2.9. 模板杂类 2.10. lambda 2.11. 成员函数指针 2.12. 数据成员指针 2.13. 虚">
 <meta property="og:type" content="article">
 <meta property="og:title" content="houjiecpp">
 <meta property="og:url" content="http://example.com/2023/08/25/houjiecpp/index.html">
 <meta property="og:site_name" content="kuli&#39;s blog">
 <meta property="og:description" content="1. 2023&#x2F;08&#x2F;29 2. 2023&#x2F;08&#x2F;29 2.1. unicode 2.2. 非类型形参的局限： 2.3. 非类型实参的局限： 2.4. 编译时常量表达式 2.5. 隐式转换 2.6. 设计模式 2.7. 智能指针 2.8. 右值 2.9. 模板杂类 2.10. lambda 2.11. 成员函数指针 2.12. 数据成员指针 2.13. 虚">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2023/08/25/houjiecpp/structure.png">
 <meta property="article:published_time" content="2023-08-25T02:48:38.000Z">
 <meta property="article:modified_time" content="2023-11-06T09:26:44.600Z">
@@ -20,97 +30,254 @@
 <meta property="article:tag" content="c11&#x2F;14 syntax">
 <meta property="article:tag" content="cpp memory model">
 <meta property="article:tag" content="static&#x2F;dynamic polymorphic">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/2023/08/25/houjiecpp/structure.png">
   
-    <link rel="alternate" href="/atom.xml" title="kuli's blog" type="application/atom+xml">
   
   
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+  <title>houjiecpp - kuli&#39;s blog</title>
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
   
 <meta name="generator" content="Hexo 6.3.0"></head>
 
+
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">kuli&#39;s blog</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">Men are brave</a>
-        </h2>
-      
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
     </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="houjiecpp"></span>
+          
+        </div>
+
         
-          <a class="main-nav-link" href="/">Home</a>
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-25 10:48" pubdate>
+          2023年8月25日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
         
-          <a class="main-nav-link" href="/archives">Archives</a>
+          18k 字
         
-      </nav>
-      <nav id="sub-nav">
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
         
         
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
         
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+          147 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
       </div>
+
+      
     </div>
   </div>
-</header>
+</div>
 
-      <div class="outer">
-        <section id="main"><article id="post-houjiecpp" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/08/25/houjiecpp/" class="article-date">
-  <time class="dt-published" datetime="2023-08-25T02:48:38.000Z" itemprop="datePublished">2023-08-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/cpp-related/">cpp related</a>
-  </div>
+</div>
 
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="p-name article-title" itemprop="headline name">
-      houjiecpp
-    </h1>
-  
+  </header>
 
-      </header>
+  <main>
     
-    <div class="e-content article-entry" itemprop="articleBody">
       
-        <ul>
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">houjiecpp</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <ul>
 <li><a href="#1-20230829">1. 2023&#x2F;08&#x2F;29</a></li>
 <li><a href="#2-20230829">2. 2023&#x2F;08&#x2F;29</a><ul>
 <li><a href="#21-unicode">2.1. unicode</a></li>
@@ -198,7 +365,7 @@
 </ol>
 </li>
 <li>如果非类型形参类型为对象指针，则必须传入完整对象的地址，不能是指向该对象的指针</li>
-<li>如下，如果数组类型形参不是引用传递而是值传递，数组会自动降一维，成为一个指向一维数组的指针<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="type">size_t</span> w, <span class="type">size_t</span> h&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">double</span> (&amp;s)[w][h])</span></span>&#123;cout&lt;&lt;s[<span class="number">0</span>]&lt;&lt;endl;&#125;</span><br></pre></td></tr></table></figure></li>
+<li>如下，如果数组类型形参不是引用传递而是值传递，数组会自动降一维，成为一个指向一维数组的指针<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-type">size_t</span> w, <span class="hljs-type">size_t</span> h&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">double</span> (&amp;s)[w][h])</span></span>&#123;cout&lt;&lt;s[<span class="hljs-number">0</span>]&lt;&lt;endl;&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="2-4-编译时常量表达式"><a href="#2-4-编译时常量表达式" class="headerlink" title="2.4. 编译时常量表达式"></a>2.4. 编译时常量表达式</h2><ul>
 <li>整形常量为如果被常量表达式初始化则为常量表达式 ，也可以用于初始化其他常量表达式，其他类型目前未知</li>
@@ -208,11 +375,11 @@
 <li>Point的构造函数可被声明为constexpr，因为如果传入的参数在编译期可知，Point的数据成员也能在编译器可知。因此这样初始化的Point就能为constexpr </li>
 <li>声明为constexpr的<strong>静态</strong>成员对象是<strong>内联</strong>的，在odr-use时可以不用在类外定义，lambda表达式中被odr-use的变量一定要被捕获，被捕获的变量不论是不是constexpr都不能用于常量表达式</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">magic</span> &#123;</span><br><span class="line">  <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> number = <span class="number">42</span>; <span class="comment">//c++17引入内联变量的概念，此处使用constexpr默认为内联，</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  std::vector&lt;<span class="type">int</span>&gt; v;</span><br><span class="line">  <span class="comment">// 调用 push_back(const T&amp;)</span></span><br><span class="line">  v.<span class="built_in">push_back</span>(magic::number);</span><br><span class="line">  std::cout &lt;&lt; v[<span class="number">0</span>] &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;vector&gt;</span></span><br><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">magic</span> &#123;<br>  <span class="hljs-type">static</span> <span class="hljs-keyword">constexpr</span> <span class="hljs-type">int</span> number = <span class="hljs-number">42</span>; <span class="hljs-comment">//c++17引入内联变量的概念，此处使用constexpr默认为内联，</span><br>&#125;;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>  std::vector&lt;<span class="hljs-type">int</span>&gt; v;<br>  <span class="hljs-comment">// 调用 push_back(const T&amp;)</span><br>  v.<span class="hljs-built_in">push_back</span>(magic::number);<br>  std::cout &lt;&lt; v[<span class="hljs-number">0</span>] &lt;&lt; std::endl;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
 <li>在函数体内定义的constexpr变量不能用于初始化constexpr引用，constexpr引用必须被静态存储或<em>线程局部</em>常量表达式初始化（也称左值核心常量表达式）</li>
 <li>constexpr的变量也是在运行期给予地址的，所以取地址不是常量表达式</li>
-<li>constexpr变量模板，之前我们需要用类静态数据成员来表达的东西，使用变量模板可以更简洁地表达。constexpr 很合适用在变量模板里，表达一个和某个类型相关的编译期常量。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="type">bool</span></span><br><span class="line">  is_trivially_destructible_v =</span><br><span class="line">    is_trivially_destructible&lt;</span><br><span class="line">      T&gt;::value;  <span class="comment">//判断类是否能平凡析构，指是否不调用析构函数也能正确回收资源</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>constexpr变量模板，之前我们需要用类静态数据成员来表达的东西，使用变量模板可以更简洁地表达。constexpr 很合适用在变量模板里，表达一个和某个类型相关的编译期常量。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++"><br><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>&gt;<br><span class="hljs-keyword">inline</span> <span class="hljs-keyword">constexpr</span> <span class="hljs-type">bool</span><br>  is_trivially_destructible_v =<br>    is_trivially_destructible&lt;<br>      T&gt;::value;  <span class="hljs-comment">//判断类是否能平凡析构，指是否不调用析构函数也能正确回收资源</span><br><br></code></pre></td></tr></table></figure></li>
 </ul>
 <blockquote>
 <p>个人对于常量表达式的理解目前仍旧比较浅显，cppreference关于constexpr的叙述看的好像明白又好像完全不懂…</p>
@@ -230,7 +397,7 @@
 <hr>
 <h2 id="2-6-设计模式"><a href="#2-6-设计模式" class="headerlink" title="2.6. 设计模式"></a>2.6. 设计模式</h2><ul>
 <li><p>观察者模式是一种行为设计模式， 允许你定义一种订阅机制， 可在对象事件发生时通知多个 “观察” 该对象的其他对象。</p>
-<p><img src="/2023/08/25/houjiecpp/structure.png" alt="observer示例"></p>
+<p><img src="/2023/08/25/houjiecpp/structure.png" srcset="/img/loading.gif" lazyload alt="observer示例"></p>
 </li>
 <li><p>奇怪的重复模板模式 （CRTP ）</p>
 </li>
@@ -253,21 +420,21 @@
 <li><p>c++模板是图灵完全的，可以在编译期对模板类进行求值,要进行编译期编程，最主要的一点，是需要把计算转变成类型推导。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/fegus/article/details/130338576?ops_request_misc=&request_id=38815c79755449fe82293d93350e9293&biz_id=&utm_medium=distribute.pc_search_result.none-task-blog-2~blog~koosearch~default-9-130338576-null-null.268%5Ev1%5Econtrol&utm_term=%E7%8E%B0%E4%BB%A3&spm=1018.2226.3001.4450">现代c++编程实战中关于模板编译期计算的讲解</a></p>
 </li>
 <li><p>T&amp;&amp; 当T作为成员函数模板形参时，表现出通用引用，或转发引用，根据传递的左值或者右值来决定是左值还是右值引用，而如同complex&amp;&amp;此类直接指定类名或者在模板类中指定T，亦或者将T&amp;&amp;前加上cv限定，一般都属于右值引用</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; </span><br><span class="line"><span class="built_in">complex</span>(T&amp;&amp;)&#123;&#125; <span class="comment">// forward reference</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">template</span> &lt;<span class="hljs-keyword">typename</span> T&gt; <br><span class="hljs-built_in">complex</span>(T&amp;&amp;)&#123;&#125; <span class="hljs-comment">// forward reference</span><br></code></pre></td></tr></table></figure>
 <ul>
 <li>一般来说都用std::forward<T>(param)来转发通用引用（有条件的转为右值引用），用std::move将右值引用转为右值，且不会影响cv限定</li>
 </ul>
 </li>
 <li><p>如果你在按值返回的函数中，返回值绑定到右值引用或者通用引用上，需要对返回的引用使用std::move或者std::forward。要了解原因，考虑两个矩阵相加的operator+函数，左侧的矩阵为右值（可以被用来保存求值之后的和）：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Matrix                              <span class="comment">//按值返回</span></span><br><span class="line"><span class="keyword">operator</span>+(Matrix&amp;&amp; lhs, <span class="type">const</span> Matrix&amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    lhs += rhs;</span><br><span class="line">    <span class="keyword">return</span> std::<span class="built_in">move</span>(lhs);	        <span class="comment">//移动lhs到返回值中</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c++">Matrix                              <span class="hljs-comment">//按值返回</span><br><span class="hljs-keyword">operator</span>+(Matrix&amp;&amp; lhs, <span class="hljs-type">const</span> Matrix&amp; rhs)<br>&#123;<br>    lhs += rhs;<br>    <span class="hljs-keyword">return</span> std::<span class="hljs-built_in">move</span>(lhs);	        <span class="hljs-comment">//移动lhs到返回值中</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
 <li><p>通过在return语句中将lhs转换为右值（通过std::move），lhs可以移动到返回值的内存位置。如果省略了std::move调用，</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Matrix                              <span class="comment">//同之前一样</span></span><br><span class="line"><span class="keyword">operator</span>+(Matrix&amp;&amp; lhs, <span class="type">const</span> Matrix&amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    lhs += rhs;</span><br><span class="line">    <span class="keyword">return</span> lhs;                     <span class="comment">//拷贝lhs到返回值中</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c++">Matrix                              <span class="hljs-comment">//同之前一样</span><br><span class="hljs-keyword">operator</span>+(Matrix&amp;&amp; lhs, <span class="hljs-type">const</span> Matrix&amp; rhs)<br>&#123;<br>    lhs += rhs;<br>    <span class="hljs-keyword">return</span> lhs;                     <span class="hljs-comment">//拷贝lhs到返回值中</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
 <li><p>lhs是个左值的事实，会强制编译器拷贝它到返回值的内存空间。假定Matrix支持移动操作，并且比拷贝操作效率更高，在return语句中使用std::move的代码效率更高。</p>
 </li>
 <li><p>模板在使用之前必须先声明。模板的使用由友元声明构成，不是由模板的声明构成。实际的模板声明必须在友元声明之前。例如，编译系统尝试链接以下示例中生成的目标文件时，对未实例化的 operator&lt;&lt; 函数，会生成未定义错误。</p>
 <ul>
 <li>友元类，友元函数的相关知识<ul>
-<li>在 C++11 中，一个类有两种形式的友元声明：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">friend</span> <span class="keyword">class</span> <span class="title class_">F</span>;</span><br><span class="line"><span class="keyword">friend</span> F;</span><br></pre></td></tr></table></figure>
+<li>在 C++11 中，一个类有两种形式的友元声明：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">friend</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">F</span>;<br><span class="hljs-keyword">friend</span> F;<br></code></pre></td></tr></table></figure>
 如果最内层的命名空间中找不到任何具有该名称的现有类，则第一种形式引入新的类 F。 C++11：第二种形式不引入新的类；当类已声明时，可以使用该形式，而当将模板类型参数或 typedef 声明为 friend 时，必须使用该形式。 </li>
 <li>如果声明以前未声明的 friend 函数，则该函数将被导出到封闭非类范围。friend 声明中声明的函数被视为已使用 extern 关键字声明。若使用</li>
 </ul>
@@ -299,7 +466,7 @@
 <h2 id="2-11-成员函数指针"><a href="#2-11-成员函数指针" class="headerlink" title="2.11. 成员函数指针"></a>2.11. 成员函数指针</h2><ul>
 <li>指向作为类 C 的成员的非静态成员函数 f 的指针，能准确地以表达式 &amp;C::f 初始化。在 C 的成员函数内，如 &amp;(C::f) 或 &amp;f，这样的表达式不构成成员函数指针。</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">C</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123; std::cout &lt;&lt; n &lt;&lt; <span class="string">&#x27;\n&#x27;</span>; &#125;</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">void</span> (C::* p)(<span class="type">int</span>) = &amp;C::f; <span class="comment">// 指向类 C 的成员函数 f 的指针</span></span><br><span class="line">    C c;</span><br><span class="line">    (c.*p)(<span class="number">1</span>);                  <span class="comment">// 打印 1</span></span><br><span class="line">    C* cp = &amp;c;</span><br><span class="line">    (cp-&gt;*p)(<span class="number">2</span>);                <span class="comment">// 打印 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">C</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123; std::cout &lt;&lt; n &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>; &#125;<br>    <br>&#125;;<br> <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-built_in">void</span> (C::* p)(<span class="hljs-type">int</span>) = &amp;C::f; <span class="hljs-comment">// 指向类 C 的成员函数 f 的指针</span><br>    C c;<br>    (c.*p)(<span class="hljs-number">1</span>);                  <span class="hljs-comment">// 打印 1</span><br>    C* cp = &amp;c;<br>    (cp-&gt;*p)(<span class="hljs-number">2</span>);                <span class="hljs-comment">// 打印 2</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h2 id="2-12-数据成员指针"><a href="#2-12-数据成员指针" class="headerlink" title="2.12. 数据成员指针"></a>2.12. 数据成员指针</h2><ul>
 <li><p>指向作为类 C 的成员的非静态数据成员 m 的指针，能准确地以表达式 &amp;C::m 初始化。在 C 的成员函数中，如 &amp;(C::m) 或 &amp;m 这样的表达式不构成指向成员指针</p>
@@ -307,11 +474,11 @@
 <li><p>类定义是一种类型声明，存在于代码块中，并没有分配内存空间；对类的数据成员取地址，得到的是类的数据成员在类内的相对偏移量；</p>
 </li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">C</span> &#123; <span class="type">int</span> m; &#125;;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> C::* p = &amp;C::m;          <span class="comment">// 指向类 C 的数据成员 m</span></span><br><span class="line">    C c = &#123;<span class="number">7</span>&#125;;</span><br><span class="line">    std::cout &lt;&lt; c.*p &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;   <span class="comment">// 打印 7</span></span><br><span class="line">    C* cp = &amp;c;</span><br><span class="line">    cp-&gt;m = <span class="number">10</span>;</span><br><span class="line">    std::cout &lt;&lt; cp-&gt;*p &lt;&lt; <span class="string">&#x27;\n&#x27;</span>; <span class="comment">// 打印 10</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">C</span> &#123; <span class="hljs-type">int</span> m; &#125;;<br> <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> C::* p = &amp;C::m;          <span class="hljs-comment">// 指向类 C 的数据成员 m</span><br>    C c = &#123;<span class="hljs-number">7</span>&#125;;<br>    std::cout &lt;&lt; c.*p &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>;   <span class="hljs-comment">// 打印 7</span><br>    C* cp = &amp;c;<br>    cp-&gt;m = <span class="hljs-number">10</span>;<br>    std::cout &lt;&lt; cp-&gt;*p &lt;&lt; <span class="hljs-string">&#x27;\n&#x27;</span>; <span class="hljs-comment">// 打印 10</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h2 id="2-13-虚函数"><a href="#2-13-虚函数" class="headerlink" title="2.13. 虚函数"></a>2.13. 虚函数</h2><h3 id="2-13-1-从汇编层面理解虚函数的实现"><a href="#2-13-1-从汇编层面理解虚函数的实现" class="headerlink" title="2.13.1. 从汇编层面理解虚函数的实现"></a>2.13.1. 从汇编层面理解虚函数的实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Parent</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">parent_virtual</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">parent_virtual2</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Child</span> : Parent&#123;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">parent_virtual</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">parent_virtual2</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Parent* p1 = <span class="keyword">new</span> Child;</span><br><span class="line">    p1-&gt;<span class="built_in">parent_virtual2</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-13-虚函数"><a href="#2-13-虚函数" class="headerlink" title="2.13. 虚函数"></a>2.13. 虚函数</h2><h3 id="2-13-1-从汇编层面理解虚函数的实现"><a href="#2-13-1-从汇编层面理解虚函数的实现" class="headerlink" title="2.13.1. 从汇编层面理解虚函数的实现"></a>2.13.1. 从汇编层面理解虚函数的实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Parent</span> &#123;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">parent_virtual</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">parent_virtual2</span><span class="hljs-params">()</span> </span>&#123;&#125;<br>&#125;;<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Child</span> : Parent&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">parent_virtual</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>&#123;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-type">void</span> <span class="hljs-title">parent_virtual2</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span> </span>&#123;&#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    Parent* p1 = <span class="hljs-keyword">new</span> Child;<br>    p1-&gt;<span class="hljs-built_in">parent_virtual2</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>经<a target="_blank" rel="noopener" href="https://godbolt.org/">x86-64_gcc7.5</a>编译器编译后， 汇编代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line">square(int):</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     DWORD PTR [rbp-4], edi</span><br><span class="line">        mov     eax, DWORD PTR [rbp-4]</span><br><span class="line">        imul    eax, DWORD PTR [rbp-4]</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Parent::parent_virtual():</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        nop</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Parent::parent_virtual2():</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        nop</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Child::parent_virtual():</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        nop</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Child::parent_virtual2():</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        nop</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Parent::Parent() [base object constructor]:</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        mov     edx, OFFSET FLAT:vtable for Parent+16</span><br><span class="line">        mov     rax, QWORD PTR [rbp-8]</span><br><span class="line">        mov     QWORD PTR [rax], rdx</span><br><span class="line">        nop</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Child::Child() [base object constructor]:</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        sub     rsp, 16</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        mov     rax, QWORD PTR [rbp-8]</span><br><span class="line">        mov     rdi, rax</span><br><span class="line">        call    Parent::Parent() [base object constructor]</span><br><span class="line">        mov     edx, OFFSET FLAT:vtable for Child+16</span><br><span class="line">        mov     rax, QWORD PTR [rbp-8]</span><br><span class="line">        mov     QWORD PTR [rax], rdx</span><br><span class="line">        nop</span><br><span class="line">        leave</span><br><span class="line">        ret</span><br><span class="line">main:</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        push    rbx</span><br><span class="line">        sub     rsp, 24</span><br><span class="line">        mov     edi, 8</span><br><span class="line">        call    operator new(unsigned long)</span><br><span class="line">        mov     rbx, rax</span><br><span class="line">        mov     rdi, rbx</span><br><span class="line">        call    Child::Child() [complete object constructor]</span><br><span class="line">        mov     QWORD PTR [rbp-24], rbx</span><br><span class="line">        mov     rax, QWORD PTR [rbp-24]</span><br><span class="line">        mov     rax, QWORD PTR [rax]</span><br><span class="line">        add     rax, 8</span><br><span class="line">        mov     rax, QWORD PTR [rax]</span><br><span class="line">        mov     rdx, QWORD PTR [rbp-24]</span><br><span class="line">        mov     rdi, rdx</span><br><span class="line">        call    rax</span><br><span class="line">        mov     eax, 0</span><br><span class="line">        add     rsp, 24</span><br><span class="line">        pop     rbx</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">vtable for Child:</span><br><span class="line">        .quad   0</span><br><span class="line">        .quad   typeinfo for Child</span><br><span class="line">        .quad   Child::parent_virtual()</span><br><span class="line">        .quad   Child::parent_virtual2()</span><br><span class="line">vtable for Parent:</span><br><span class="line">        .quad   0</span><br><span class="line">        .quad   typeinfo for Parent</span><br><span class="line">        .quad   Parent::parent_virtual()</span><br><span class="line">        .quad   Parent::parent_virtual2()</span><br><span class="line">typeinfo for Child:</span><br><span class="line">        .quad   vtable for __cxxabiv1::__si_class_type_info+16</span><br><span class="line">        .quad   typeinfo name for Child</span><br><span class="line">        .quad   typeinfo for Parent</span><br><span class="line">typeinfo name for Child:</span><br><span class="line">        .string &quot;5Child&quot;</span><br><span class="line">typeinfo for Parent:</span><br><span class="line">        .quad   vtable for __cxxabiv1::__class_type_info+16</span><br><span class="line">        .quad   typeinfo name for Parent</span><br><span class="line">typeinfo name for Parent:</span><br><span class="line">        .string &quot;6Parent&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><code class="hljs assembly">square(int):<br>        push    rbp<br>        mov     rbp, rsp<br>        mov     DWORD PTR [rbp-4], edi<br>        mov     eax, DWORD PTR [rbp-4]<br>        imul    eax, DWORD PTR [rbp-4]<br>        pop     rbp<br>        ret<br>Parent::parent_virtual():<br>        push    rbp<br>        mov     rbp, rsp<br>        mov     QWORD PTR [rbp-8], rdi<br>        nop<br>        pop     rbp<br>        ret<br>Parent::parent_virtual2():<br>        push    rbp<br>        mov     rbp, rsp<br>        mov     QWORD PTR [rbp-8], rdi<br>        nop<br>        pop     rbp<br>        ret<br>Child::parent_virtual():<br>        push    rbp<br>        mov     rbp, rsp<br>        mov     QWORD PTR [rbp-8], rdi<br>        nop<br>        pop     rbp<br>        ret<br>Child::parent_virtual2():<br>        push    rbp<br>        mov     rbp, rsp<br>        mov     QWORD PTR [rbp-8], rdi<br>        nop<br>        pop     rbp<br>        ret<br>Parent::Parent() [base object constructor]:<br>        push    rbp<br>        mov     rbp, rsp<br>        mov     QWORD PTR [rbp-8], rdi<br>        mov     edx, OFFSET FLAT:vtable for Parent+16<br>        mov     rax, QWORD PTR [rbp-8]<br>        mov     QWORD PTR [rax], rdx<br>        nop<br>        pop     rbp<br>        ret<br>Child::Child() [base object constructor]:<br>        push    rbp<br>        mov     rbp, rsp<br>        sub     rsp, 16<br>        mov     QWORD PTR [rbp-8], rdi<br>        mov     rax, QWORD PTR [rbp-8]<br>        mov     rdi, rax<br>        call    Parent::Parent() [base object constructor]<br>        mov     edx, OFFSET FLAT:vtable for Child+16<br>        mov     rax, QWORD PTR [rbp-8]<br>        mov     QWORD PTR [rax], rdx<br>        nop<br>        leave<br>        ret<br>main:<br>        push    rbp<br>        mov     rbp, rsp<br>        push    rbx<br>        sub     rsp, 24<br>        mov     edi, 8<br>        call    operator new(unsigned long)<br>        mov     rbx, rax<br>        mov     rdi, rbx<br>        call    Child::Child() [complete object constructor]<br>        mov     QWORD PTR [rbp-24], rbx<br>        mov     rax, QWORD PTR [rbp-24]<br>        mov     rax, QWORD PTR [rax]<br>        add     rax, 8<br>        mov     rax, QWORD PTR [rax]<br>        mov     rdx, QWORD PTR [rbp-24]<br>        mov     rdi, rdx<br>        call    rax<br>        mov     eax, 0<br>        add     rsp, 24<br>        pop     rbx<br>        pop     rbp<br>        ret<br>vtable for Child:<br>        .quad   0<br>        .quad   typeinfo for Child<br>        .quad   Child::parent_virtual()<br>        .quad   Child::parent_virtual2()<br>vtable for Parent:<br>        .quad   0<br>        .quad   typeinfo for Parent<br>        .quad   Parent::parent_virtual()<br>        .quad   Parent::parent_virtual2()<br>typeinfo for Child:<br>        .quad   vtable for __cxxabiv1::__si_class_type_info+16<br>        .quad   typeinfo name for Child<br>        .quad   typeinfo for Parent<br>typeinfo name for Child:<br>        .string &quot;5Child&quot;<br>typeinfo for Parent:<br>        .quad   vtable for __cxxabiv1::__class_type_info+16<br>        .quad   typeinfo name for Parent<br>typeinfo name for Parent:<br>        .string &quot;6Parent&quot;<br><br></code></pre></td></tr></table></figure>
 <p>以下是对主函数汇编段代码的解释：</p>
 <ul>
 <li><p>push rbp：将 rbp 寄存器的值压入栈中，保存当前的基址指针。</p>
@@ -362,15 +529,15 @@
 </ul>
 <h3 id="2-13-2-虚析构函数"><a href="#2-13-2-虚析构函数" class="headerlink" title="2.13.2. 虚析构函数"></a>2.13.2. 虚析构函数</h3><ul>
 <li><p>通过指向基类的指针删除对象会引发未定义行为，除非基类的析构函数是虚函数：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Base</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">Base</span>() &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Derived</span> : <span class="keyword">public</span> Base &#123;&#125;;</span><br><span class="line"> </span><br><span class="line">Base* b = <span class="keyword">new</span> Derived;</span><br><span class="line"><span class="keyword">delete</span> b; <span class="comment">// 安全</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Base</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">Base</span>() &#123;&#125;<br>&#125;;<br> <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Derived</span> : <span class="hljs-keyword">public</span> Base &#123;&#125;;<br> <br>Base* b = <span class="hljs-keyword">new</span> Derived;<br><span class="hljs-keyword">delete</span> b; <span class="hljs-comment">// 安全</span><br><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>析构函数可以声明为纯虚的，例如对于需要声明为抽象类，但没有其他可声明为纯虚的适合函数的基类。纯虚析构函数必须有定义，因为在销毁派生类时，所有基类析构函数都会被调用：</p>
 </li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">AbstractBase</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">AbstractBase</span>() = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line">AbstractBase::~<span class="built_in">AbstractBase</span>() &#123;&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Derived</span> : <span class="keyword">public</span> AbstractBase &#123;&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// AbstractBase obj; // 编译错误</span></span><br><span class="line">Derived obj;         <span class="comment">// OK</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">AbstractBase</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">AbstractBase</span>() = <span class="hljs-number">0</span>;<br>&#125;;<br>AbstractBase::~<span class="hljs-built_in">AbstractBase</span>() &#123;&#125;<br> <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Derived</span> : <span class="hljs-keyword">public</span> AbstractBase &#123;&#125;;<br> <br><span class="hljs-comment">// AbstractBase obj; // 编译错误</span><br>Derived obj;         <span class="hljs-comment">// OK</span><br></code></pre></td></tr></table></figure>
 
 <p>几个讲解虚函数讲的不错的博客：<br><a target="_blank" rel="noopener" href="https://jacktang816.github.io/post/virtualfunction/">虚函数的内存分布</a><br><a target="_blank" rel="noopener" href="http://www.fmddlmyy.cn/text15.html">C++基本概念在编译器中的实现</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FJfSkrRKvuOmAfqqgf_e8Q">多态实现-虚函数、函数指针以及变体</a></p>
-<h1 id="3-2023-9-1"><a href="#3-2023-9-1" class="headerlink" title="3. 2023&#x2F;9&#x2F;1"></a>3. 2023&#x2F;9&#x2F;1</h1><h2 id="3-1-std-bind"><a href="#3-1-std-bind" class="headerlink" title="3.1. std::bind"></a>3.1. std::bind</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;<span class="type">double</span>&gt; data;               <span class="comment">//同上</span></span><br><span class="line"></span><br><span class="line">…                                       <span class="comment">//同上</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> func =</span><br><span class="line">    std::<span class="built_in">bind</span>(                              <span class="comment">//C++11模拟初始化捕获</span></span><br><span class="line">        [](<span class="type">const</span> std::vector&lt;<span class="type">double</span>&gt;&amp; data) <span class="comment">//译者注：本行高亮</span></span><br><span class="line">        &#123; <span class="comment">/*使用data*/</span> &#125;,</span><br><span class="line">        std::<span class="built_in">move</span>(data)                     <span class="comment">//译者注：本行高亮</span></span><br><span class="line">    );</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="3-2023-9-1"><a href="#3-2023-9-1" class="headerlink" title="3. 2023&#x2F;9&#x2F;1"></a>3. 2023&#x2F;9&#x2F;1</h1><h2 id="3-1-std-bind"><a href="#3-1-std-bind" class="headerlink" title="3.1. std::bind"></a>3.1. std::bind</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++">std::vector&lt;<span class="hljs-type">double</span>&gt; data;               <span class="hljs-comment">//同上</span><br><br>…                                       <span class="hljs-comment">//同上</span><br><br><span class="hljs-keyword">auto</span> func =<br>    std::<span class="hljs-built_in">bind</span>(                              <span class="hljs-comment">//C++11模拟初始化捕获</span><br>        [](<span class="hljs-type">const</span> std::vector&lt;<span class="hljs-type">double</span>&gt;&amp; data) <span class="hljs-comment">//译者注：本行高亮</span><br>        &#123; <span class="hljs-comment">/*使用data*/</span> &#125;,<br>        std::<span class="hljs-built_in">move</span>(data)                     <span class="hljs-comment">//译者注：本行高亮</span><br>    );<br><br></code></pre></td></tr></table></figure>
 <ul>
 <li>std::bind为每个实参创建了bind对象里的<strong>副本</strong>，每次调用bind对象时，调用的是传递给lambda表达式的本地副本。在如上的例子中，std::move(data)使用移动构造创建了本地副本（左值），之后每次调用函数副本时，调用的都是该副本</li>
 </ul>
@@ -397,7 +564,7 @@
 <li>注意： <strong>对自动&#x2F;动态存储期非类类型成员进行默认初始化时会获得不确定的值</strong>，这也是我想讨论的重点，比如对int成员变量进行默认初始化之后，使用其赋值会导致UB</li>
 <li>使用默认初始化初始化const修饰的对象时，若为类对象必须有用户定义或提供的默认构造函数，或者每个非静态成员都有成员默认初始化器。最重要的是对应的基类子对象也必须满足上述条件</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">T1</span> &#123; <span class="type">int</span> mem; &#125;;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">T2</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> mem;</span><br><span class="line">    <span class="built_in">T2</span>() &#123; &#125; <span class="comment">// &quot;mem&quot; is not in the initializer list</span></span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="type">int</span> n; <span class="comment">// static non-class, a two-phase initialization is done:</span></span><br><span class="line">       <span class="comment">// 1) zero-initialization initializes n to zero</span></span><br><span class="line">       <span class="comment">// 2) default-initialization does nothing, leaving n being zero</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    [[maybe_unused]]</span><br><span class="line">    <span class="type">int</span> n;            <span class="comment">// non-class, the value is indeterminate</span></span><br><span class="line">    std::string s;    <span class="comment">// class, calls default ctor, the value is &quot;&quot; (empty string)</span></span><br><span class="line">    std::string a[<span class="number">2</span>]; <span class="comment">// array, default-initializes the elements, the value is &#123;&quot;&quot;, &quot;&quot;&#125;</span></span><br><span class="line"><span class="comment">//  int&amp; r;           // error: a reference</span></span><br><span class="line"><span class="comment">//  const int n;      // error: a const non-class</span></span><br><span class="line"><span class="comment">//  const T1 t1;      // error: const class with implicit default ctor</span></span><br><span class="line">    [[maybe_unused]]</span><br><span class="line">    T1 t1;            <span class="comment">// class, calls implicit default ctor</span></span><br><span class="line">    <span class="type">const</span> T2 t2;      <span class="comment">// const class, calls the user-provided default ctor</span></span><br><span class="line">                      <span class="comment">// t2.mem is default-initialized (to indeterminate value)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c++"><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br> <br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">T1</span> &#123; <span class="hljs-type">int</span> mem; &#125;;<br> <br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">T2</span><br>&#123;<br>    <span class="hljs-type">int</span> mem;<br>    <span class="hljs-built_in">T2</span>() &#123; &#125; <span class="hljs-comment">// &quot;mem&quot; is not in the initializer list</span><br>&#125;;<br> <br><span class="hljs-type">int</span> n; <span class="hljs-comment">// static non-class, a two-phase initialization is done:</span><br>       <span class="hljs-comment">// 1) zero-initialization initializes n to zero</span><br>       <span class="hljs-comment">// 2) default-initialization does nothing, leaving n being zero</span><br> <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    [[maybe_unused]]<br>    <span class="hljs-type">int</span> n;            <span class="hljs-comment">// non-class, the value is indeterminate</span><br>    std::string s;    <span class="hljs-comment">// class, calls default ctor, the value is &quot;&quot; (empty string)</span><br>    std::string a[<span class="hljs-number">2</span>]; <span class="hljs-comment">// array, default-initializes the elements, the value is &#123;&quot;&quot;, &quot;&quot;&#125;</span><br><span class="hljs-comment">//  int&amp; r;           // error: a reference</span><br><span class="hljs-comment">//  const int n;      // error: a const non-class</span><br><span class="hljs-comment">//  const T1 t1;      // error: const class with implicit default ctor</span><br>    [[maybe_unused]]<br>    T1 t1;            <span class="hljs-comment">// class, calls implicit default ctor</span><br>    <span class="hljs-type">const</span> T2 t2;      <span class="hljs-comment">// const class, calls the user-provided default ctor</span><br>                      <span class="hljs-comment">// t2.mem is default-initialized (to indeterminate value)</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <blockquote>
 <p>若用clang编译器进行编译，输出t1.mem会发现是随机值，用gcc编译器进行编译会发现编译器给出‘uninitiated value’警告但仍然进行了零初始化，若改写为T1 t1{}，则都能正常编译并对进行mem零初始化，这就是我认为值初始化和默认初始化的最大区别所在；</p>
 </blockquote>
@@ -419,7 +586,7 @@
 <h4 id="3-2-3-1-2023-11-1-更新动态初始化"><a href="#3-2-3-1-2023-11-1-更新动态初始化" class="headerlink" title="3.2.3.1. 2023&#x2F;11&#x2F;1 更新动态初始化"></a>3.2.3.1. 2023&#x2F;11&#x2F;1 更新动态初始化</h4><p>在动手查看过各静态变量汇编层面的动态初始化后，对动态初始化有了更多的认识<br>代码文件及汇编代码在<a target="_blank" rel="noopener" href="https://godbolt.org/z/METvfhPj3">complier explore</a>，编译器为x86-64 clang9.0;</p>
 <ol>
 <li>对于未初始化的普通数据类型静态或全局变量（即没有初始化器）来说， 其被储存在.bss段中且这些0变量本身并没有保存在可执行文件或者动态链接库文件中，但是其总内存段大小和起止位置在加载件时被统计出来。<ul>
-<li>C++ name-mangling机制把<strong>这类数据以及局部静态未初始化或者零或者动态初始化变量</strong>命名为_ZZ3fooiE开头的变量，用于表示一个静态变量的实际存储位置，根据下面对于动态初始化局部静态变量的汇编代码可以看出，编译器它调用了一些C++运行时库的函数，如__cxa_guard_acquire和__cxa_guard_release，来保证初始化的线程安全和一次性 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cmp     byte ptr [guard variable for foo(int)::staticLocalInitVar], 0</span><br><span class="line">jne     .LBB1_3</span><br><span class="line">movabs  rdi, offset guard variable for foo(int)::staticLocalInitVar</span><br><span class="line">call    __cxa_guard_acquire</span><br><span class="line">cmp     eax, 0</span><br><span class="line">je      .LBB1_3</span><br><span class="line">call    fd()</span><br><span class="line">mov     dword ptr [_ZZ3fooiE18staticLocalInitVar], eax</span><br><span class="line">movabs  rdi, offset guard variable for foo(int)::staticLocalInitVar</span><br><span class="line">call    __cxa_guard_release</span><br></pre></td></tr></table></figure></li>
+<li>C++ name-mangling机制把<strong>这类数据以及局部静态未初始化或者零或者动态初始化变量</strong>命名为_ZZ3fooiE开头的变量，用于表示一个静态变量的实际存储位置，根据下面对于动态初始化局部静态变量的汇编代码可以看出，编译器它调用了一些C++运行时库的函数，如__cxa_guard_acquire和__cxa_guard_release，来保证初始化的线程安全和一次性 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs assembly">cmp     byte ptr [guard variable for foo(int)::staticLocalInitVar], 0<br>jne     .LBB1_3<br>movabs  rdi, offset guard variable for foo(int)::staticLocalInitVar<br>call    __cxa_guard_acquire<br>cmp     eax, 0<br>je      .LBB1_3<br>call    fd()<br>mov     dword ptr [_ZZ3fooiE18staticLocalInitVar], eax<br>movabs  rdi, offset guard variable for foo(int)::staticLocalInitVar<br>call    __cxa_guard_release<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li>对于有初始化器但不是常量初始化的普通数据类型静态或全局变量来说，其被存储在.data段中，但编译阶段被初始化为0，其被真正初始化的阶段在运行期，program startup的阶段，在主函数执行之前被无序，偏序，或正序初始化。对于clang为每个静态数据成员在编译阶段分配了其初始化的，名称为__cxx_global_var_init.<strong>num</strong>的函数代码，到startup时会被__start函数调用<ul>
@@ -435,7 +602,7 @@
 </ul>
 </li>
 </ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">double</span> <span class="title">fd</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">1.0</span>; &#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">extern</span> <span class="type">double</span> d1;</span><br><span class="line"> </span><br><span class="line"><span class="type">double</span> d2 = d1;   <span class="comment">// unspecified:</span></span><br><span class="line">                  <span class="comment">// dynamically initialized to 0.0 if d1 is dynamically initialized, or</span></span><br><span class="line">                  <span class="comment">// dynamically initialized to 1.0 if d1 is statically initialized, or</span></span><br><span class="line">                  <span class="comment">// statically initialized to 0.0 (because that would be its value</span></span><br><span class="line">                  <span class="comment">// if both variables were dynamically initialized)</span></span><br><span class="line"> </span><br><span class="line"><span class="type">double</span> d1 = <span class="built_in">fd</span>(); <span class="comment">// may be initialized statically or dynamically to 1.0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">inline</span> <span class="hljs-type">double</span> <span class="hljs-title">fd</span><span class="hljs-params">()</span> </span>&#123; <span class="hljs-keyword">return</span> <span class="hljs-number">1.0</span>; &#125;<br> <br><span class="hljs-keyword">extern</span> <span class="hljs-type">double</span> d1;<br> <br><span class="hljs-type">double</span> d2 = d1;   <span class="hljs-comment">// unspecified:</span><br>                  <span class="hljs-comment">// dynamically initialized to 0.0 if d1 is dynamically initialized, or</span><br>                  <span class="hljs-comment">// dynamically initialized to 1.0 if d1 is statically initialized, or</span><br>                  <span class="hljs-comment">// statically initialized to 0.0 (because that would be its value</span><br>                  <span class="hljs-comment">// if both variables were dynamically initialized)</span><br> <br><span class="hljs-type">double</span> d1 = <span class="hljs-built_in">fd</span>(); <span class="hljs-comment">// may be initialized statically or dynamically to 1.0</span><br></code></pre></td></tr></table></figure>
 <blockquote>
 <p>简而言之，d1在程序开始前被赋0，这是静态初始化，之后被赋1，这是动态初始化，但由于某些规则该变量的动态初始化可以被提至编译时间，也就是静态初始化为1，所以d2的值也是不确定的，虽然在本地表现出被动态初始化为1的结果</p>
 </blockquote>
@@ -465,157 +632,376 @@
 <li><input disabled="" type="checkbox"> c++程序加载时的内存模型(编译期内存的分配以及运行期内存的分配)<br><a target="_blank" rel="noopener" href="https://ctfbook.ph0en1x.com/reverse/zhan-3001-zhan-zheng-yu-han-shu-diao-yong">栈、栈帧与函数调用</a><br><a target="_blank" rel="noopener" href="https://www.tenouk.com/ModuleW.html">COMPILER, ASSEMBLER, LINKER AND LOADER: A BRIEF STORY</a></li>
 </ul>
 
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
       
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/08/25/houjiecpp/" data-id="cloy78eo40005hctl33q0deds" data-title="houjiecpp" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c11-14-syntax/" rel="tag">c11&#x2F;14 syntax</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpp-memory-model/" rel="tag">cpp memory model</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/static-dynamic-polymorphic/" rel="tag">static&#x2F;dynamic polymorphic</a></li></ul>
 
-    </footer>
-  </div>
+<span class="category-chains">
+  
   
     
-<nav id="article-nav">
+      <span class="category-chain">
+        
+  <a href="/categories/cpp-related/" class="category-chain-item">cpp related</a>
   
-    <a href="/2023/09/19/network-high-concurrency/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          network &amp; high concurrency
-        
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/c11-14-syntax/" class="print-no-link">#c11/14 syntax</a>
+      
+        <a href="/tags/cpp-memory-model/" class="print-no-link">#cpp memory model</a>
+      
+        <a href="/tags/static-dynamic-polymorphic/" class="print-no-link">#static/dynamic polymorphic</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>houjiecpp</div>
+      <div>http://example.com/2023/08/25/houjiecpp/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年8月25日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/09/19/network-high-concurrency/" title="network &amp; high concurrency">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">network &amp; high concurrency</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/08/24/cplus-learning/" title="cplus_learning">
+                        <span class="hidden-mobile">cplus_learning</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
       </div>
-    </a>
-  
-  
-    <a href="/2023/08/24/cplus-learning/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">cplus_learning</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GNU-linux/">GNU/linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/command-line/">command line</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpp-related/">cpp related</a></li></ul>
     </div>
-  </div>
 
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/POSIX-socket/" rel="tag">POSIX socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/POSIX-system-call/" rel="tag">POSIX system call</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c11-14-syntax/" rel="tag">c11&#x2F;14 syntax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c11-14-thread-future/" rel="tag">c11&#x2F;14 thread&#x2F;future</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmake/" rel="tag">cmake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpp-memory-model/" rel="tag">cpp memory model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dijstra/" rel="tag">dijstra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/encounter-cpp/" rel="tag">encounter cpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/filesystem/" rel="tag">filesystem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash-table/" rel="tag">hash table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/smart-pointer/" rel="tag">smart-pointer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static-dynamic-polymorphic/" rel="tag">static&#x2F;dynamic polymorphic</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/POSIX-socket/" style="font-size: 10px;">POSIX socket</a> <a href="/tags/POSIX-system-call/" style="font-size: 10px;">POSIX system call</a> <a href="/tags/c11-14-syntax/" style="font-size: 10px;">c11/14 syntax</a> <a href="/tags/c11-14-thread-future/" style="font-size: 10px;">c11/14 thread/future</a> <a href="/tags/cmake/" style="font-size: 10px;">cmake</a> <a href="/tags/cpp-memory-model/" style="font-size: 10px;">cpp memory model</a> <a href="/tags/dijstra/" style="font-size: 10px;">dijstra</a> <a href="/tags/encounter-cpp/" style="font-size: 10px;">encounter cpp</a> <a href="/tags/filesystem/" style="font-size: 10px;">filesystem</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/smart-pointer/" style="font-size: 10px;">smart-pointer</a> <a href="/tags/static-dynamic-polymorphic/" style="font-size: 10px;">static/dynamic polymorphic</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2023/11/06/effective-modern-cpp/">effective_modern_cpp</a>
-          </li>
-        
-          <li>
-            <a href="/2023/11/03/linux-high-performanceserver/">linux-high-performanceserver</a>
-          </li>
-        
-          <li>
-            <a href="/2023/09/30/cmake-and-so-on/">cmake and so_on</a>
-          </li>
-        
-          <li>
-            <a href="/2023/09/19/network-high-concurrency/">network &amp; high concurrency</a>
-          </li>
-        
-          <li>
-            <a href="/2023/08/25/houjiecpp/">houjiecpp</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
+    <div class="side-col d-none d-lg-block col-lg-2">
       
-      &copy; 2023 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
 
     </div>
-    <nav id="mobile-nav">
+  </div>
+</div>
+
+
+
+
+
   
-    <a href="/" class="mobile-nav-link">Home</a>
+
+
+
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+
+
+
   
-</nav>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
     
 
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-<script src="/js/jquery-3.6.4.min.js"></script>
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
 
 
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
 
-<script src="/js/script.js"></script>
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
 
 
 
 
 
-  </div>
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>

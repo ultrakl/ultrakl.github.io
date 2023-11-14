@@ -1,1554 +1,792 @@
+
+
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
   
-  <title>kuli&#39;s blog</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="c++ 学习爱好者，欢迎交流">
+    <meta name="description" content="c++ 学习爱好者，欢迎交流">
 <meta property="og:type" content="website">
 <meta property="og:title" content="kuli&#39;s blog">
 <meta property="og:url" content="http://example.com/index.html">
 <meta property="og:site_name" content="kuli&#39;s blog">
 <meta property="og:description" content="c++ 学习爱好者，欢迎交流">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="kuli's blog" type="application/atom+xml">
+<meta name="twitter:card" content="summary_large_image">
   
   
-    <link rel="shortcut icon" href="/favicon.png">
   
-  
-    
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+  <title>kuli&#39;s blog</title>
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
   
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.5-a","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
   
 <meta name="generator" content="Hexo 6.3.0"></head>
 
+
 <body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">kuli&#39;s blog</a>
-      </h1>
-      
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">Men are brave</a>
-        </h2>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 100vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
         
-          <a class="main-nav-link" href="/">Home</a>
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
         
-          <a class="main-nav-link" href="/archives">Archives</a>
-
-          <a class="main_nav-link" href="/categories">Categories</a>
-
-          <a class="main-nav-link" href="/tags">Tags</a>
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
         
-      </nav>
-      <nav id="sub-nav">
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
         
         
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-effective-modern-cpp" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/11/06/effective-modern-cpp/" class="article-date">
-  <time class="dt-published" datetime="2023-11-06T09:30:50.000Z" itemprop="datePublished">2023-11-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/cpp-related/">cpp related</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/11/06/effective-modern-cpp/">effective_modern_cpp</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><a href="#1-c%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E5%85%85">1. c++知识点补充</a><ul>
-<li><a href="#11-%E6%9D%82%E9%A1%B9">1.1. 杂项</a></li>
-<li><a href="#12-c%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86">1.2. c++异常处理</a></li>
-<li><a href="#13-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88">1.3. 智能指针</a></li>
-<li><a href="#14-%E7%89%B9%E6%AE%8A%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%9F%E6%88%90--1-c%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E5%85%85">1.4. 特殊成员函数的生成- 1. c++知识点补充</a></li>
-<li><a href="#15-volatile-vs-atomic">1.5. volatile vs atomic</a><ul>
-<li><a href="#151-stdatomic">1.5.1. std::atomic</a></li>
-<li><a href="#152-keyword-volatile">1.5.2. keyword volatile</a></li>
-</ul>
-</li>
-<li><a href="#move%E6%93%8D%E4%BD%9C">move操作</a></li>
-</ul>
-</li>
-</ul>
-<h1 id="1-c-知识点补充"><a href="#1-c-知识点补充" class="headerlink" title="1. c++知识点补充"></a>1. c++知识点补充</h1><h2 id="1-1-杂项"><a href="#1-1-杂项" class="headerlink" title="1.1. 杂项"></a>1.1. 杂项</h2><ol>
-<li>c++11 lambda表达式不支持移动捕获和初始化捕获，c++14起开始支持，c++11可以使用std::bind实现近似功能</li>
-<li>string内存存储在堆上，但是libstdc++实现了对于字节长度小于十五的短字符串的优化(sso)，string所存储的字符串被构造在栈内存中，不用重新从堆内申请内存，这样虽然string所提供的移动操作为常数时间，拷贝操作为线性时间，但对于短字符串来说移动所需时间不一定比拷贝短</li>
-<li>当一个异常发生时，程序需要沿着运行时栈向上查找合适的异常处理器（catch block）。为了做到这一点，运行时栈必须处于可展开状态，即每个栈帧都有相应的信息来指示如何恢复函数的执行环境，并释放其中的资源。这些信息通常是由编译器在生成代码时添加的，称为展开信息（unwind information） 。当抛出异常并且控制从 try 块传递到处理程序时，C++ 运行时会调用自 try 块开始以来构造的所有自动对象的析构函数。这个过程称为堆栈展开（stack unwind）。</li>
-<li>函数std::terminate()调用作为set_terminate()参数指定的函数, 程序会直接退出</li>
-</ol>
-<h2 id="1-2-c-异常处理"><a href="#1-2-c-异常处理" class="headerlink" title="1.2. c++异常处理"></a>1.2. c++异常处理</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">D</span>(<span class="type">char</span>) <span class="keyword">try</span>: <span class="built_in">D</span>(<span class="number">55</span>)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;D::D(char). Throws.\n&quot;</span>);</span><br><span class="line">    <span class="keyword">throw</span> <span class="number">0</span>;</span><br><span class="line">  &#125;<span class="built_in">catch</span>(...)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n&quot;</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>所有异常类都可继承std::exception，并重载其what方法，注意what方法应该是不抛出异常的，即应做异常规格说明throw（），通常在函数签名尾部加入；</li>
-<li>throw（A,B,C,D）声明函数可能抛出A,B,C,D中的任意一种异常</li>
-<li>try-catch中try块可以抛出异常并被catch块捕捉到，catch后的小括号内可以指定你要处理的异常类型Myexception &amp;e,并在块中使用其what方法输出异常信息，也可以直接用一个变量缩写名代替特定异常</li>
-</ol>
-<h2 id="1-3-智能指针"><a href="#1-3-智能指针" class="headerlink" title="1.3. 智能指针"></a>1.3. 智能指针</h2><ol>
-<li>unique_ptr move only</li>
-<li>make函数也实现了完美转发，所以参数为构造函数的参数 </li>
-<li>对于std::unique_ptr，只有这两种情景（自定义删除器和花括号初始化）使用make函数有点问题，使用make函数1是可以原子化操作创建指针，2是可以一次性创建控制块和对象，减少代码生成，提高执行代码的速度</li>
-<li>weak_ptr shared_ptr之间可以相互创建，先创建shared_ptr保证有引用计数，之后赋值给weak_ptr，可以储存到容器中充当缓存来按索引检查是否过期，之后如果用户需要返回cache</li>
-<li>unique只支持移动操作，移动构造表现为源指针置空，移动赋值表现为将被赋值指针销毁</li>
-<li><strong>pImpl</strong></li>
-</ol>
-<p><strong>用来减少类的实现和类使用者之间的编译依赖的一种方法</strong>，将原本类中含有的对象剥离出去，只留下它的指针，如果实现文件中修改成员或函数定义，而类的使用方法没有什么变化， 那么在编译源文件时只需要重新编译实现文件就可以</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Widget</span> &#123;                  <span class="comment">//跟之前一样，在“widget.h”中</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Widget</span>();</span><br><span class="line">    ~<span class="built_in">Widget</span>();                  <span class="comment">//只有声明语句</span></span><br><span class="line">    …</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:                        <span class="comment">//跟之前一样</span></span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">Impl</span>;</span><br><span class="line">    std::unique_ptr&lt;Impl&gt; pImpl;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>unique_ptr 和 shared_ptr 的一大区别在于，unique_ptr对象本身has_a 默认或自定义删除器， 而shared_ptr内部只包含一个引用计数指针，指向<br>control_block, 其内包含引用计数，weak_count, 删除器对象等等(这在unique_ptr, shared_ptr两者不同构造函数上可以看出)，所以shared_ptr在生成速度和数据结构体积上远远大于unique_ptr   </li>
-<li>默认删除器是一个函数对象，它使用delete来销毁内置于std::unique_ptr的原始指针. unique_ptr的析构函数会调用删除器的operator()， 而该方法使用C++11的特性static_assert(sizeof(资源类型))在编译阶段就确保原始指针指向的类型<em>不是一个不完整类型</em>， 根据上面widget例子来说，若Impl的定义在别的翻译单元，而析构函数在Widget.h文件定义或使用编译器自动生成的版本，则编译器会因为看不到类的定义而报错</li>
-</ul>
-<blockquote>
-<p>诸如noexcept，sizeof， decltype， typeid（不用于指针指向的多态对象）， 统称为unevaluated expression</p>
-</blockquote>
-<ul>
-<li>为了避免这种情况发生，在类定义时只声明默认构造和析构函数，具体实现放在实现文件中原始指针指向对象的类型定义之后实现, 移动赋值同理, 移动构造时，编译器自动生成的代码里，包含有抛出异常的事件，在这个事件里会生成销毁pImpl的代码。</li>
-<li>shared_ptr则没有这种要求，它只要求构造时必须看到完整定义(在clang和gcc编译器上实验，尽管在头文件中就定义了空的默认构造函数， 编译器仍然可以<strong>正常编译</strong>，代码如下), 析构函数可以由编译器正常产出， 析构时shared_ptr使用指向control block的指针调用删除器的delete方法， 过程类似于虚函数调用，在运行期才能知道是否调用成功， 在代码中具体表现为shared_ptr构造基类子对象**__shared_ptr<em><em>时会使用static_assert来判断sizeof(资源类型)， ~~析构时也有一个get_del方法，该方法返回删除器的指针，但是没有static_assert， 只有static_cast一个void</em> to 删除器的指针Del</em>~~，不清楚是不是这样解释， 源码看的一知半解， 等之后更精进了再来解决吧</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">D::D() [base object constructor]:</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        sub     rsp, 16</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        mov     rax, QWORD PTR [rbp-8]</span><br><span class="line">        mov     rdi, rax</span><br><span class="line">        call    std::shared_ptr&lt;D::Impl&gt;::shared_ptr() [complete object constructor]</span><br><span class="line">        nop</span><br><span class="line">        leave</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
-<pre><code>- 所以在使用unique_ptr来实现pImpl的近似代码如下：
-</code></pre>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;widget.h&quot;</span>                 <span class="comment">//跟之前一样，在“widget.cpp”中</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;gadget.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Widget</span>::Impl &#123;               <span class="comment">//跟之前一样，定义Widget::Impl</span></span><br><span class="line">    std::string name;</span><br><span class="line">    std::vector&lt;<span class="type">double</span>&gt; data;</span><br><span class="line">    Gadget g1,g2,g3;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Widget::<span class="built_in">Widget</span>()                    <span class="comment">//跟之前一样</span></span><br><span class="line">: <span class="built_in">pImpl</span>(std::<span class="built_in">make_unique</span>&lt;Impl&gt;())</span><br><span class="line">&#123;&#125;</span><br><span class="line"></span><br><span class="line">Widget::~<span class="built_in">Widget</span>()                   <span class="comment">//析构函数的定义（译者注：这里高亮）</span></span><br><span class="line">&#123;&#125;</span><br><span class="line"><span class="comment">//Widget::~Widget() = default </span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>而对std::shared_ptr而言，删除器的类型不是该智能指针的一部分，这让它会生成更大的运行时数据结构和稍微慢点的代码，但是当编译器生成的特殊成员函数被使用的时候，指向的对象不必是一个完整类型。</li>
-</ul>
-<blockquote>
-<p>关于shared_ptr和unique_ptr的具体实现，请参见<a target="_blank" rel="noopener" href="https://murphypei.github.io/blog/2022/03/shared-unique-ptr">这篇博客</a></p>
-</blockquote>
-<h2 id="1-4-特殊成员函数的生成-1-c-知识点补充"><a href="#1-4-特殊成员函数的生成-1-c-知识点补充" class="headerlink" title="1.4. 特殊成员函数的生成- 1. c++知识点补充"></a>1.4. 特殊成员函数的生成- <a href="#1-c%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E5%85%85">1. c++知识点补充</a></h2><ol>
-<li>拷贝，或者移动操作，若有一方是用户定义的，则不会生成另一方，并且对于两个移动操作来说，显式定义一方也会导致另一方不会被自动生成</li>
-<li>所以仅当下面条件成立时才会生成移动操作（当需要时）：<ul>
-<li>类中没有拷贝操作</li>
-<li>类中没有移动操作</li>
-<li>类中没有用户定义的析构，但如果出现定义析构，编译器也会自动生成拷贝操作</li>
-</ul>
-</li>
-<li>注意没有“成员函数模版阻止编译器生成特殊成员函数”的规则</li>
-</ol>
-<h2 id="1-5-volatile-vs-atomic"><a href="#1-5-volatile-vs-atomic" class="headerlink" title="1.5. volatile vs atomic"></a>1.5. volatile vs atomic</h2><h3 id="1-5-1-std-atomic"><a href="#1-5-1-std-atomic" class="headerlink" title="1.5.1. std::atomic"></a>1.5.1. std::atomic</h3><ol>
-<li>原子化读写操作，多线程访问时不会产生数据竞争，而且也可以用来当作条件变量，单纯使用时反应函数需要不断轮询，会增加线程开销，线程阻塞而不挂起，内存中的资源一直被占用</li>
-<li>会限制编译器和底层硬件对于代码执行顺序的重排，维护atomic的顺序一致性模型</li>
-<li>无法进行拷贝操作，但是可以进行load和store操作，但是若出现<strong>冗余访问</strong>或者<strong>无用存储</strong>, 编译器也会进行优化</li>
-</ol>
-<h3 id="1-5-2-keyword-volatile"><a href="#1-5-2-keyword-volatile" class="headerlink" title="1.5.2. keyword volatile"></a>1.5.2. keyword volatile</h3><p>避免编译器对于代码的优化，在变量用来存储<strong>做内存IO映射内存</strong>上报的数据时，非常有用</p>
-<ol>
-<li>std::atomic用在并发编程中，对访问特殊内存没用。</li>
-<li>volatile用于访问特殊内存，对并发编程没用。<br>因为std::atomic和volatile用于不同的目的，所以可以结合起来使用：<br><code>volatile std::atomic&lt;int&gt; vai;          //对vai的操作是原子性的，且不能被优化掉</code><br>  如果vai变量关联了内存映射I&#x2F;O的位置，被多个线程并发访问，这会很有用。</li>
-</ol>
-<h2 id="move操作"><a href="#move操作" class="headerlink" title="move操作"></a>move操作</h2><ol>
-<li>std::move只是强制将左值&#x2F;右值统统转换为右值<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line">std::remove_reference&lt;T&gt;::<span class="function">type &amp;&amp; <span class="title">move</span><span class="params">(T&amp;&amp; param)</span></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> Returntype =  std::remove_reference&lt;T&gt;::type&amp;&amp;;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">static_cast</span>&lt;Returntype&gt;(param);</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></li>
-<li>虽然string提供了<strong>常数时间</strong>的移动操作和<strong>线性时间</strong>的复制操作由于string的小字符串优化(SSO,指的是当字符串的长度小于某数时，编译器会将其存入缓冲区中，而不是在堆上分配内存，这个长度每个编译器的实现略有区别)，所以此时对字符串的移动操作不一定比复制操作时间快很多</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/11/06/effective-modern-cpp/" data-id="cloy78eod001chctldhc8eyw4" data-title="effective_modern_cpp" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/smart-pointer/" rel="tag">smart-pointer</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-linux-high-performanceserver" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/11/03/linux-high-performanceserver/" class="article-date">
-  <time class="dt-published" datetime="2023-11-03T14:38:03.000Z" itemprop="datePublished">2023-11-03</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/GNU-linux/">GNU/linux</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/11/03/linux-high-performanceserver/">linux-high-performanceserver</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="IO模型"><a href="#IO模型" class="headerlink" title="IO模型"></a>IO模型</h2><ol>
-<li><p>阻塞IO和非阻塞IO的区别就在于对非就绪事件的处理， 对于设置了O_NONBLOCK的文件描述符来说，若此时文件描述符非可读或者可写，针对其进行的系统调用会返回-1，设置errno，而对未设置的文件描述符的connect，recv，send会阻塞进程</p>
-</li>
-<li><p>管道pipe是环形缓冲区</p>
-</li>
-<li><p>O_NONBLOCK对一般文件而言没有什么影响，所有一般文件都是可读或者可写的，它主要用来在fcntl时设置socket或者字符设备的属性，详情请见<a target="_blank" rel="noopener" href="https://www.cnblogs.com/hustxujinkang/p/5072270.html">O_NONBLOCK on regular file</a></p>
-<blockquote>
-<p>字符设备，即流设备，如tty，pts，拥有自己的缓冲区，并且采用行缓冲，每个进程的STDIN_FILENO,STDOUT_FILENO软链接到当前终端中（&#x2F;dev&#x2F;stdin及其他也和这三个文件描述符软链接），所以使用splice等系统调用从标准输入读取中会读取换行符</p>
-</blockquote>
-</li>
-<li><p>同步或者异步I&#x2F;O主要是指访问数据的机制(即实际I&#x2F;O操作的完成方式)，同步一般指主动请求并等待I&#x2F;O操作完毕的方式，I&#x2F;O操作未完成前，会导致应用进程挂起；而异步是指用户进程触发IO操作以后便开始做自己的事情，而当IO操作已经完成的时候会得到IO完成的通知（异步的特点就是通知）,这可以使进程在数据读写时也不阻塞。阻塞或者非阻塞I&#x2F;O主要是指I&#x2F;O操作第一阶段的完成方式(进程访问的数据如果尚未就绪)，即数据还未准备好的时候，应用进程的表现，如果这里进程挂起，则为阻塞I&#x2F;O，否则为非阻塞I&#x2F;O。说白了就是阻塞和非阻塞是针对于进程在访问数据的时候，根据IO操作的就绪状态来采取的不同方式，说白了是一种读取或者写入操作函数的实现方式，阻塞方式下读取或者写入函数将一直等待，<br>而非阻塞方式下，读取或者写入函数会立即返回一个状态值。<br> 而在并发模式中，同步指的是程序严格按照代码顺序执行， 异步指的是程序的执行需要系统事件来驱动</p>
-</li>
-</ol>
-<h2 id="关于splice函数的盲点"><a href="#关于splice函数的盲点" class="headerlink" title="关于splice函数的盲点"></a>关于splice函数的盲点</h2><p>   SPLICE_F_MORE对于写入端是socket的情况下有效，如果设置了 SPLICE_F_MORE 那么会追加 MSG_MORE flag；如果当前 pipe 中还有其他的 page，则追加 MSG_SENDPAGE_NOTLAST flag。</p>
-<p>首先来看 MSG_MORE 的作用，熟悉 TCP 的应该已经知道了这个标志表示调用者有更多的数据要发送。在 TCP socket 中，该标志用于获取与 TCP_CORK 相同的效果，不同之处在于该标志可以在每次调用时设置。顾名思义 TCP_CORK 就是给 TCP 发送数据的时候加了一个木塞子。往这个 socket 写入的数据都会聚集起来。虽然堵上了塞子，但是数据总得发送，取决于:</p>
-<ul>
-<li><p>程序取消设置 TCP_CORK 这个选项</p>
-</li>
-<li><p>socket 聚集的数据大于一个 MSS 的大小</p>
-</li>
-<li><p>自从堵上塞子写入第一个字节开始，已经经过 200ms</p>
-</li>
-<li><p>socket 被关闭了 </p>
-<p>  此外，当设置SPLCICE_NONBLOCK标志时，若读取端设置为非阻塞且没有准备好数据，则会触发EAGAIN错误</p>
-</li>
-</ul>
-<h2 id="三种设备驱动"><a href="#三种设备驱动" class="headerlink" title="三种设备驱动"></a>三种设备驱动</h2><p>即为dev目录下的设备文件是如何实际硬件进行交互的，一般是通过驱动程序进行</p>
-<p><strong>进一步-VFS虚拟文件系统</strong></p>
-<h2 id="Linux中的文件描述符与打开文件之间的关系"><a href="#Linux中的文件描述符与打开文件之间的关系" class="headerlink" title="Linux中的文件描述符与打开文件之间的关系"></a>Linux中的文件描述符与打开文件之间的关系</h2><p>两个不同的文件描述符，若指向同一个打开文件句柄，将共享同一文件偏移量</p>
-<p><a target="_blank" rel="noopener" href="https://www.linuxprobe.com/linux-file-descriptor.html">详情</a></p>
-<h2 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h2><table>
-<thead>
-<tr>
-<th>常用信号</th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>信号</td>
-<td>含义</td>
-<td>默认行为</td>
-</tr>
-<tr>
-<td>SIGINT</td>
-<td>键盘输入以中断进程(Ctrl + C)</td>
-<td>term(终止进程)</td>
-</tr>
-<tr>
-<td>SIGQUIT</td>
-<td>键盘输入使进程退出(Ctrl + )</td>
-<td>core（结束进程并生成核心转储文件）</td>
-</tr>
-<tr>
-<td>SIGSTOP</td>
-<td>暂停进程(Ctrl + S), 该信号不得被捕获或者忽略</td>
-<td>stop（暂停进程）</td>
-</tr>
-<tr>
-<td>SIGCHLD</td>
-<td>子进程状态发生变化（退出或者暂停）</td>
-<td>ign(忽略信号)</td>
-</tr>
-</tbody></table>
-<ol>
-<li>信号处理函数指针__sighandler_t<ul>
-<li>系统定义两种处理函数<ul>
-<li>SIG_DFL (__sighandler_t) 0 采用信号默认处理方式 &#x2F;<em>整形-&gt;函数指针强制类型转换</em>&#x2F;</li>
-<li>SIG_IGN (__sighandler_t) 1 忽略信号</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>自定义信号处理函数：sigaction系统调用<br>参数：<ul>
-<li>sig，要捕获的信号</li>
-<li>act，struct sigaction*<ul>
-<li>结构体中的sa_handler是信号处理函数指针，用于指定函数处理函数</li>
-<li>sa_mask，类型为信号集sigset_t，用于设定增加的信号掩码（在原进程基础上）<ul>
-<li>sa_mask指定了一个信号集的掩码，这些信号在信号处理程序执行期间应该被阻塞（<strong>即添加到调用信号处理程序的线程的信号掩码中</strong>）。此外，除非使用了SA_NODEFER标志，否则触发处理程序的信号也将被阻塞。</li>
-</ul>
-</li>
-<li>sa_flags, 整形数据，用于设置程序接收到信号时的行为<ul>
-<li>SA_RESTART, 含义是重新调用被该信号终止的系统调用</li>
-<li>SA_NODEFER, 一般情况下，在接收信号并进入其信号处理函数时，该信号会被加入至线程的信号掩码中，防止接收同种信号，引发竞态条件，设置该选项可以使得同种信号也被线程接收<br>成功返回0，失败返回-1并设置errno</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>struct sigset 用于表示一组信号集，其中定义了一个长整型数组，每个元素的每个位都代表着一个信号, 这组信号集可以用来设置进程掩码，标志着某个信号将会被<strong>阻塞</strong>，手册上给出了掩码和阻塞的说明：<ul>
-<li>一个信号可能会被阻塞，这意味着直到解除阻塞之前它将不会被传递。在生成和传递之间的时间内，信号被称为待处理的(pending)。</li>
-<li>进程中的每个线程都有一个独立的信号掩码，它指示线程当前阻止的信号集。线程可以使用pthread_sigmask(3)来操作其信号掩码。在传统的单thread线程应用程序中，可以使用sigprocmask(2)来操作信号掩码。</li>
-</ul>
-</li>
-<li>sigprocmask函数也可以用sigset来指定新的进程掩码，通过how参数可以设置新掩码集和当前掩码集的交互方式</li>
-<li>可以使用sigpending函数获取被挂起的信号集，当通过设置进程掩码导致新的信号被屏蔽时，新的信号会被操作系统设置为挂起的信号，若取消对信号的屏蔽，则可以立刻被进程接收到 </li>
-<li>fork出的子线程会继承父线程的信号集合，但会拥有空的挂起信号集</li>
-<li><strong>正在阻塞</strong>的系统调用可以被信号处理函数中断(interrupt), 若在sigaction建立信号处理函数时设置了SA_RESTART标志，则某些系统调用可以在信号处理函数返回之后重启(restart), 有些则不论是否设置该标志都会<strong>失败</strong>，并设置errno为EINTR<ul>
-<li>SA_RESTART标志有效的系统调用包括： read，write，ioctl，open(如果能被阻塞，比如当打开FIFO时)，以及常见的socket接口</li>
-<li>SA_RESTART标志无效的系统调用包括： 通过setsockopt设置socket选项为超时SO_RECVTIMEO的输入输出socket接口， 以及IO复用select，poll，epoll_wait</li>
-<li>sleep函数永远不会重启但会成功返回，并返回剩余的sleep秒数</li>
-</ul>
-</li>
-<li>当挂起进程的控制终端时，SIGHUP将被触发，对于没有控制终端的网络后台程序来说，通常利用SIGHUP信号来强制服务器重读配置文件</li>
-<li>linux环境下，内核通知应用程序**带外数据(大小1字节，通常被tcp接收端存储到特殊缓存中，称为带外缓存)**到来的方式有两种：<ul>
-<li>使用IO复用函数监听事件集中的异常事件，select等系统调用在接收到带外数据时将返回，并向应用程序报告socket上的异常事件，此时应用程序可以调用FD_ISSET等函数来查看异常事件是否发生</li>
-<li>使用SIGURG信号，此时应用程序可设置信号处理函数来读取带外数据<blockquote>
-<p>对于带外缓存来说，可以设置连接socket的SO_OOBINLINE选项来将带外数据存放在接收端的普通数据输入队列中，此时我们不能使用MSB_OOB来读取数据</p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ol>
-<h1 id="进程间通信-IPC"><a href="#进程间通信-IPC" class="headerlink" title="进程间通信 IPC"></a>进程间通信 IPC</h1><ol>
-<li><p>如果文件事先已经存在，<br>open(pathname, O_RDWR | O_CREAT，0666);  打开成功，返回一个大于0的fd<br>open(pathname, O_RDWR | O_CREAT | O_EXCL，0666); 打开失败，返回-1</p>
-<p>O_EXCL表示的是：如果使用O_CREAT时文件存在，就返回错误信息，它可以测试文件是否存在。并且此时检查文件和打开文件是原子性操作，避免了进程临界区竞争</p>
-<blockquote>
-<p>在NFS（网络文件系统）上，O_EXCL可能不是原子性的，此时可以调用link系统调用创建hard link来查看文件是否存在(通过使用stat可以查看st_nlink的数量)</p>
-</blockquote>
-</li>
-<li><p>IPC对象包括：信号量（semaphore），共享内存，消息队列</p>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/11/03/linux-high-performanceserver/" data-id="cloy78eo6000ahctl4mag86sh" data-title="linux-high-performanceserver" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/POSIX-system-call/" rel="tag">POSIX system call</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/filesystem/" rel="tag">filesystem</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-cmake-and-so-on" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/09/30/cmake-and-so-on/" class="article-date">
-  <time class="dt-published" datetime="2023-09-30T03:35:37.000Z" itemprop="datePublished">2023-09-30</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/GNU-linux/">GNU/linux</a>►<a class="article-category-link" href="/categories/command-line/">command line</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/09/30/cmake-and-so-on/">cmake and so_on</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><a href="#linux-%E5%91%BD%E4%BB%A4">Linux 命令</a></li>
-<li><a href="#valgrind-%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7">valgrind 调试工具</a></li>
-<li><a href="#%E7%B3%BB%E7%BB%9F%E7%9B%91%E6%B5%8B%E5%B7%A5%E5%85%B7">系统监测工具</a></li>
-<li><a href="#cmake">cmake</a><ul>
-<li><a href="#cmake%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B">cmake具体流程</a></li>
-</ul>
-</li>
-</ul>
-<h2 id="Linux-命令"><a href="#Linux-命令" class="headerlink" title="Linux 命令"></a>Linux 命令</h2><ol>
-<li><p>ldconfig (creates the required links and cache to the most recent shared libraries found in the standard library directories.)</p>
-</li>
-<li><p>ldd filename (displays the shared object files that a particular Linux command needs to run.) </p>
-</li>
-<li><p>file filename (display the property of the file)</p>
-</li>
-<li><p>set (shell variable)</p>
-</li>
-<li><p>ar -t (for static library, display contents of the archive)</p>
-</li>
-<li><p>du (show the file size)</p>
-</li>
-<li><p>gcc -I . -c mathDemo.c (-I . means tell gcc search headerfiles in the specific folder, in the example is .)</p>
-</li>
-<li><p>set v export(shell variable export to user variable) v env (local user variable)</p>
-</li>
-<li><p>environment variable (globally) :  etc&#x2F;zsh&#x2F;zprofile (source) etc&#x2F;profile (source) etc&#x2F;proifile.d&#x2F;*sh</p>
-</li>
-<li><p>environment variable (per-user) :  ~&#x2F;.zshenv, ~&#x2F;.zshrc</p>
-</li>
-<li><p>zshenv 是在任何情况下都会被读取的文件，它用于设置一些全局的环境变量，比如 $PATH, $EDITOR 等。<a target="_blank" rel="noopener" href="https://juejin.cn/post/7128574050406367269https://blog.csdn.net/ber_bai/article/details/122257534">它通常不用于设置交互式 shell 的选项，比如 $PROMPT, aliases, functions 等。</a></p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7128574050406367269https://bing.com/search?q=.zshenv+%E5%92%8C+.zshrc+%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB&form=SKPBOT">zshrc 是只在交互式 shell 中被读取的文件，它用于设置一些交互式 shell 的选项，比如 $PROMPT, aliases, functions 等。它通常在 .zprofile 之后被加载，所以可以覆盖.zprofile 中的一些设置。</a></li>
-<li><a target="_blank" rel="noopener" href="https://einverne.github.io/post/2023/01/zprofile-zshrc.html">一般来说，.zshenv 用于设置一些不会改变的环境变量，而 .zshrc 用于设置一些会根据个人喜好和需求变化的交互式 shell 的选项</a></li>
-</ul>
-</li>
-<li><p>chmod u&#x2F;g&#x2F;a +s （设置目标文件的set-user-id&#x2F;set-group-id&#x2F;全部标志，使得文件可以被不同UID用户执行时设置EUID为ownerID&#x2F;groupID，前提是设置others的权限为可以执行文件）</p>
-<ul>
-<li>数字模式下set-user-id 对应的比特位值为4， set-group-id 对应的比特位值为2，他们对应的比特位在u，g，o之前, 这个比特位表示执行该文件的真实用户在执行该文件时可以获得该文件的拥有者的特权</li>
-<li>补充linux的setuid函数<ul>
-<li>如果调用进程具有特权（有效用户为0&#x2F;root），则此函数将进程的实际用户ID和有效用户ID都设置为newuid。如果有的话，它还会删除进程的文件用户ID。newuid可以是任何合法值。（一旦完成此操作，将无法恢复旧的有效用户ID。），所以对于特权进程而言，如果只是暂时想要放弃特权，应该使用<strong>seteuid</strong>函数</li>
-<li>如果调用进程不具有特权，则该函数和seteuid类似，只是将该函数将进程的有效用户ID设置为neweuid，前提是进程被允许更改其有效用户ID。具有特权的进程（有效用户ID为零）可以将其有效用户ID更改为任何合法值。具有文件用户ID的非特权进程可以将其有效用户ID更改为其实际用户ID或文件用户ID。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>chmod u&#x2F;g&#x2F;o&#x2F;a +&#x2F;-&#x2F;&#x3D; r&#x2F;w&#x2F; 操作符+会将所选文件的模式位添加到每个文件的现有模式位中；-会将它们移除；&#x3D;会将它们添加，并且将未提及的位移除，但目录的未提及的设置用户和组ID位不受影响。</p>
-<ul>
-<li>the user who owns it (u), other users in the file’s group (g), other users not in the file’s group (o)</li>
-<li>数字模式下u对应的比特位为第二位，之后是g，最后为o，位上的值4代表着读，2代表着写，1代表可执行</li>
-</ul>
-</li>
-<li><p>chmod -r表示递归设置目录文件下的所有文件</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://chmodcommand.com/chmod-2755/">模拟chmod命令的网站</a></p>
-</blockquote>
-</li>
-<li><p>chown root:root 设置owner为root，group为root</p>
-</li>
-<li><p><strong>ps command</strong><br><img src="/2023/09/30/cmake-and-so-on/ps%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B%E7%BB%84%E5%85%B3%E7%B3%BB.png" alt="使用ps查看进程组，会话组之间关系"></p>
-</li>
-</ol>
-<ul>
-<li>这条命令创建出三个进程，一个会话，两个进程组，bash是ps和less的父进程，则ps和less的PPID对应bash的PID</li>
-<li>bash命令是整个会话组的首领（会话组：一些有关联的进程组），会话首领对应的SID和进程组PGID以及PID都是相同的</li>
-<li>bash进程fork出两个子进程ps和less，ps和less同属一个进程组，ps是该进程组的首领</li>
-</ul>
-<ol start="3">
-<li>cat<ul>
-<li>cat filename 显示文件内容</li>
-<li>cat &gt; filname1 将标准输入中的内容重定向到filename1中（用ctrl+d作为EOF结束输入）</li>
-<li>cat &gt; filename2 &lt;&lt;EOF 将开始标记EOF和结束标记EOF之间的标准输入中的内容重定向到fiilname2</li>
-<li>cat &gt;&gt; filename3 在filename3中追加内容<br>更多关于重定向的内容：<a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-shell-io-redirections.html">Shell 输入&#x2F;输出重定向</a></li>
-</ul>
-</li>
-<li>wc -l filename 计算file中的行数</li>
-<li>telnet<br>set localecho<br>open <host ip> <port><br>telnet开启本地回显</li>
-<li>ps -ef 列出所有进程(all process)的详细信息(full-format, including command lines)<br>ps aux 列出前台进程(all with tty)，后台进程(processes without controlling ttys)<br><img src="/pscmd.png"><br><img src="/stat.png"><br>其中STAT状态位常见的状态字符有<br>D      &#x2F;&#x2F;无法中断的休眠状态（通常 IO 的进程）；<br>R      &#x2F;&#x2F;正在运行可中在队列中可过行的；<br>S      &#x2F;&#x2F;处于休眠状态；<br>T      &#x2F;&#x2F;停止或被追踪；<br>W      &#x2F;&#x2F;进入内存交换 （从内核2.6开始无效）；<br>X      &#x2F;&#x2F;死掉的进程 （基本很少见）；<br>Z      &#x2F;&#x2F;僵尸进程；<br>&lt;      &#x2F;&#x2F;优先级高的进程<br>N      &#x2F;&#x2F;优先级较低的进程<br>L      &#x2F;&#x2F;有些页被锁进内存；<br>s      &#x2F;&#x2F;进程的领导者（在它之下有子进程）；<br>l      &#x2F;&#x2F;多线程，克隆线程（使用 CLONE_THREAD, 类似 NPTL pthreads）；</li>
-</ol>
-<ul>
-<li><pre><code> //位于后台的进程组；
-</code></pre>
-</li>
-</ul>
-<ol>
-<li><p>基本正则表达式(BRE)和扩展正则表达式(ERE)是指定模式语法的两种变体。sed命令使用BRE语法<br>在对比如小括号()进行处理时两者有所区别，在BRE内，单独小括号是指文本中的小括号，加了backflash(也就是反斜杠)转义之后是模式匹配的意义，ERE相反，<a target="_blank" rel="noopener" href="https://www.runoob.com/regexp/regexp-syntax.html">ERE的详细信息</a><br>sed -i ‘s&#x2F;(.*)apple&#x2F;\1banana&#x2F;g’ fruits.txt(需要修改的文件名)</p>
-<ul>
-<li>s表示用字符串匹配模式，标准写法为”s&#x2F;pattern&#x2F;replacement&#x2F;flag”, flag g表示替换所有非重叠实例，而不仅仅是第一次匹配</li>
-<li>i表示将文件修改之后的内容不再输入标准输出(默认行为)，而是直接在文件内部修改</li>
-<li>.表示匹配任意一个字符，*表示这个字符出现0次或多次，用括号括起来表示捕获这个组，\1表示引用之前捕获的第一个组，所以这行命令的意思为将每行行尾出现的apple替换为banana</li>
-</ul>
-</li>
-<li><p>strace 跟踪系统调用和信号<br>flags:<br>- p: pid，指定进程</p>
-</li>
-<li><p>touch filename 创建新的空文件</p>
-<ul>
-<li>批量创建文件：touch file{1..5}.txt</li>
-</ul>
-</li>
-<li><p>find [path] [arguments] -exec [command] {} ;<br><em>or</em><br>find [path] [arguments] -exec [command] {} +<br> <a target="_blank" rel="noopener" href="https://www.myfreax.com/how-to-combine-find-exec-commands/">find exec 命令实例教程</a></p>
-<ul>
-<li>find . -type f -name ‘*.txt’ -exec sh -c ‘mv “$1” “${1%.txt}.js”‘ _ {} ;<ul>
-<li>解释: ;对;进行转义，表示command的结束，{}存储find命令执行的结果， _是占位符，表示$0 </li>
-<li>find找出所有后缀为txt的文件并使用sh -c启动subshell执行mv命令，将sh传给其的第二个参数(e.g., 1.txt)中的txt删除并替换为.js</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="valgrind-调试工具"><a href="#valgrind-调试工具" class="headerlink" title="valgrind 调试工具"></a>valgrind 调试工具</h2><ol>
-<li>valgrind</li>
-</ol>
-<h2 id="系统监测工具"><a href="#系统监测工具" class="headerlink" title="系统监测工具"></a>系统监测工具</h2><ol>
-<li>tcpdump&#x2F;</li>
-<li>host&#x2F;</li>
-<li>telnet&#x2F;</li>
-<li>route&#x2F;</li>
-<li>iptables&#x2F;</li>
-<li>netstat&#x2F;</li>
-<li>nc</li>
-</ol>
-<h2 id="cmake"><a href="#cmake" class="headerlink" title="cmake"></a>cmake</h2><h3 id="cmake具体流程"><a href="#cmake具体流程" class="headerlink" title="cmake具体流程"></a>cmake具体流程</h3><ol>
-<li><p>CMakeLists.txt脚本在配置步骤期间执行。该脚本负责定义目标。每个目标表示构建流程的可执行文件、库或其他输出。如果配置步骤成功——也就是说，CMakeLists.txt没有错 误——CMake将使用脚本定义的目标生成构建流程。生成的构建流程类型取决于所使用的生成器类型，在配置步骤期间，根据CMakeLists.txt的内容，可能会发生其他事情。<br>  <em>virsual stdio提供了configure with cmake debugger， 可以设置cmakelists的断点来调试配置过程</em><br><img src="/2023/09/30/cmake-and-so-on/cmake-simple-flowchart.png" alt="cmake"></p>
-</li>
-<li><p>vs中可以选择在UI中选择cmake的kit来指定编译器及其配套组件</p>
-</li>
-<li><p>命令行中通过设置cmake的–config选项可以指定编译源文件时是按debug模式还是release模式编译</p>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/09/30/cmake-and-so-on/" data-id="cloy78eo40006hctl5mxa7nim" data-title="cmake and so_on" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cmake/" rel="tag">cmake</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-network-high-concurrency" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/09/19/network-high-concurrency/" class="article-date">
-  <time class="dt-published" datetime="2023-09-19T09:39:14.000Z" itemprop="datePublished">2023-09-19</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/GNU-linux/">GNU/linux</a>►<a class="article-category-link" href="/categories/cpp-related/">cpp related</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/09/19/network-high-concurrency/">network &amp; high concurrency</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><a href="#1-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B">1. 网络编程</a><ul>
-<li><a href="#11-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0">1.1. 字符串处理函数</a></li>
-<li><a href="#12-io%E6%A8%A1%E5%9E%8B">1.2. IO模型</a></li>
-<li><a href="#13-io%E5%A4%8D%E7%94%A8">1.3. IO复用</a></li>
-</ul>
-</li>
-<li><a href="#2-pthread---%E7%AC%A6%E5%90%88posix%E6%A0%87%E5%87%86%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%BA%93">2. pthread - 符合POSIX标准的线程库</a><ul>
-<li><a href="#21-%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8F%96%E6%B6%88">2.1. 线程的取消</a></li>
-<li><a href="#22-%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8A%A0%E5%85%A5">2.2. 线程的加入</a></li>
-<li><a href="#23-%E4%B8%80%E4%BA%9B%E5%85%B3%E4%BA%8E%E7%BC%96%E7%A8%8B%E7%9A%84%E5%BA%95%E5%B1%82%E7%9F%A5%E8%AF%86%E8%A1%A5%E5%85%85">2.3. 一些关于编程的底层知识补充</a></li>
-</ul>
-</li>
-<li><a href="#3-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B">3. 并发编程</a><ul>
-<li><a href="#31-stdthread">3.1. std::thread</a></li>
-<li><a href="#32-stdfuture">3.2. std::future</a></li>
-<li><a href="#33-condition_variable--mutex">3.3. condition_variable &amp; mutex</a></li>
-<li><a href="#34-lock_guard--unique_lock">3.4. lock_guard &amp; unique_lock</a></li>
-</ul>
-</li>
-</ul>
-<h3 id="1-网络编程"><a href="#1-网络编程" class="headerlink" title="1. 网络编程"></a>1. 网络编程</h3><hr>
-<table>
-<thead>
-<tr>
-<th>OSI四层模型</th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td></td>
-<td>协议</td>
-<td>作用</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>链路层</td>
-<td>ARP&#x2F;RARP</td>
-<td>ip地址到物理地址的映射</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>网络层</td>
-<td>IP&#x2F;ICMP</td>
-<td>数据包的选路和转发&#x2F;检查网络连接</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>传输层</td>
-<td>TCP&#x2F;UDP</td>
-<td>数据的收发以及链路的超时重连</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>应用层</td>
-<td>DNS(proto)&#x2F;telnet</td>
-<td>域名查询&#x2F;远程连接</td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<ol>
-<li>ARP协议主要用来向自己所在的网络广播一个ARP请求,该请求包含目标机器的网络地址。此网络上的其他机器都将收到这个请求，但只有被请求的目标机器会回应一个ARP应答，其中包含自己的物理地址<br> <img src="/2023/09/19/network-high-concurrency/arp%E6%8A%A5%E6%96%87.png" alt="arp报文"><br> <img src="/2023/09/19/network-high-concurrency/ethernetframe.png" alt="以太网帧"></li>
-<li>使用telnet在同网络机器中进行远程连接，在一台机器上使用tcpdump进行以太网帧捕捉，捕捉结果显示类型为ARP，ARP报文长度为28字节，被封装在以太网帧中，并且根据以太网帧头部信息长度和ARP报文长度来看，帧总长应为46字节，这里显示42字节表示不考虑尾部4字节的CRC字段（对头部和数据进行循环冗余校验）<br> <img src="/2023/09/19/network-high-concurrency/Snipaste_2023-09-22_22-37-24.png" alt="tcpdump检测结果"></li>
-<li>无状态（ stateless ）是指IP通信双方不同步传输数据的状态信息，因此所有IP数据报的发送、传输和接收都是相互独立、没有上下文关系的。这种服务最大的缺点是无法处理乱序<br>和重复的 IP 数据报 。 比如发送端发送出的第 N 个 IP 数据报可能比第 N + 1个IP数据报后到</li>
-<li>计算机电路先处理低位字节，效率比较高，因为计算都是从低位开始的。所以，计算机的内部处理都是小端字节序。在计算机内部，小端序被广泛应用于现代 CPU 内部存储数据；而在其他场景，比如网络传输和文件存储则使用大端序。<br><img src="/2023/09/19/network-high-concurrency/v2-233887068992518bb4eec56de043d1b2_r.jpg" alt="大端序和小端序"></li>
-<li>tcp&#x2F;ip新感悟<ul>
-<li>tcp通信双方在连接初始化，即发送同步报文段中要确定MSS及扩大窗口因子的大小，这样可以有效防止ip模块进行分片处理</li>
-<li>http和udp都是无状态协议，即每个http请求之间没有上下文关系，解决办法为设置cookie，服务器向客户端发送cookie，客户端每次请求时都会带上cookie（通过HTTP头部字段cookie），这样服务器就可以区别不同客户</li>
-<li>ip模块通过接收和发送ip数据报输入队列和输出队列与网络驱动程序交互</li>
-</ul>
-</li>
-</ol>
-<h4 id="1-1-字符串处理函数"><a href="#1-1-字符串处理函数" class="headerlink" title="1.1. 字符串处理函数"></a>1.1. 字符串处理函数</h4><ol>
-<li>strpbrk(char* s1, char* s2) 指向str1中任何属于str2字符的第一个出现位置的指针，如果在终止的空字符之前在str1中找不到str2的任何字符，则返回空指针。如果在str1中不存在str2的任何字符，则返回空指针。</li>
-<li><strong>strcasecmp</strong>(char* s1, char* s2) 和 <strong>strcmp</strong> 相似，但strcasecmp不区分大小写，<strong>strcasencmp</strong> 和 <strong>strncmp</strong> 类似</li>
-</ol>
-<h4 id="1-2-IO模型"><a href="#1-2-IO模型" class="headerlink" title="1.2. IO模型"></a>1.2. IO模型</h4><p>通过fcntl设置文件描述符属性为O_NONBLOCK，这样的文件描述符被称为非阻塞IO，当accept，recv，send等系统调用处理非阻塞IO时，会立即返回，若事件没有发生，则会返回-1并设置errno为EAGAIN或EWOULDBLOCK（其实二者相同），对connect而言则是EINPORCESS</p>
-<h4 id="1-3-IO复用"><a href="#1-3-IO复用" class="headerlink" title="1.3. IO复用"></a>1.3. IO复用</h4><p>IO复用可以使程序同时监听多个文件描述符，IO复用函数可以向内核注册文件描述符及其关联的可读，可写，异常事件，并返回就绪事件的数量（通知进程事件已经就绪）</p>
-<ol>
-<li><p>epoll和select以及poll的区别在于epoll对应一组函数调用，如epoll_ctl,epoll_wait，并将就绪事件重新赋值给一个新event数组，这样节省轮询事件就绪的时间</p>
-</li>
-<li><p>epoll，select，poll都会因为内核收到信号而返回-1并设置errno为EINTR</p>
-</li>
-<li><p>epoll两种工作模式LT,ET在处理可读事件的区别在于</p>
-<ul>
-<li>LT：如果此时缓存区没有可读数据，则epoll_wait不会返回EPOLLIN，如果此时缓冲区有可读数据，则epoll_wait会持续返回EPOLLIN</li>
-<li>ET：如果此时缓存区没有可读数据，则epoll_wait不会返回EPOLLIN，如果此时缓冲区有可读数据，则epoll_wait会返回一次EPOLLIN<br>可通过设置evnets为EPOLL_ET来显式设置工作模式为EPOLL_ET</li>
-</ul>
-</li>
-<li><p>由于ET工作模式仍会导致某个事件被触发多次，使得多线程可能会处理同个fd，从而避免许多竞态条件，EPOLLONESHOT使得某个时刻只可能触发fd注册的一个可读，可写，异常事件，并且该事件只能触发一次</p>
-<ul>
-<li>可通过epoll_ctl来重新设置EPOLLONESHOT来重新触发新的可读事件（通过设置flag为EPOLL_CTL_MOD）</li>
-<li>监听fd不应该设为EPOLLONESHOT，不然只能某个时刻处理一个客户连接</li>
-</ul>
-</li>
-<li><p>多线程使用pthread_exit(NULL)来退出线程不是<strong>异步信号安全的</strong>，其发出的信号可以中断例如epoll_wait()等阻塞函数 </p>
-</li>
-<li><p>对非阻塞IO进行connect()系统调用，可能会立即返回-1并设置errno为EAGAIN（UNIX本地协议族socket）或EINPROGRESS表示连接已经开始但未完全建立好，这时使用select或poll监听sockfd上的写事件（非阻塞connect连接成功或者因为超时失败时会触发写就绪事件）, 超时失败是指客户端同步报文段发出后收不到ack，在本地arch环境下，重连次数为6，也就是127（1+2+4+8+16+32+64）s, 不论是失败或者成功，select都会返回写就绪，此时需要getsockopt中设置SO_ERROR选项来查看socket上的错误事件，对应测试cpp文件为non_blockconnect.cc<br><a target="_blank" rel="noopener" href="http://cr.yp.to/docs/connect.html">Dan_Bernstein对于非阻塞socket连接的理解和思考</a></p>
-</li>
-</ol>
-<h3 id="2-pthread-符合POSIX标准的线程库"><a href="#2-pthread-符合POSIX标准的线程库" class="headerlink" title="2. pthread - 符合POSIX标准的线程库"></a>2. pthread - 符合POSIX标准的线程库</h3><h4 id="2-1-线程的取消"><a href="#2-1-线程的取消" class="headerlink" title="2.1. 线程的取消"></a>2.1. 线程的取消</h4><ol>
-<li>如果想在线程执行时取消该线程。可以使用pthread_cancel(thread)来完成此操作,该函数向指定线程发出一个取消请求，。但是，请记住需要启用 pthread 取消支持。此外，还有取消时的清理代码。</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">thread_cleanup_push</span>(my_thread_cleanup_handler, resources);</span><br><span class="line"><span class="built_in">pthread_setcancelstate</span>(PTHREAD_CANCEL_ENABLE, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">my_thread_cleanup_handler</span><span class="params">(<span class="type">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// free</span></span><br><span class="line">  <span class="comment">// close, fclose</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>一个线程的取消类型，由**pthread_setcanceltype(3)**确定，可以是异步的(PTHREAD_CANCEL_ASYNCHRONOUS)或延迟的(PTHREAD_CANCEL_DEFERRED)（新线程的默认值）。异步可取消性意味着线程可以随时被取消（通常是立即，但系统不保证这一点）。延迟可取消性意味着取消将被延迟，直到线程下次调用一个是取消点(cancel_point)的函数。</li>
-<li>线程的可取消状态由**pthread_setcancelstate(3)**确定，可以启用（新线程的默认值）或禁用。如果线程已禁用取消，则取消请求将保持排队状态，直到线程启用取消。如果线程已启用取消，则其可取消性类型确定何时发生取消。</li>
-<li>pthread_cleanup_push(void (*routine)(void *), void *arg);<br>void pthread_cleanup_pop(int execute);</li>
-</ol>
-<ul>
-<li><p>这些函数操作调用线程的线程取消清理处理程序堆栈。清理处理程序是在取消线程时自动执行的函数。</p>
-</li>
-<li><p>pthread_cleanup_push()函数将routine推送到清理处理程序堆栈的顶部。当routine稍后被调用时，它将被给予arg作为其参数。</p>
-</li>
-<li><p>pthread_cleanup_pop()函数从清理处理程序堆栈的顶部移除routine，并在execute为非零时可选择执行它。</p>
-</li>
-<li><p>在以下情况下，取消清理处理程序将从堆栈中弹出并执行：</p>
-<ul>
-<li><p>当线程被取消时，所有堆栈清理处理程序都会被弹出并按照它们被推入堆栈的顺序相反执行。</p>
-</li>
-<li><p>当线程通过调用pthread_exit(3)终止时，所有清理处理程序都会按照前面描述的方式执行。（如果线程通过从线程开始函数返回来终止，则不会调用清理处理程序。）</p>
-</li>
-<li><p>当线程调用pthread_cleanup_pop()并带有非零的execute参数时，最顶部的清理处理程序将被弹出并执行。</p>
-</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>POSIX.1 允许 pthread_cleanup_push() 和 pthread_cleanup_pop() 作为宏实现，它们分别扩展为包含 ‘{‘ 和 ‘}’ 的文本。因此，调用者必须确保在同一函数中、在相同的词法嵌套级别内调用这些函数。（换句话说，仅在执行指定代码段期间才建立清理处理程序。）</p>
-</blockquote>
-<ol start="5">
-<li>pthread_exit(void* retval) vs phread_cancel(tid)<ul>
-<li>pthread_cancel()函数将请求取消线程。目标线程的取消状态和类型决定何时取消生效。当取消被执行时，将调用线程的取消清理处理程序。当最后一个取消清理处理程序返回时，将为线程调用线程特定数据(Thread_specific data)析构函数。当最后一个析构函数返回时，线程将被终止。目标线程中的取消处理与从pthread_cancel()返回的调用线程异步运行</li>
-<li>由于许多系统调用在接收信号时返回并将errno设置为EINTR，因此很容易捕获此情况，并通过pthread_exit()使线程在此条件下干净地结束自身<br>就线程资源清理的情况而言，二者并无本质区别, 都要通过pthread_cleanup_push设置的函数来清理动态分配资源</li>
-</ul>
-</li>
-</ol>
-<h4 id="2-2-线程的加入"><a href="#2-2-线程的加入" class="headerlink" title="2.2. 线程的加入"></a>2.2. 线程的加入</h4><p>int pthread_join(pthread_t thread, void **retval)</p>
-<ol>
-<li>如果 retval 不为 NULL，则 pthread_join() 将目标线程的退出状态（即目标线程提供给 pthread_exit(3) 的值）复制到 retval 指向的位置。如果目标线程被取消，则在 retval 指向的位置放置 PTHREAD_CANCELED。</li>
-<li>成功的话返回0，失败返回一个errno(例如因中断返回EINTR)</li>
-</ol>
-<h4 id="2-3-一些关于编程的底层知识补充"><a href="#2-3-一些关于编程的底层知识补充" class="headerlink" title="2.3. 一些关于编程的底层知识补充"></a>2.3. 一些关于编程的底层知识补充</h4><ol>
-<li>函数的可重入性(reentrancy)<br>函数的线程安全性，保证多个线程同时执行一个函数不会出现竞态条件，同时在单处理器系统上当该函数被中断（可能是信号导致的）并被重新执行时可以安全执行</li>
-<li>函数的幂等性(idempotence)<br>函数在被多次执行后可以产出同一结果</li>
-</ol>
-<h3 id="3-并发编程"><a href="#3-并发编程" class="headerlink" title="3. 并发编程"></a>3. 并发编程</h3><h4 id="3-1-std-thread"><a href="#3-1-std-thread" class="headerlink" title="3.1. std::thread"></a>3.1. std::thread</h4><ol>
-<li>thread构造时会将可调用函数和传入参数完美转发并根据左值右值选择拷贝或移动构造至一个tuple中，返回invoke_result&lt;decay<F>::type, decay<Args>::type…&gt;::type，也就是F调用去掉引用和cv限定之后的实参之后返回的类型，调用时会将tuple中的数据使用<strong>std::move</strong>方法转为右值进行调用，所以对于左值引用类型的数据无法正常调用，编译时thread会调用静态断言来报错<em>不能将左值引用绑定到右值</em>之类的消息</li>
-</ol>
-<blockquote>
-<p>invoke_result 是 result_of 的 更进版本，<del>具体内容见cppreference</del>， 这里加入几个type_traits的知识点：首先decltype(function)不能直接用来调用，可以在后方加入&amp;来表示对函数的引用, 其次常见的type_traits有iterator_traits<T>::type, remove_reference<T>::type, decay<T>::type, 函数declval<T>()（返回右值引用，此函数只能在未求值的操作数（比如 sizeof 和 decltype 的操作数）中使用。）, 除此之外，还有is_constructible&lt;T,args…&gt;::value（args是否能构造T）等返回0或1来表示类型判断的类也属于type_traits</p>
-</blockquote>
-<ul>
-<li>补充两个重要的工具类：</li>
-</ul>
-<p>  <code>typedef std::integral_constant&lt;   bool, true&gt; true_type; typedef std::integral_constant&lt;   bool, false&gt; false_type;</code></p>
-<ol start="2">
-<li>不只是thread，bind以及async都会在创建的对象中构造传入实参另一份数据，所以如果函数形参为引用类型，使用std::ref()来构造reference_wrapper函数对象是一个明智的选择</li>
-<li>thread在析构时若是<strong>可结合的</strong>，比如没有显式join(主线程会阻塞直到thread对应的底层线程返回)或detach(底层软件线程分离)或者移动，则会调用std::terminate终止程序</li>
-<li>thread作为软件线程的句柄可调用native_handle来返回tid，之后可以通过其他方法来设置线程优先级和调度策略，<strong>这是future做不到的</strong></li>
-<li>为了防止线程终止，可以构造RAII类型对象，在析构时通过构造实参指定的join或者detach来指定析构方法</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ThreadRAII</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">enum class</span> <span class="title class_">DtorAction</span> &#123; join, detach &#125;;         <span class="comment">//跟之前一样</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">ThreadRAII</span>(std::thread&amp;&amp; t, DtorAction a)       <span class="comment">//跟之前一样</span></span><br><span class="line">    : <span class="built_in">action</span>(a), <span class="built_in">t</span>(std::<span class="built_in">move</span>(t)) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    ~<span class="built_in">ThreadRAII</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        …                                           <span class="comment">//跟之前一样</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">ThreadRAII</span>(ThreadRAII&amp;&amp;) = <span class="keyword">default</span>;             <span class="comment">//支持移动</span></span><br><span class="line">    ThreadRAII&amp; <span class="keyword">operator</span>=(ThreadRAII&amp;&amp;) = <span class="keyword">default</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">std::thread&amp; <span class="title">get</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> t; &#125;                <span class="comment">//跟之前一样</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>: <span class="comment">// as before</span></span><br><span class="line">    DtorAction action;</span><br><span class="line">    std::thread t;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>按理来说当显式生成析构函数时，编译器不会再主动生成移动构造和移动赋值函数，但当对象是可以逐成员移动时，我们可以显式default声明移动函数来保证移动操作是可以被执行的  </p>
-</blockquote>
-<ol start="6">
-<li>为了防止线程在开始后被修改优先级，可以在创建线程时将方法设为wait函数，将线程挂起</li>
-</ol>
-<h4 id="3-2-std-future"><a href="#3-2-std-future" class="headerlink" title="3.2. std::future"></a>3.2. std::future</h4><ol>
-<li>与thread不同，在使用默认策略启动时，不一定会使用异步执行，这种调用方式将线程管理的职责转交给C++标准库的开发者。举个例子，这种调用方式会减少抛出资源超额异常的可能性</li>
-<li>std::launch::deferred启动策略意味着f仅当在std::async返回的future上调用get或者wait时才执行。这表示f推迟到存在这样的调用时才执行</li>
-<li>默认启动策略的调度灵活性导致使用thread_local变量比较麻烦，因为这意味着如果f读写了线程本地存储（thread-local storage，TLS），不可能预测到哪个线程的变量被访问<br>可以使用 <code>fut.wait_for(0s) == std::future_status::deferred</code> 检查函数是否被延时</li>
-<li>future是通信信道的一端，被调用者通过该信道将结果发送给调用者。被调用者（通常是异步执行）将计算结果写入通信信道中（通常通过std::promise对象），调用者使用future读取结果, 除了这种普通用途外还可以将promise模板实参设为void，用来当作<strong>条件变量</strong>通知future对象，future所在线程调用wait方法将会阻塞直到结果返回，这种方法好处在于不再需要互斥锁，条件变量，或者原子变量，并且可以用来设置线程优先级，使得线程在创建时不会自动运行，处于挂起状态，坏处在于通道的值只能设置一次，线程也只能被挂起一次。<br>  <img src="/2023/09/19/network-high-concurrency/item38_fig1.png" alt="future信道"></li>
-<li>因为与被调用者关联的对象和与调用者关联的对象都不适合存储这个结果，所以调用结果必须存储在两者之外的位置。此位置称为共享状态（shared state）。共享状态通常是基于堆的对象，一般来说对于future对象拥有这个共享状态的控制权，或者说引用了共享状态，析构时引用该状态的future会自动阻塞并且等待任务完成</li>
-<li>future不能被拷贝，但他却可以用来构造shared_future，之后转交共享状态的控制权，shared_future在并发访问时可以用来为每个线程构造副本来共享共享状态的拥有权，设置std::promise::set_value()可以在多线程使用wait来唤起多个线程<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">std::promise&lt;<span class="type">void</span>&gt; p;                   <span class="comment">//跟之前一样</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">detect</span><span class="params">()</span>                           <span class="comment">//现在针对多个反映线程</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> sf = p.<span class="built_in">get_future</span>().<span class="built_in">share</span>();   <span class="comment">//sf的类型是std::shared_future&lt;void&gt;</span></span><br><span class="line">    std::vector&lt;std::thread&gt; vt;        <span class="comment">//反应线程容器</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; threadsToRun; ++i) &#123;</span><br><span class="line">        vt.<span class="built_in">emplace_back</span>([sf]&#123; sf.<span class="built_in">wait</span>();    <span class="comment">//在sf的局部副本上wait；</span></span><br><span class="line">                              <span class="built_in">react</span>(); &#125;);  <span class="comment">//emplace_back见条款42</span></span><br><span class="line">    &#125;</span><br><span class="line">    …                                   <span class="comment">//如果这个“…”抛出异常，detect挂起！</span></span><br><span class="line">    p.<span class="built_in">set_value</span>();                      <span class="comment">//所有线程解除挂起</span></span><br><span class="line">    …</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span>&amp; t : vt) &#123;                <span class="comment">//使所有线程不可结合；</span></span><br><span class="line">        t.<span class="built_in">join</span>();                       <span class="comment">//“auto&amp;”见条款2</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h4 id="3-3-condition-variable-mutex"><a href="#3-3-condition-variable-mutex" class="headerlink" title="3.3. condition_variable &amp; mutex"></a>3.3. condition_variable &amp; mutex</h4><ol>
-<li>cv.Wait(lock<which is basically unique_lock>, bool function)会导致当前线程阻塞，直到条件变量被通知或发生假唤醒，或者循环直到满足某个谓词</li>
-</ol>
-<h4 id="3-4-lock-guard-unique-lock"><a href="#3-4-lock-guard-unique-lock" class="headerlink" title="3.4. lock_guard &amp; unique_lock"></a>3.4. lock_guard &amp; unique_lock</h4><ol>
-<li>lock_guard自动加锁解锁，在函数异常等情况下函数内部直接返回也会执行对锁的析构，需要注意对锁的占用时间，为了手动释放锁可以在lock_guard周围加入花括号即可</li>
-<li>wait function causes the current thread to block until the condition variable is notified or a spurious wakeup occurs, optionally looping until some predicate is satisfied</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/09/19/network-high-concurrency/" data-id="cloy78eo30004hctlhlj1d25z" data-title="network &amp; high concurrency" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/POSIX-socket/" rel="tag">POSIX socket</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c11-14-thread-future/" rel="tag">c11&#x2F;14 thread&#x2F;future</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-houjiecpp" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/08/25/houjiecpp/" class="article-date">
-  <time class="dt-published" datetime="2023-08-25T02:48:38.000Z" itemprop="datePublished">2023-08-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/cpp-related/">cpp related</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/08/25/houjiecpp/">houjiecpp</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><a href="#1-20230829">1. 2023&#x2F;08&#x2F;29</a></li>
-<li><a href="#2-20230829">2. 2023&#x2F;08&#x2F;29</a><ul>
-<li><a href="#21-unicode">2.1. unicode</a></li>
-<li><a href="#22-%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%BD%A2%E5%8F%82%E7%9A%84%E5%B1%80%E9%99%90">2.2. 非类型形参的局限：</a></li>
-<li><a href="#23-%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%AE%9E%E5%8F%82%E7%9A%84%E5%B1%80%E9%99%90">2.3. 非类型实参的局限：</a></li>
-<li><a href="#24-%E7%BC%96%E8%AF%91%E6%97%B6%E5%B8%B8%E9%87%8F%E8%A1%A8%E8%BE%BE%E5%BC%8F">2.4. 编译时常量表达式</a></li>
-<li><a href="#25-%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2">2.5. 隐式转换</a></li>
-<li><a href="#26-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F">2.6. 设计模式</a></li>
-<li><a href="#27-%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88">2.7. 智能指针</a></li>
-<li><a href="#28-%E5%8F%B3%E5%80%BC">2.8. 右值</a></li>
-<li><a href="#29-%E6%A8%A1%E6%9D%BF%E6%9D%82%E7%B1%BB">2.9. 模板杂类</a></li>
-<li><a href="#210-lambda">2.10. lambda</a></li>
-<li><a href="#211-%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88">2.11. 成员函数指针</a></li>
-<li><a href="#212-%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98%E6%8C%87%E9%92%88">2.12. 数据成员指针</a></li>
-<li><a href="#213-%E8%99%9A%E5%87%BD%E6%95%B0">2.13. 虚函数</a><ul>
-<li><a href="#2131-%E4%BB%8E%E6%B1%87%E7%BC%96%E5%B1%82%E9%9D%A2%E7%90%86%E8%A7%A3%E8%99%9A%E5%87%BD%E6%95%B0%E7%9A%84%E5%AE%9E%E7%8E%B0">2.13.1. 从汇编层面理解虚函数的实现</a></li>
-<li><a href="#2132-%E8%99%9A%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0">2.13.2. 虚析构函数</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#3-202391">3. 2023&#x2F;9&#x2F;1</a><ul>
-<li><a href="#31-stdbind">3.1. std::bind</a></li>
-<li><a href="#32-%E5%85%B3%E4%BA%8E%E5%88%9D%E5%A7%8B%E5%8C%96%E7%9A%84%E4%B8%80%E4%BA%9B%E6%83%B3%E6%B3%95%E8%A1%A8%E8%BF%B0%E4%B8%8A%E5%8F%AF%E8%83%BD%E6%9C%89%E7%BA%B0%E6%BC%8F%E4%BD%86%E6%A0%B9%E6%8D%AE%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%9D%A5%E7%9C%8B%E5%BA%94%E8%AF%A5%E6%98%AF%E6%AD%A3%E7%A1%AE%E7%9A%84">3.2. 关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的</a><ul>
-<li><a href="#321-%E5%80%BC%E5%88%9D%E5%A7%8B%E5%8C%96">3.2.1. 值初始化</a></li>
-<li><a href="#322-%E9%BB%98%E8%AE%A4%E5%88%9D%E5%A7%8B%E5%8C%96">3.2.2. 默认初始化</a></li>
-<li><a href="#323-%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96">3.2.3. 静态成员的初始化</a><ul>
-<li><a href="#3231-2023111-%E6%9B%B4%E6%96%B0%E5%8A%A8%E6%80%81%E5%88%9D%E5%A7%8B%E5%8C%96">3.2.3.1. 2023&#x2F;11&#x2F;1 更新动态初始化</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#33-internal-linkage--external-linkage">3.3. internal linkage &amp;&amp; external linkage</a></li>
-<li><a href="#34-cc99ansi-c-%E5%92%8C-gnu-c-%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB">3.4. C、C99、ANSI C 和 GNU C 之间的区别</a></li>
-</ul>
-</li>
-<li><a href="#4-%E6%9C%AA%E5%AE%8C%E6%88%90%E7%9A%84%E5%AD%A6%E4%B9%A0%E4%BB%BB%E5%8A%A1">4. 未完成的学习任务</a></li>
-</ul>
-<h1 id="1-2023-08-29"><a href="#1-2023-08-29" class="headerlink" title="1. 2023&#x2F;08&#x2F;29"></a>1. 2023&#x2F;08&#x2F;29</h1><ul>
-<li><p>析构函数和复制构造函数不能是模板。若声明了可用复制构造函数的类型签名实例化的模板构造函数，则替而使用隐式声明的复制构造函数。</p>
-</li>
-<li><p>成员函数模板不能为虚，且派生类中的成员函数模板不能覆盖来自基类的虚成员函数。</p>
-</li>
-<li><p>重载规则规定当模板实例化函数和非模板函数（或者称为“正常”函数）匹配优先级相当时，优先使用“正常”函数。</p>
-</li>
-</ul>
-<hr>
-<ul>
-<li><input disabled="" type="checkbox"> 函数模板重载</li>
-<li>重载运算符为成员函数和友元函数时关键的区别在于成员函数具有this指针，而友元函数没有this指针。</li>
-</ul>
-<h1 id="2-2023-08-29"><a href="#2-2023-08-29" class="headerlink" title="2. 2023&#x2F;08&#x2F;29"></a>2. 2023&#x2F;08&#x2F;29</h1><h2 id="2-1-unicode"><a href="#2-1-unicode" class="headerlink" title="2.1. unicode"></a>2.1. unicode</h2><ol>
-<li><p>字符集定义了字符和二进制的对应关系，为每个字符分配了唯一的编号。可以将字符集理解成一个很大的表格，它列出了所有字符和二进制的对应关系，<br>计算机显示文字或者存储文字，就是一个查表的过程。</p>
-</li>
-<li><p>而字符编码规定了如何将字符的编号存储到计算机中。如果使用了类似 GB2312 和 GBK 的变长存储方案（不同的字符占用的字节数不一样），那么为了区分一个字符</p>
-</li>
-<li><p>到底使用了几个字节，就不能将字符的编号直接存储到计算机中，字符编号在存储之前必须要经过转换，在读取时还要再逆向转换一次，这套转换方案就叫做字符编码</p>
-</li>
-</ol>
-<ul>
-<li>字面常量(literal constant)即无需定义可以直接写出来的量。字面常量的值一望便知，但是他的数据类型往往不能被准确分辨（尤其是使用auto时）。</li>
-<li>编译期可知的值“享有特权”，它们可能被存放到只读存储空间中。</li>
-</ul>
-<h2 id="2-2-非类型形参的局限："><a href="#2-2-非类型形参的局限：" class="headerlink" title="2.2. 非类型形参的局限："></a>2.2. 非类型形参的局限：</h2><ol>
-<li>浮点数不可以作为非类型形参，包括float，double。具体原因可能是历史因素，也许未来C++会支持浮点数；</li>
-<li>类不可以作为非类型形参；</li>
-<li>字符串不可以作为非类型形参；</li>
-<li>整形，可转化为整形的类型都可以作为形参，比如int，char，long，unsigned，bool，short（enum声明的内部数据可以作为实参传递给int，但是一般不能当形参）；</li>
-<li>指向对象或函数的指针与引用（左值引用）可以作为形参。</li>
-<li>this is [a link][link-id]<br>[link-id]: <a target="_blank" rel="noopener" href="https://github.com/">https://github.com/</a></li>
-</ol>
-<h2 id="2-3-非类型实参的局限："><a href="#2-3-非类型实参的局限：" class="headerlink" title="2.3. 非类型实参的局限："></a>2.3. 非类型实参的局限：</h2><ol>
-<li>实参必须是编译时常量表达式，不能使用非const的局部变量，局部对象地址及动态对象；</li>
-<li>非const的全局指针，全局对象&#x2F;全局变量（下面可能有个特例）都不是常量表达式；</li>
-<li>由于形参的已经做了限定，字符串，浮点型即使是常量表达式也不可以作为非类型实参 ；</li>
-<li>当传递指针或者引用给模板参数时，他们指向的对象不能是字符串字面值、临时量或者数据成员或者其他子对象。<ul>
-<li>这些限制在每个的C++版本中有所放送，额外的限制：</li>
-</ul>
-<ol>
-<li>C++11前，该对象必须有外部链接（external linkage）</li>
-<li>C++14前，该对象必须有外部链接或者内部链接<blockquote>
-<p>备注：常量表达式基本上是字面值以及const修饰的变量</p>
-</blockquote>
-</li>
-</ol>
-</li>
-<li>如果非类型形参类型为对象指针，则必须传入完整对象的地址，不能是指向该对象的指针</li>
-<li>如下，如果数组类型形参不是引用传递而是值传递，数组会自动降一维，成为一个指向一维数组的指针<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="type">size_t</span> w, <span class="type">size_t</span> h&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">double</span> (&amp;s)[w][h])</span></span>&#123;cout&lt;&lt;s[<span class="number">0</span>]&lt;&lt;endl;&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="2-4-编译时常量表达式"><a href="#2-4-编译时常量表达式" class="headerlink" title="2.4. 编译时常量表达式"></a>2.4. 编译时常量表达式</h2><ul>
-<li>整形常量为如果被常量表达式初始化则为常量表达式 ，也可以用于初始化其他常量表达式，其他类型目前未知</li>
-<li>constexpr 所表示的对象为const，被放置在只读内存中，是在编译期就可以被处理识别的值, 并且对象一定要被正确初始化</li>
-<li>constexpr 所表示的函数的参数和返回值都应为字面值或编译期常量（该常量也应被加上constexpr说明符），当多个不可知量调用constexpr函数时，该函数所表现出的形式为普通函数，所以constexpr的返回值不一定是const</li>
-<li>在C++11中，除了void外的所有内置类型，以及一些用户定义类型都可以是字面值类型，因为构造函数和其他成员函数可能是constexpr(<strong>c++14</strong>constexpr函数可以返回void)</li>
-<li>Point的构造函数可被声明为constexpr，因为如果传入的参数在编译期可知，Point的数据成员也能在编译器可知。因此这样初始化的Point就能为constexpr </li>
-<li>声明为constexpr的<strong>静态</strong>成员对象是<strong>内联</strong>的，在odr-use时可以不用在类外定义，lambda表达式中被odr-use的变量一定要被捕获，被捕获的变量不论是不是constexpr都不能用于常量表达式</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">magic</span> &#123;</span><br><span class="line">  <span class="type">static</span> <span class="keyword">constexpr</span> <span class="type">int</span> number = <span class="number">42</span>; <span class="comment">//c++17引入内联变量的概念，此处使用constexpr默认为内联，</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  std::vector&lt;<span class="type">int</span>&gt; v;</span><br><span class="line">  <span class="comment">// 调用 push_back(const T&amp;)</span></span><br><span class="line">  v.<span class="built_in">push_back</span>(magic::number);</span><br><span class="line">  std::cout &lt;&lt; v[<span class="number">0</span>] &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>在函数体内定义的constexpr变量不能用于初始化constexpr引用，constexpr引用必须被静态存储或<em>线程局部</em>常量表达式初始化（也称左值核心常量表达式）</li>
-<li>constexpr的变量也是在运行期给予地址的，所以取地址不是常量表达式</li>
-<li>constexpr变量模板，之前我们需要用类静态数据成员来表达的东西，使用变量模板可以更简洁地表达。constexpr 很合适用在变量模板里，表达一个和某个类型相关的编译期常量。<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="type">bool</span></span><br><span class="line">  is_trivially_destructible_v =</span><br><span class="line">    is_trivially_destructible&lt;</span><br><span class="line">      T&gt;::value;  <span class="comment">//判断类是否能平凡析构，指是否不调用析构函数也能正确回收资源</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ul>
-<blockquote>
-<p>个人对于常量表达式的理解目前仍旧比较浅显，cppreference关于constexpr的叙述看的好像明白又好像完全不懂…</p>
-</blockquote>
-<h2 id="2-5-隐式转换"><a href="#2-5-隐式转换" class="headerlink" title="2.5. 隐式转换"></a>2.5. 隐式转换</h2><ul>
-<li>常见的隐式转换有<ol>
-<li>整形之间以及整形浮点数（算术类型）</li>
-<li>nullptr和其他类型之间的转换</li>
-<li>函数到函数指针的转换</li>
-<li>up-casting</li>
-</ol>
-</li>
-<li>一个隐式类型转换序列包括一个初始标准转换序列、一个用户定义转换序列、一个第二标准转换序列,也就是说不存在什么两步转换问题，本身转换序列最少可以转换1次，最多可以三次。两次转换当然没问题了。唯一会触发问题的是出现了两次用户定义转换，因为隐式转换序列里只允许一次用户定义转换，语言标准也规定了不允许出现多余一次的用户定义转换：</li>
-</ul>
-<hr>
-<h2 id="2-6-设计模式"><a href="#2-6-设计模式" class="headerlink" title="2.6. 设计模式"></a>2.6. 设计模式</h2><ul>
-<li><p>观察者模式是一种行为设计模式， 允许你定义一种订阅机制， 可在对象事件发生时通知多个 “观察” 该对象的其他对象。</p>
-<p><img src="/2023/08/25/houjiecpp/structure.png" alt="observer示例"></p>
-</li>
-<li><p>奇怪的重复模板模式 （CRTP ）</p>
-</li>
-<li></li>
-</ul>
-<h2 id="2-7-智能指针"><a href="#2-7-智能指针" class="headerlink" title="2.7. 智能指针"></a>2.7. 智能指针</h2><ul>
-<li>shared_ptr的析构会将引用计数减一，但lambda闭包中的ptr还持有一个引用,引用计数不会变为0</li>
-</ul>
-<h2 id="2-8-右值"><a href="#2-8-右值" class="headerlink" title="2.8. 右值"></a>2.8. 右值</h2><ul>
-<li>std::move除了转换它的实参到右值以外什么也不做，有一些提议说它的名字叫rvalue_cast之类可能会更好。虽然可能确实是这样，但是它的名字已经是std::move，所以记住std::move做什么和不做什么很重要。它只进行转换，不移动任何东西。</li>
-<li>右值可以用来初始化右值引用，这种情况下该右值所标识的对象的生存期被延长到该引用的作用域结尾。</li>
-<li>static_cast<T>(v)<ul>
-<li>如果T的类型为左值引用或者对函数指针的右值引用，结果为左值，同时T若为右值引用，返回结果为相应类型的<strong>亡值</strong>，其生命周期等于引用的生命周期</li>
-<li>同时，static_cast 不太适用于向下转型，基类的左值(引用)转型为派生类左值引用时必须保证基类为派生类中的基类子对象(顾名思义为子类中is_a基类的部分)，结果可转为类型为D的封闭对象（enclosing object），否则UB</li>
-<li>所以，static_cast在运行时不进行任何检查来确保被转换的对象实际上是目标类型的完整对象。因此，程序员需要确保转换是安全的。另一方面，它不会产生dynamic_cast的<strong>类型安全检查</strong>的开销。</li>
-</ul>
-</li>
-</ul>
-<h2 id="2-9-模板杂类"><a href="#2-9-模板杂类" class="headerlink" title="2.9. 模板杂类"></a>2.9. 模板杂类</h2><ul>
-<li><p>c++模板是图灵完全的，可以在编译期对模板类进行求值,要进行编译期编程，最主要的一点，是需要把计算转变成类型推导。<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/fegus/article/details/130338576?ops_request_misc=&request_id=38815c79755449fe82293d93350e9293&biz_id=&utm_medium=distribute.pc_search_result.none-task-blog-2~blog~koosearch~default-9-130338576-null-null.268%5Ev1%5Econtrol&utm_term=%E7%8E%B0%E4%BB%A3&spm=1018.2226.3001.4450">现代c++编程实战中关于模板编译期计算的讲解</a></p>
-</li>
-<li><p>T&amp;&amp; 当T作为成员函数模板形参时，表现出通用引用，或转发引用，根据传递的左值或者右值来决定是左值还是右值引用，而如同complex&amp;&amp;此类直接指定类名或者在模板类中指定T，亦或者将T&amp;&amp;前加上cv限定，一般都属于右值引用</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; </span><br><span class="line"><span class="built_in">complex</span>(T&amp;&amp;)&#123;&#125; <span class="comment">// forward reference</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>一般来说都用std::forward<T>(param)来转发通用引用（有条件的转为右值引用），用std::move将右值引用转为右值，且不会影响cv限定</li>
-</ul>
-</li>
-<li><p>如果你在按值返回的函数中，返回值绑定到右值引用或者通用引用上，需要对返回的引用使用std::move或者std::forward。要了解原因，考虑两个矩阵相加的operator+函数，左侧的矩阵为右值（可以被用来保存求值之后的和）：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Matrix                              <span class="comment">//按值返回</span></span><br><span class="line"><span class="keyword">operator</span>+(Matrix&amp;&amp; lhs, <span class="type">const</span> Matrix&amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    lhs += rhs;</span><br><span class="line">    <span class="keyword">return</span> std::<span class="built_in">move</span>(lhs);	        <span class="comment">//移动lhs到返回值中</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>通过在return语句中将lhs转换为右值（通过std::move），lhs可以移动到返回值的内存位置。如果省略了std::move调用，</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Matrix                              <span class="comment">//同之前一样</span></span><br><span class="line"><span class="keyword">operator</span>+(Matrix&amp;&amp; lhs, <span class="type">const</span> Matrix&amp; rhs)</span><br><span class="line">&#123;</span><br><span class="line">    lhs += rhs;</span><br><span class="line">    <span class="keyword">return</span> lhs;                     <span class="comment">//拷贝lhs到返回值中</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>lhs是个左值的事实，会强制编译器拷贝它到返回值的内存空间。假定Matrix支持移动操作，并且比拷贝操作效率更高，在return语句中使用std::move的代码效率更高。</p>
-</li>
-<li><p>模板在使用之前必须先声明。模板的使用由友元声明构成，不是由模板的声明构成。实际的模板声明必须在友元声明之前。例如，编译系统尝试链接以下示例中生成的目标文件时，对未实例化的 operator&lt;&lt; 函数，会生成未定义错误。</p>
-<ul>
-<li>友元类，友元函数的相关知识<ul>
-<li>在 C++11 中，一个类有两种形式的友元声明：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">friend</span> <span class="keyword">class</span> <span class="title class_">F</span>;</span><br><span class="line"><span class="keyword">friend</span> F;</span><br></pre></td></tr></table></figure>
-如果最内层的命名空间中找不到任何具有该名称的现有类，则第一种形式引入新的类 F。 C++11：第二种形式不引入新的类；当类已声明时，可以使用该形式，而当将模板类型参数或 typedef 声明为 friend 时，必须使用该形式。 </li>
-<li>如果声明以前未声明的 friend 函数，则该函数将被导出到封闭非类范围。friend 声明中声明的函数被视为已使用 extern 关键字声明。若使用</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>类模板的静态成员变量是所有同类型的类模板实例共享的一块数据。当多个目标文件中声明了同一类模板的同类型实例后，必然会产生跨目标文件链接。</p>
-</li>
-<li><p>在函数模板中的所有if语句的分支都会被实例化(instantiated)。实例化后的代码是否有用是在run-time决定，而函数调用的实例化是在complie-time。</p>
-</li>
-<li><p>缺省情况下，实例会进入特殊地址区域，链接程序会识别并丢弃重复项。</p>
-<blockquote>
-<p>注意，在本地mingw gcc环境下对多个源文件都引入头文件中关于模板特定实参的实例化并统一编译，结果成功，表明链接器会丢弃重复的实例化</p>
-</blockquote>
-</li>
-</ul>
-<h2 id="2-10-lambda"><a href="#2-10-lambda" class="headerlink" title="2.10. lambda"></a>2.10. lambda</h2><ul>
-<li>lambda主体不能捕捉静态存储期限变量</li>
-<li>lambda主体在读取被常量表达式初始化并被const修饰的整形或枚举常量或者constexpr修饰的常量的值时，可以不进行捕获</li>
-<li>如果存在捕获默认项，则当前对象（*this）可以被隐式捕获。如果隐式捕获，则始终通过引用进行捕获，即使捕获默认项是&#x3D;。</li>
-<li><strong>odr-use</strong><ul>
-<li>lambda函数主体在ODR-use自动存储期变量或者this指针所指代的实体(entity)时，必须要隐式或显式的捕获它</li>
-<li>如果lambda函数的主体odr-use被复制捕获的实体，则访问闭包类型的成员。如果它没有odr-use该实体，则访问原始对象。</li>
-<li>在默认捕获为复制捕获的lambda主体中，任何可捕获实体的类型都像被捕获了一样（因此如果lambda不可变，则通常会添加const限定符），即使该实体在未求值的操作数中且未被捕获（例如在decltype中）。</li>
-<li>任何被lambda函数隐式或显式捕获的变量都是ODR-use的</li>
-</ul>
-</li>
-</ul>
-<h2 id="2-11-成员函数指针"><a href="#2-11-成员函数指针" class="headerlink" title="2.11. 成员函数指针"></a>2.11. 成员函数指针</h2><ul>
-<li>指向作为类 C 的成员的非静态成员函数 f 的指针，能准确地以表达式 &amp;C::f 初始化。在 C 的成员函数内，如 &amp;(C::f) 或 &amp;f，这样的表达式不构成成员函数指针。</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">C</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123; std::cout &lt;&lt; n &lt;&lt; <span class="string">&#x27;\n&#x27;</span>; &#125;</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">void</span> (C::* p)(<span class="type">int</span>) = &amp;C::f; <span class="comment">// 指向类 C 的成员函数 f 的指针</span></span><br><span class="line">    C c;</span><br><span class="line">    (c.*p)(<span class="number">1</span>);                  <span class="comment">// 打印 1</span></span><br><span class="line">    C* cp = &amp;c;</span><br><span class="line">    (cp-&gt;*p)(<span class="number">2</span>);                <span class="comment">// 打印 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-12-数据成员指针"><a href="#2-12-数据成员指针" class="headerlink" title="2.12. 数据成员指针"></a>2.12. 数据成员指针</h2><ul>
-<li><p>指向作为类 C 的成员的非静态数据成员 m 的指针，能准确地以表达式 &amp;C::m 初始化。在 C 的成员函数中，如 &amp;(C::m) 或 &amp;m 这样的表达式不构成指向成员指针</p>
-</li>
-<li><p>类定义是一种类型声明，存在于代码块中，并没有分配内存空间；对类的数据成员取地址，得到的是类的数据成员在类内的相对偏移量；</p>
-</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">C</span> &#123; <span class="type">int</span> m; &#125;;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> C::* p = &amp;C::m;          <span class="comment">// 指向类 C 的数据成员 m</span></span><br><span class="line">    C c = &#123;<span class="number">7</span>&#125;;</span><br><span class="line">    std::cout &lt;&lt; c.*p &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;   <span class="comment">// 打印 7</span></span><br><span class="line">    C* cp = &amp;c;</span><br><span class="line">    cp-&gt;m = <span class="number">10</span>;</span><br><span class="line">    std::cout &lt;&lt; cp-&gt;*p &lt;&lt; <span class="string">&#x27;\n&#x27;</span>; <span class="comment">// 打印 10</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-13-虚函数"><a href="#2-13-虚函数" class="headerlink" title="2.13. 虚函数"></a>2.13. 虚函数</h2><h3 id="2-13-1-从汇编层面理解虚函数的实现"><a href="#2-13-1-从汇编层面理解虚函数的实现" class="headerlink" title="2.13.1. 从汇编层面理解虚函数的实现"></a>2.13.1. 从汇编层面理解虚函数的实现</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Parent</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">parent_virtual</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">parent_virtual2</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Child</span> : Parent&#123;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">parent_virtual</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">parent_virtual2</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Parent* p1 = <span class="keyword">new</span> Child;</span><br><span class="line">    p1-&gt;<span class="built_in">parent_virtual2</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>经<a target="_blank" rel="noopener" href="https://godbolt.org/">x86-64_gcc7.5</a>编译器编译后， 汇编代码如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line">square(int):</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     DWORD PTR [rbp-4], edi</span><br><span class="line">        mov     eax, DWORD PTR [rbp-4]</span><br><span class="line">        imul    eax, DWORD PTR [rbp-4]</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Parent::parent_virtual():</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        nop</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Parent::parent_virtual2():</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        nop</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Child::parent_virtual():</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        nop</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Child::parent_virtual2():</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        nop</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Parent::Parent() [base object constructor]:</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        mov     edx, OFFSET FLAT:vtable for Parent+16</span><br><span class="line">        mov     rax, QWORD PTR [rbp-8]</span><br><span class="line">        mov     QWORD PTR [rax], rdx</span><br><span class="line">        nop</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">Child::Child() [base object constructor]:</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        sub     rsp, 16</span><br><span class="line">        mov     QWORD PTR [rbp-8], rdi</span><br><span class="line">        mov     rax, QWORD PTR [rbp-8]</span><br><span class="line">        mov     rdi, rax</span><br><span class="line">        call    Parent::Parent() [base object constructor]</span><br><span class="line">        mov     edx, OFFSET FLAT:vtable for Child+16</span><br><span class="line">        mov     rax, QWORD PTR [rbp-8]</span><br><span class="line">        mov     QWORD PTR [rax], rdx</span><br><span class="line">        nop</span><br><span class="line">        leave</span><br><span class="line">        ret</span><br><span class="line">main:</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        push    rbx</span><br><span class="line">        sub     rsp, 24</span><br><span class="line">        mov     edi, 8</span><br><span class="line">        call    operator new(unsigned long)</span><br><span class="line">        mov     rbx, rax</span><br><span class="line">        mov     rdi, rbx</span><br><span class="line">        call    Child::Child() [complete object constructor]</span><br><span class="line">        mov     QWORD PTR [rbp-24], rbx</span><br><span class="line">        mov     rax, QWORD PTR [rbp-24]</span><br><span class="line">        mov     rax, QWORD PTR [rax]</span><br><span class="line">        add     rax, 8</span><br><span class="line">        mov     rax, QWORD PTR [rax]</span><br><span class="line">        mov     rdx, QWORD PTR [rbp-24]</span><br><span class="line">        mov     rdi, rdx</span><br><span class="line">        call    rax</span><br><span class="line">        mov     eax, 0</span><br><span class="line">        add     rsp, 24</span><br><span class="line">        pop     rbx</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br><span class="line">vtable for Child:</span><br><span class="line">        .quad   0</span><br><span class="line">        .quad   typeinfo for Child</span><br><span class="line">        .quad   Child::parent_virtual()</span><br><span class="line">        .quad   Child::parent_virtual2()</span><br><span class="line">vtable for Parent:</span><br><span class="line">        .quad   0</span><br><span class="line">        .quad   typeinfo for Parent</span><br><span class="line">        .quad   Parent::parent_virtual()</span><br><span class="line">        .quad   Parent::parent_virtual2()</span><br><span class="line">typeinfo for Child:</span><br><span class="line">        .quad   vtable for __cxxabiv1::__si_class_type_info+16</span><br><span class="line">        .quad   typeinfo name for Child</span><br><span class="line">        .quad   typeinfo for Parent</span><br><span class="line">typeinfo name for Child:</span><br><span class="line">        .string &quot;5Child&quot;</span><br><span class="line">typeinfo for Parent:</span><br><span class="line">        .quad   vtable for __cxxabiv1::__class_type_info+16</span><br><span class="line">        .quad   typeinfo name for Parent</span><br><span class="line">typeinfo name for Parent:</span><br><span class="line">        .string &quot;6Parent&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>以下是对主函数汇编段代码的解释：</p>
-<ul>
-<li><p>push rbp：将 rbp 寄存器的值压入栈中，保存当前的基址指针。</p>
-</li>
-<li><p>mov rbp, rsp：将 rsp 寄存器的值赋给 rbp 寄存器，设置新的基址指针</p>
-</li>
-<li><p>push rbx：将 rbx 寄存器的值压入栈中，保存当前的基址寄存器</p>
-</li>
-<li><p>sub rsp, 24：将 rsp 寄存器的值减去 24，为局部变量分配空间</p>
-</li>
-<li><p>mov edi, 8：将 8 赋给 edi 寄存器，作为 operator new 的参数，表示要分配 8 个字节的内存</p>
-</li>
-<li><p>call operator new(unsigned long)：调用 operator new 函数，为 Child 对象分配内存空间，并将返回的地址放在 rax 寄存器中</p>
-</li>
-<li><p>mov rbx, rax：将 rax 寄存器的值赋给 rbx 寄存器，保存 Child 对象的地址</p>
-</li>
-<li><p>mov rdi, rbx：将 rbx 寄存器的值赋给 rdi 寄存器，作为 Child::Child() 的参数，表示要构造 Child 对象</p>
-</li>
-<li><p>call Child::Child() [complete object constructor]：调用 Child::Child() 函数，完成 Child 对象的构造过程</p>
-</li>
-<li><p>mov QWORD PTR [rbp-24], rbx：将 rbx 寄存器的值（Child 对象的地址）赋给 [rbp-24] 指向的内存单元（局部变量）</p>
-</li>
-<li><p>mov rax, QWORD PTR [rbp-24]：将 [rbp-24] 指向的内存单元（局部变量）的值（Child 对象的地址）赋给 rax 寄存器</p>
-</li>
-<li><p>mov rax, QWORD PTR [rax]：将 [rax] 指向的内存单元（Child 对象中第一个成员变量）的值（虚函数表指针）赋给 rax 寄存器</p>
-</li>
-<li><p>mov rax, QWORD PTR [rax]：将 [rax] 指向的内存单元（虚函数表中第一个函数指针）的值（虚函数地址）赋给 rax 寄存器</p>
-</li>
-<li><p>mov rdx, QWORD PTR [rbp-24]：将 [rbp-24] 指向的内存单元（局部变量）的值（Child 对象的地址）赋给 rdx 寄存器</p>
-</li>
-<li><p>mov rdi, rdx：将 rdx 寄存器的值（Child 对象的地址）赋给 rdi 寄存器，作为虚函数的参数，表示要调用 Child 对象的虚函数</p>
-</li>
-<li><p>call rax：调用 rax 寄存器中保存的函数地址（虚函数地址），执行 Child 对象的虚函数，并将返回值放在 rax 寄存器中</p>
-</li>
-<li><p>mov eax, 0：将 0 赋给 eax 寄存器，作为 main 函数的返回值</p>
-</li>
-<li><p>add rsp, 24：将 rsp 寄存器的值加上 24，释放局部变量占用的空间</p>
-</li>
-<li><p>pop rbx：从栈中弹出一个值，赋给 rbx 寄存器，恢复之前保存的基址寄存器</p>
-</li>
-<li><p>pop rbp：从栈中弹出一个值，赋给 rbp 寄存器，恢复之前保存的基址指针</p>
-</li>
-<li><p>ret：从栈中弹出一个值，作为返回地址，并跳转到该地址继续执行。</p>
-<blockquote>
-<p>总结来说，比较老旧的编译器无法直接对<strong>指针或者引用下</strong>虚函数的调用进行静态绑定（值语义下可以，值语义指的是直接使用对象的.方法调用虚函数），即直接使用call functionname的做法，必须通过当前指针所指向的对象，查找其内存模型的第一个成员地址，也就是vptr的位置，之后通过vptr找到其指向的vtbl(虚表), vtbl是可以看作一个存放虚函数地址的数组，单个继承下无论是父类还是子类其每个虚函数的的偏移量在虚表中是相同的（索引是相同的），运行期可以直接通过该虚函数的地址来调用虚函数。所以编译器在编译期就已经构建并维护了虚指针和虚表，具体创建时间是在该类的对象的构造函数被调用之后，在较新的编译器中编译相同代码，编译器可能直接对虚函数进行静态绑定, 在c++11之后，子类使用<strong>final</strong>来覆写虚函数后，用<strong>子类指针或引用</strong>来调用虚函数，也可以做到静态绑定</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="2-13-2-虚析构函数"><a href="#2-13-2-虚析构函数" class="headerlink" title="2.13.2. 虚析构函数"></a>2.13.2. 虚析构函数</h3><ul>
-<li><p>通过指向基类的指针删除对象会引发未定义行为，除非基类的析构函数是虚函数：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Base</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">Base</span>() &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Derived</span> : <span class="keyword">public</span> Base &#123;&#125;;</span><br><span class="line"> </span><br><span class="line">Base* b = <span class="keyword">new</span> Derived;</span><br><span class="line"><span class="keyword">delete</span> b; <span class="comment">// 安全</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>析构函数可以声明为纯虚的，例如对于需要声明为抽象类，但没有其他可声明为纯虚的适合函数的基类。纯虚析构函数必须有定义，因为在销毁派生类时，所有基类析构函数都会被调用：</p>
-</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">AbstractBase</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">AbstractBase</span>() = <span class="number">0</span>;</span><br><span class="line">&#125;;</span><br><span class="line">AbstractBase::~<span class="built_in">AbstractBase</span>() &#123;&#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Derived</span> : <span class="keyword">public</span> AbstractBase &#123;&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// AbstractBase obj; // 编译错误</span></span><br><span class="line">Derived obj;         <span class="comment">// OK</span></span><br></pre></td></tr></table></figure>
-
-<p>几个讲解虚函数讲的不错的博客：<br><a target="_blank" rel="noopener" href="https://jacktang816.github.io/post/virtualfunction/">虚函数的内存分布</a><br><a target="_blank" rel="noopener" href="http://www.fmddlmyy.cn/text15.html">C++基本概念在编译器中的实现</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FJfSkrRKvuOmAfqqgf_e8Q">多态实现-虚函数、函数指针以及变体</a></p>
-<h1 id="3-2023-9-1"><a href="#3-2023-9-1" class="headerlink" title="3. 2023&#x2F;9&#x2F;1"></a>3. 2023&#x2F;9&#x2F;1</h1><h2 id="3-1-std-bind"><a href="#3-1-std-bind" class="headerlink" title="3.1. std::bind"></a>3.1. std::bind</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">std::vector&lt;<span class="type">double</span>&gt; data;               <span class="comment">//同上</span></span><br><span class="line"></span><br><span class="line">…                                       <span class="comment">//同上</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> func =</span><br><span class="line">    std::<span class="built_in">bind</span>(                              <span class="comment">//C++11模拟初始化捕获</span></span><br><span class="line">        [](<span class="type">const</span> std::vector&lt;<span class="type">double</span>&gt;&amp; data) <span class="comment">//译者注：本行高亮</span></span><br><span class="line">        &#123; <span class="comment">/*使用data*/</span> &#125;,</span><br><span class="line">        std::<span class="built_in">move</span>(data)                     <span class="comment">//译者注：本行高亮</span></span><br><span class="line">    );</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<ul>
-<li>std::bind为每个实参创建了bind对象里的<strong>副本</strong>，每次调用bind对象时，调用的是传递给lambda表达式的本地副本。在如上的例子中，std::move(data)使用移动构造创建了本地副本（左值），之后每次调用函数副本时，调用的都是该副本</li>
-</ul>
-<h2 id="3-2-关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的"><a href="#3-2-关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的" class="headerlink" title="3.2. 关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的"></a>3.2. 关于初始化的一些想法，表述上可能有纰漏，但根据代码执行来看应该是正确的</h2><h3 id="3-2-1-值初始化"><a href="#3-2-1-值初始化" class="headerlink" title="3.2.1. 值初始化"></a>3.2.1. 值初始化</h3><ul>
-<li><p>形式: T() &#x2F; T{}</p>
-</li>
-<li><p>若T为类对象且有用户提供（<em>除了在类定义内直接显式指定default的默认构造函数都可以称为用户提供的默认构造函数</em>）的默认构造函数，则对对象进行<strong>默认初始化</strong>；</p>
-</li>
-<li><p>若T为类对象且T只有隐式生成的默认构造函数，或者只有在类定义内指定default的默认构造函数，换而言之，如果显式定义&#x2F;预置&#x2F;删除了转换构造，拷贝或者移动构造（经过实验发现赋值操作不会影响默认构造函数的隐式生成），那么默认构造函数就不会隐式生成，如果默认构造函数隐式生成或被显式预置（后者前提是没有用户提供或者显示删除的默认构造函数），则会首先对类对象进行<strong>零初始化</strong>(即所有bit位置零)，之后会通过语义限制检查默认构造函数是否为<strong>重要(non-trivial)<strong>的默认构造函数，来对其中的对象进行</strong>默认初始化</strong></p>
-<p>  trivial default constructor :</p>
-<ul>
-<li>不是用户提供（即隐式生成或者首次声明时就显式预置）</li>
-<li>对应的类没有虚函数或者虚基类</li>
-<li>直接基类拥有trivial default ctor</li>
-<li>非静态成员同上</li>
-</ul>
-</li>
-<li><p>所有标准容器（std::vector、std::list 等）在以单个 size_type 实参进行构造或由对 resize() 的调用而增长时值初始化它们的各个元素，除非它们的分配器定制 construct 的行为。</p>
-</li>
-</ul>
-<h3 id="3-2-2-默认初始化"><a href="#3-2-2-默认初始化" class="headerlink" title="3.2.2. 默认初始化"></a>3.2.2. 默认初始化</h3><ul>
-<li>形式： T obj&#x2F; new T;</li>
-<li>调用无参默认构造函数，并对没有<strong>在成员初始化列表进行指明</strong>或者<strong>没有默认成员初始化器</strong>的非静态成员和基类成员进行默认初始化</li>
-<li>注意： <strong>对自动&#x2F;动态存储期非类类型成员进行默认初始化时会获得不确定的值</strong>，这也是我想讨论的重点，比如对int成员变量进行默认初始化之后，使用其赋值会导致UB</li>
-<li>使用默认初始化初始化const修饰的对象时，若为类对象必须有用户定义或提供的默认构造函数，或者每个非静态成员都有成员默认初始化器。最重要的是对应的基类子对象也必须满足上述条件</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">T1</span> &#123; <span class="type">int</span> mem; &#125;;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">T2</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> mem;</span><br><span class="line">    <span class="built_in">T2</span>() &#123; &#125; <span class="comment">// &quot;mem&quot; is not in the initializer list</span></span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="type">int</span> n; <span class="comment">// static non-class, a two-phase initialization is done:</span></span><br><span class="line">       <span class="comment">// 1) zero-initialization initializes n to zero</span></span><br><span class="line">       <span class="comment">// 2) default-initialization does nothing, leaving n being zero</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    [[maybe_unused]]</span><br><span class="line">    <span class="type">int</span> n;            <span class="comment">// non-class, the value is indeterminate</span></span><br><span class="line">    std::string s;    <span class="comment">// class, calls default ctor, the value is &quot;&quot; (empty string)</span></span><br><span class="line">    std::string a[<span class="number">2</span>]; <span class="comment">// array, default-initializes the elements, the value is &#123;&quot;&quot;, &quot;&quot;&#125;</span></span><br><span class="line"><span class="comment">//  int&amp; r;           // error: a reference</span></span><br><span class="line"><span class="comment">//  const int n;      // error: a const non-class</span></span><br><span class="line"><span class="comment">//  const T1 t1;      // error: const class with implicit default ctor</span></span><br><span class="line">    [[maybe_unused]]</span><br><span class="line">    T1 t1;            <span class="comment">// class, calls implicit default ctor</span></span><br><span class="line">    <span class="type">const</span> T2 t2;      <span class="comment">// const class, calls the user-provided default ctor</span></span><br><span class="line">                      <span class="comment">// t2.mem is default-initialized (to indeterminate value)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>若用clang编译器进行编译，输出t1.mem会发现是随机值，用gcc编译器进行编译会发现编译器给出‘uninitiated value’警告但仍然进行了零初始化，若改写为T1 t1{}，则都能正常编译并对进行mem零初始化，这就是我认为值初始化和默认初始化的最大区别所在；</p>
-</blockquote>
-<h3 id="3-2-3-静态成员的初始化"><a href="#3-2-3-静态成员的初始化" class="headerlink" title="3.2.3. 静态成员的初始化"></a>3.2.3. 静态成员的初始化</h3><ul>
-<li>具有static(<em>全局变量或static声明</em>)或 thread 存储期限的<strong>非局部变量</strong>在程序开始前被初始化，存放在全局区，先进行<strong>静态初始化</strong>，再进行<strong>动态初始化</strong>, 全局区分为已被初始化的段(.data段)，和未被初始化的段(.bss段)<ul>
-<li>静态初始化一般来说就是指零初始化和常量初始化，动态初始化在 <a href="%5Bhttps://%5D(https://en.cppreference.com/w/cpp/language/initialization#Non-local_variables)">cppreference</a>中并没给出明确定义，网络上对于这方面的相关资料也甚少，但值得注意的是，<strong>若没有被常量初始化的静态非局部变量在其他初始化进行前都会进行零初始化</strong>，之后会根据变量的定义来判断是否改变变量的值，但变量此时必须出现定义，若无定义则会报<strong>undefined reference</strong> 错误！！</li>
-<li>动态初始化一般来说（有别的像无序或部分有序，太复杂）是按照静态非局部变量的定义顺序来进行初始化的</li>
-</ul>
-</li>
-<li>static <strong>局部变量</strong> 拥有静态存储期限，但初始化是在第一次进入scope 作用域并执行到变量声明时初始化，除非他是被 <strong>零初始化</strong> (加载程序时被设为0，一般存储在BSS段)或者 <strong>常量初始化</strong>(编译时间)，这让他们可以像全局变量一样在程序开始前被初始化</li>
-<li>具有自动和动态存储期的非类变量的默认初始化，生成具有不确定值的对象(静态和线程局部对象的初始化为零)。</li>
-<li>引用和常量标量对象不能被默认初始化。<ul>
-<li>标量类型(scalar types)包括integral，reference，floating-point, pointer…………………………..</li>
-</ul>
-</li>
-<li>静态数据成员(static data  members) 在声明<strong>内联或constexpr</strong>时指定initialzer , 在类外不需要重定义，甚至在odr-use时也不需要定义，然而对于普通const成员来说，只有int类型的数据才可以拥有initializer，并且在odr-use时也需要在类外重新声明，但这时不能给出初始化器</li>
-<li>总结就是类静态成员在类中声明时是不会默认初始化的，可以在类外定义进行动态初始化，在类外的静态数据可以直接默认初始化.</li>
-</ul>
-<h4 id="3-2-3-1-2023-11-1-更新动态初始化"><a href="#3-2-3-1-2023-11-1-更新动态初始化" class="headerlink" title="3.2.3.1. 2023&#x2F;11&#x2F;1 更新动态初始化"></a>3.2.3.1. 2023&#x2F;11&#x2F;1 更新动态初始化</h4><p>在动手查看过各静态变量汇编层面的动态初始化后，对动态初始化有了更多的认识<br>代码文件及汇编代码在<a target="_blank" rel="noopener" href="https://godbolt.org/z/METvfhPj3">complier explore</a>，编译器为x86-64 clang9.0;</p>
-<ol>
-<li>对于未初始化的普通数据类型静态或全局变量（即没有初始化器）来说， 其被储存在.bss段中且这些0变量本身并没有保存在可执行文件或者动态链接库文件中，但是其总内存段大小和起止位置在加载件时被统计出来。<ul>
-<li>C++ name-mangling机制把<strong>这类数据以及局部静态未初始化或者零或者动态初始化变量</strong>命名为_ZZ3fooiE开头的变量，用于表示一个静态变量的实际存储位置，根据下面对于动态初始化局部静态变量的汇编代码可以看出，编译器它调用了一些C++运行时库的函数，如__cxa_guard_acquire和__cxa_guard_release，来保证初始化的线程安全和一次性 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cmp     byte ptr [guard variable for foo(int)::staticLocalInitVar], 0</span><br><span class="line">jne     .LBB1_3</span><br><span class="line">movabs  rdi, offset guard variable for foo(int)::staticLocalInitVar</span><br><span class="line">call    __cxa_guard_acquire</span><br><span class="line">cmp     eax, 0</span><br><span class="line">je      .LBB1_3</span><br><span class="line">call    fd()</span><br><span class="line">mov     dword ptr [_ZZ3fooiE18staticLocalInitVar], eax</span><br><span class="line">movabs  rdi, offset guard variable for foo(int)::staticLocalInitVar</span><br><span class="line">call    __cxa_guard_release</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li>对于有初始化器但不是常量初始化的普通数据类型静态或全局变量来说，其被存储在.data段中，但编译阶段被初始化为0，其被真正初始化的阶段在运行期，program startup的阶段，在主函数执行之前被无序，偏序，或正序初始化。对于clang为每个静态数据成员在编译阶段分配了其初始化的，名称为__cxx_global_var_init.<strong>num</strong>的函数代码，到startup时会被__start函数调用<ul>
-<li>无序初始化针对模板类<strong>没有被特化</strong>的静态数据成员（<em>当然前提是该数据成员不是在类中被赋值的常量整形成员，也不是指定constexpr的内联静态成员</em>），其生成函数的num不一定在它之后声明的变量之前</li>
-<li>偏序初始化针对内联静态变量</li>
-<li>其余静态变量或普通类的静态数据成员在同一翻译单元中按照代码顺序动态初始化</li>
-</ul>
-</li>
-<li>对于class类型的全局成员来说，.data段将其非静态数据成员全部零初始化，并且构造函数也在startup阶段被调用，析构函数在主函数推出后也被调用</li>
-<li>还有一种动态初始化可以提早发生在编译阶段，其必须满足以下条件<ul>
-<li>初始化的动态版本不改变命名空间作用域中任何先于其初始化的对象的值</li>
-<li>初始化的静态版本在被初始化变量中产生的值，与当所有不要求静态初始化的变量都被动态初始化时，由动态初始化所生成的值相同。<br>但这只是可能提前初始化，并不保证一定会</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="type">double</span> <span class="title">fd</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">1.0</span>; &#125;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">extern</span> <span class="type">double</span> d1;</span><br><span class="line"> </span><br><span class="line"><span class="type">double</span> d2 = d1;   <span class="comment">// unspecified:</span></span><br><span class="line">                  <span class="comment">// dynamically initialized to 0.0 if d1 is dynamically initialized, or</span></span><br><span class="line">                  <span class="comment">// dynamically initialized to 1.0 if d1 is statically initialized, or</span></span><br><span class="line">                  <span class="comment">// statically initialized to 0.0 (because that would be its value</span></span><br><span class="line">                  <span class="comment">// if both variables were dynamically initialized)</span></span><br><span class="line"> </span><br><span class="line"><span class="type">double</span> d1 = <span class="built_in">fd</span>(); <span class="comment">// may be initialized statically or dynamically to 1.0</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>简而言之，d1在程序开始前被赋0，这是静态初始化，之后被赋1，这是动态初始化，但由于某些规则该变量的动态初始化可以被提至编译时间，也就是静态初始化为1，所以d2的值也是不确定的，虽然在本地表现出被动态初始化为1的结果</p>
-</blockquote>
-<p>-[] 依然困惑于动态初始化的局部静态变量，在汇编码中没有找到其在.data段被分配内存，莫非仍然在.bss段被分配内存？</p>
-<h2 id="3-3-internal-linkage-external-linkage"><a href="#3-3-internal-linkage-external-linkage" class="headerlink" title="3.3. internal linkage &amp;&amp; external linkage"></a>3.3. internal linkage &amp;&amp; external linkage</h2><ul>
-<li>#pragma once 只能作用于某个具体的文件，而无法向 #ifndef 那样仅作用于指定的一段代码</li>
-<li>具有内部链接性质的变量可以在头文件中定义，这样会在每个翻译单元内定义不同实体，但由于该变量只在单文件中可见于是不会引发多重定义的问题， 但是会引发代码冗余</li>
-<li>具有外部链接性质的变量或者函数若声明inline，则会在编译时将变量名替换为变量值 &#x2F; 函数名替换为函数体， 此时可以在头文件中定义</li>
-<li>类类型虽然在cppreference中标注类的名称具有外部链接，但在源文件中使用类时（比如构造函数，成员函数等等时），若只在开头标注class complex；是会导致编译错误的，必须要引入class头文件，但是类的静态数据成员和成员函数都具有外部链接，可以在类外定义（另一个源文件，若在头文件定义，需在类外声明inline，若在类内则不需要，因为在类内定义是隐式内联的），<strong>根据ODR原则可知ODR允许类类型在多个翻译单元中定义，特别地，对于需要该类类型完整定义的翻译单元中，必须有且仅有该类类型的一个定义，并且在满足特定条件时，如同整个程序中只有一个定义。</strong></li>
-<li>匿名命名空间也不要在头文件定义，因为每个引入该命名空间的源文件都会为自己创建一份独特命名的命名空间，可能会导致很多意外情况发生</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/shaochuanhe/articles/14238153.html">讲述c++编译时会出现多重定义，链接错误等error原因的博客</a></p>
-<h2 id="3-4-C、C99、ANSI-C-和-GNU-C-之间的区别"><a href="#3-4-C、C99、ANSI-C-和-GNU-C-之间的区别" class="headerlink" title="3.4. C、C99、ANSI C 和 GNU C 之间的区别"></a>3.4. C、C99、ANSI C 和 GNU C 之间的区别</h2><p>标准化之前的一切一般被称为“K&amp;R C”，以著名的书（第一版和第二版）命名，C语言的发明者丹尼斯·里奇（Dennis Ritchie）是作者之一。这就是 1972 年至 1989 年的“C 语言”。</p>
-<p>第一个 C 标准于 1989 年由美国国家标准协会 ANSI 在全国发布。此版本称为 C89 或 ANSI-C。从 1989 年到 1990 年，这就是“C 语言”。</p>
-<p>次年，美国标准被国际接受并由 ISO 发布（ISO 9899:1990）。此版本称为 C90。从技术上来说，它与C89&#x2F;ANSI-C是相同的标准。从形式上来说，它取代了 C89&#x2F;ANSI-C，使它们变得过时。从 1990 年到 1999 年，C90 是“C 语言”。</p>
-<p>请注意，自 1989 年以来，ANSI 与 C 语言没有任何关系，只是作为 ISO 标准的众多实例之一。现在在美国通过INCITS完成，C 标准在美国的正式名称为 INCITS&#x2F;ISO&#x2F;IEC 9899。就像在欧洲称为 EN&#x2F;ISO&#x2F;IEC 一样。</p>
-<p>仍在谈论“ANSI C”的程序员通常不知道它的含义。ISO 通过 ISO 9899 标准“拥有”C 语言。</p>
-<p>1995 年发布了一个小更新，有时称为“C95”。这不是重大修订，而是正式命名为 ISO&#x2F;IEC 9899:1990&#x2F;Amd.1:1995 的技术修订。主要的变化是引入了广泛的字符支持。</p>
-<p>1999年，C标准进行了重大修订（ISO 9899:1999）。该版本的标准称为 C99。从 1999 年到 2011 年，这就是“C 语言”。</p>
-<p>2011年，C标准再次发生变更（ISO 9899:2011）。这个版本称为C11。该语言中添加了各种新功能，例如_Generic、和线程支持。_Static_assert此次更新重点关注多核、多处理和表达测序。从 2011 年到 2017 年，这就是“C 语言”。</p>
-<p>2017年，C11进行了改版，解决了各种缺陷报告。该标准非正式地称为 C17 或 C18。它于 2017 年完成（并使用__STDC_VERSION__&#x3D; 201710L），但由 ISO 发布为 9899:2018，因此 C17&#x2F;C18 之间存在歧义。它不包含任何新功能，仅包含更正。它是 C 语言的当前版本。</p>
-<p>该委员会正在制定一项名为“C23”&#x2F;“C2X”的草案，计划于 2023 年发布（但官僚主义的车轮磨得很慢，请检查ISO 的状态）。最后的工作草案 N3096 可在此处找到。</p>
-<p>其中包含许多小缺陷报告修复，例如 C17&#x2F;C18，但也包含许多重大更改和新功能。这是一个主要版本。</p>
-<p>“C99 strict”可能是指强制编译器严格遵循标准的编译器设置。C 标准中有一个术语“conformedimplementation” 。本质上它的意思是：“这个编译器实际上正确地实现了C语言”。正确实现 C 语言的程序正式称为严格符合程序。此类程序也可能不包含任何形式的定义不明确的行为。</p>
-<p>“GNU C”有两个含义。作为 GNU 编译器集合 (GCC) 一部分的 C 编译器本身。或者它可能意味着 GCC C 编译器使用的非标准默认设置。如果您使用它进行编译，gcc program.c那么您就不会根据 C 标准进行编译，而是根据非标准 GNU 设置进行编译，这可能被称为“GNU C”。例如，整个 Linux 内核是用非标准 GNU C 编写的，而不是用标准 C 编写的。</p>
-<h1 id="4-未完成的学习任务"><a href="#4-未完成的学习任务" class="headerlink" title="4. 未完成的学习任务"></a>4. 未完成的学习任务</h1><ul>
-<li><input disabled="" type="checkbox"> c++程序加载时的内存模型(编译期内存的分配以及运行期内存的分配)<br><a target="_blank" rel="noopener" href="https://ctfbook.ph0en1x.com/reverse/zhan-3001-zhan-zheng-yu-han-shu-diao-yong">栈、栈帧与函数调用</a><br><a target="_blank" rel="noopener" href="https://www.tenouk.com/ModuleW.html">COMPILER, ASSEMBLER, LINKER AND LOADER: A BRIEF STORY</a></li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/08/25/houjiecpp/" data-id="cloy78eo40005hctl33q0deds" data-title="houjiecpp" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c11-14-syntax/" rel="tag">c11&#x2F;14 syntax</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cpp-memory-model/" rel="tag">cpp memory model</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/static-dynamic-polymorphic/" rel="tag">static&#x2F;dynamic polymorphic</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-cplus-learning" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/08/24/cplus-learning/" class="article-date">
-  <time class="dt-published" datetime="2023-08-24T14:07:42.000Z" itemprop="datePublished">2023-08-24</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>►<a class="article-category-link" href="/categories/cpp-related/">cpp related</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/08/24/cplus-learning/">cplus_learning</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="2023-8-2"><a href="#2023-8-2" class="headerlink" title="2023&#x2F;8&#x2F;2"></a>2023&#x2F;8&#x2F;2</h1><ul>
-<li>dijstra，每次并入一个节点并更新dist值，下面列举几种不同实现方式<ul>
-<li>邻接矩阵 时间复杂度为O(v^2)</li>
-<li>邻接链表，每个顶点连着跟他相连的顶点作为链表中的节点，存储着目的顶点和边的权重，时间复杂度为O(Elogv) 可以用list&lt;pair&lt;int(目的顶点),int(边的权重)&gt;&gt;<ul>
-<li>最小堆<ul>
-<li>基本知识：节点索引由一个数组维护，左右子树下标和二叉树类似， 每个左右子树的父节点的值都比子节点的值小，这里的值指的是dist值</li>
-<li>提取最小值：将堆中最小值节点，也就是根节点和数组中最后一个节点调换位置，并减少堆中size的值，这样可以防止下次寻找最小值时再次访问该节点，之后进行堆最小化操作</li>
-<li>堆最小化操作 : 递归函数，递归对比父节点和左右节点的值并交换节点中的值以及交换对应图中顶点所在索引值</li>
-<li>减少键值操作：每次更新顶点的dist值后都要在最小堆中进行更新，并递归和其父节点进行比较，将其放在最小堆中应在的位置</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>stl set : 集合的定义，每个元素只有一份在集合中</li>
-<li>std::tie是C++标准库中的一个函数模板，位于<tuple>头文件中。std::tie用于创建一个std::tuple元组，可以用来绑定多个变量，并从中提取元素值。</li>
-<li>std::tie的用法是将多个变量作为参数传递给它，并返回一个元组，其中包含这些变量的引用。可以使用std::tie来简洁地同时解包多个变量。</li>
-<li>myset.erase(myset.find(40)); 只删除第一个匹配到的元素，而 myset.erase(40); 会删除所有匹配到的元素。</li>
-<li>set的默认排序方式为升序排序，priority_queue相反 </li>
-<li>std::sort(myints, myints+8, myfunction&#x2F;myobject(strcut or class仿函数)) &#x2F; std::set&lt;int, less<int>&#x2F;greater<int>&#x2F;myfunctionobject&#x2F;bool(*)(int, int)&gt; myset(myfunction)</li>
-<li>pair的默认排序方式按pair.first排序</li>
-<li>常见的实现方法为BFS，每次从队列或集合中取出最小的dist所对应的节点，松弛该节点相连的所有边，若有更新，将更新后的pair加入至队列中</li>
-<li>为了防止遍历到已经提取出最小值的节点，可以加入vis数组，但加不加无所谓，最终都会收敛至最小值</li>
-</ul>
-</li>
-</ul>
-<p><img src="/image/dijkstra.png"></p>
-<h1 id="2023-8-3"><a href="#2023-8-3" class="headerlink" title="2023&#x2F;8&#x2F;3"></a>2023&#x2F;8&#x2F;3</h1><ul>
-<li>原地哈希：将原数组的元素对应到其下标中，比如1对应的下标为1-1&#x3D;0，还可以使用替换的方式将0索引上的数字与1进行交换，该方式可以用来查看某个数字是否出现在了数组中。</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/08/24/cplus-learning/" data-id="cloy78eny0001hctla9z4f7pd" data-title="cplus_learning" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dijstra/" rel="tag">dijstra</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hash-table/" rel="tag">hash table</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-introduction" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/07/24/introduction/" class="article-date">
-  <time class="dt-published" datetime="2023-07-24T13:55:23.000Z" itemprop="datePublished">2023-07-24</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/cpp-related/">cpp related</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/07/24/introduction/">introduction</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <ul>
-<li><a href="#1-2023713">1. 2023&#x2F;7&#x2F;13</a><ul>
-<li><a href="#11-contribut">1.1. Contribut</a></li>
-</ul>
-</li>
-<li><a href="#2-2023714">2. 2023&#x2F;7&#x2F;14</a><ul>
-<li><a href="#21-cpp-learning">2.1. cpp learning</a></li>
-</ul>
-</li>
-<li><a href="#3-2023720">3. 2023&#x2F;7&#x2F;20</a></li>
-<li><a href="#4-2023724">4. 2023&#x2F;7&#x2F;24</a></li>
-<li><a href="#5-2023725">5. 2023&#x2F;7&#x2F;25</a></li>
-<li><a href="#6-2023726">6. 2023&#x2F;7&#x2F;26</a></li>
-</ul>
-<h1 id="1-2023-7-13"><a href="#1-2023-7-13" class="headerlink" title="1. 2023&#x2F;7&#x2F;13"></a>1. 2023&#x2F;7&#x2F;13</h1><h2 id="1-1-Contribut"><a href="#1-1-Contribut" class="headerlink" title="1.1. Contribut"></a>1.1. Contribut</h2><ul>
-<li>剑桥雅思真题</li>
-<li>manium数学动画</li>
-<li><input checked="" disabled="" type="checkbox"> <a target="_blank" rel="noopener" href="https://github.com/">https://github.com/</a></li>
-</ul>
-<ol>
-<li>public&#x2F;private&#x2F;protected cpp</li>
-<li>friend cpp</li>
-<li>non-virtual function cpp <blockquote>
-</blockquote>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">example</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">&#125;<span class="type">const</span> = <span class="number">0</span>; </span><br></pre></td></tr></table></figure></li>
-</ol>
-<h1 id="2-2023-7-14"><a href="#2-2023-7-14" class="headerlink" title="2. 2023&#x2F;7&#x2F;14"></a>2. 2023&#x2F;7&#x2F;14</h1><h2 id="2-1-cpp-learning"><a href="#2-1-cpp-learning" class="headerlink" title="2.1. cpp learning"></a>2.1. cpp learning</h2><ul>
-<li><p>stringstream<br><strong>used to split word</strong><br><br><code>using namespace std;</code></p>
-</li>
-<li><p>to_string(int):change a int to a string  </p>
-<blockquote>
-<p>仅作测试样例<br> <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%-3d&quot;</span>,a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-</li>
-<li><p>字典树 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU4NDE3MTEyMA==&mid=2247488490&idx=1&sn=db2998cb0e5f08684ee1b6009b974089">查找匹配字符，其实就是树节点存储26个字母</a></p>
- <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">Trie</span> &#123;</span><br><span class="line">        <span class="type">bool</span> isEnd;</span><br><span class="line">        vector&lt;Trie*&gt; children;</span><br><span class="line">        <span class="built_in">Trie</span>() : <span class="built_in">isEnd</span>(<span class="literal">false</span>), <span class="built_in">children</span>(<span class="number">26</span>, <span class="literal">NULL</span>)&#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function">string <span class="title">searhPrefix</span><span class="params">(Trie* root, <span class="type">const</span> string&amp; word)</span> </span>&#123;</span><br><span class="line">        Trie* cur = root;</span><br><span class="line">        string res;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">char</span> c : word) &#123;</span><br><span class="line">            <span class="keyword">if</span> (cur-&gt;children[c - <span class="string">&#x27;a&#x27;</span>] == <span class="literal">NULL</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;isNotMatch&quot;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            res += c;</span><br><span class="line">            cur = cur-&gt;children[c - <span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">            <span class="keyword">if</span> (cur-&gt;isEnd == <span class="literal">true</span>) <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;isNotMatch&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">replaceWords</span><span class="params">(vector&lt;string&gt;&amp; dictionary, string sentence)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 构建前缀树Trie</span></span><br><span class="line">        Trie* root = <span class="keyword">new</span> <span class="built_in">Trie</span>();</span><br><span class="line">        <span class="keyword">for</span> (string&amp; str : dictionary) &#123;</span><br><span class="line">            Trie* cur = root;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">char</span> c : str) &#123;</span><br><span class="line">                <span class="keyword">if</span> (cur-&gt;children[c - <span class="string">&#x27;a&#x27;</span>] == <span class="literal">NULL</span>) &#123;</span><br><span class="line">                    cur-&gt;children[c - <span class="string">&#x27;a&#x27;</span>] = <span class="keyword">new</span> <span class="built_in">Trie</span>();</span><br><span class="line">                &#125;</span><br><span class="line">                cur = cur-&gt;children[c - <span class="string">&#x27;a&#x27;</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            cur-&gt;isEnd = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 分割字符串</span></span><br><span class="line">        string word, res;</span><br><span class="line">        <span class="function">stringstream <span class="title">input</span><span class="params">(sentence)</span></span>;</span><br><span class="line">        <span class="keyword">while</span> (input &gt;&gt; word) &#123;</span><br><span class="line">            <span class="comment">// 查找前缀prefix</span></span><br><span class="line">            string prefix = <span class="built_in">searhPrefix</span>(root, word);</span><br><span class="line">            <span class="keyword">if</span> (prefix != <span class="string">&quot;isNotMatch&quot;</span>) &#123;</span><br><span class="line">                res += prefix;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                res += word;</span><br><span class="line">            &#125;</span><br><span class="line">            res += <span class="string">&quot; &quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        res.<span class="built_in">pop_back</span>();</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-<li><p><em>nullptr</em> 纯右值(need to study)</p>
-</li>
-<li><p>预编译-&gt;编译(目标文件obj,机器代码,可通过译码变为汇编指令)-&gt;链接</p>
-</li>
-<li><p>using Func &#x3D; int (*)(int,int) <em>函数指针</em></p>
-</li>
-<li><p>using 和 typedef 的区别在于typedef只能定义类型别，，using可以定义模板别名</p>
-</li>
-</ul>
-<h1 id="3-2023-7-20"><a href="#3-2023-7-20" class="headerlink" title="3. 2023&#x2F;7&#x2F;20"></a>3. 2023&#x2F;7&#x2F;20</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> U&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ComplexType</span> &#123;</span><br><span class="line">    T value;</span><br><span class="line">    U otherValue;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 using 定义模板别名</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">using</span> MyAlias = ComplexType&lt;T, std::vector&lt;T&gt;&gt;;</span><br></pre></td></tr></table></figure>
-<br>
-
-<ul>
-<li>using PI &#x3D; pair&lt;Treenode*,__uint128_t&gt;;</li>
-<li><em>push_back() vs emplace_back()</em>  <blockquote><p>push_back时vector会新建一个数组,将新元素&amp;原vector中的元素<strong>深拷贝</strong>至新vector，原vector会被释放, 其中元素的析构函数也会被调用<br>注意: 这里只适用于没有创建固定大小空间的vector，若使用vector.reverse(N),提前创建好元素个数，可以提高存取速度<br>使用Reserve()而不是使用“vector<Point> vertices(3)”，因为下面的语法有时不起作用，因为类中没有定义默认构造函数。</p>
-<p>使用emplace_back而不是使用参数化构造函数创建对象并将其分配到不同的内存中，然后将其传递给复制构造函数，复制构造函数会将其插入到向量中。该函数可以直接插入对象，无需调用复制构造函数。</p>
-<p><em>如果构造函数接受多个参数，push_back 只接受该类型的一个对象obj，	而emplace_back 接受该类型的构造函数的参数。</em></p>
-</blockquote></li>
-</ul>
-<h1 id="4-2023-7-24"><a href="#4-2023-7-24" class="headerlink" title="4. 2023&#x2F;7&#x2F;24"></a>4. 2023&#x2F;7&#x2F;24</h1><ul>
-<li><strong>vector empty是常数时间，empty()函数没有使用任何比较运算符，因此使用起来更方便,无论容器类型如何， empty() 函数都以恒定时间实现，而 size() 函数的某些实现需要 O(n) 时间复杂度，例如 list::size()。</strong></li>
-<li><strong>size返回参数为size_t(unsigned int type)，要小心其在vecotr.size()-1上使用时出现小于0的情况出现段错误的情况</strong></li>
-<li>Base(const Base&amp; temp_obj) &#x3D; <em>delete</em>;</li>
-<li><strong>列表初始化(list initalize)</strong><ul>
-<li><code>vector&lt;int&gt; vec&#123;1&#125;</code></li>
-<li><code>vector&lt;pair&lt;int,int&gt;&gt; vec&#123;&#123;1,1&#125;&#125;</code><br></li>
-<li><code>vector&lt;pair&lt;int,int&gt;&gt; vec&#123;make_pair(1,1)&#125;</code><br>not the vec{(1,1)},it’s evaluated as 1</li>
-</ul>
-</li>
-<li><strong>逗号运算符，它是一种中缀运算符，用于对其左右两个表达式进行求值，并返回第二个表达式的值。</strong></li>
-<li><strong>使用声明将基类的成员引入到派生类定义中，例如将基类的受保护成员公开为派生类的公共成员。在这种情况下，nested-name-specifier必须命名所定义的基类。如果名称是基类的重载成员函数的名称，则引入具有该名称的所有基类成员函数。如果派生类已具有具有相同名称、参数列表和限定条件的成员，则派生类成员将隐藏或覆盖（<em>不冲突</em>）从基类引入的成员。</strong></li>
-<li><strong>protected关键字说明成员在派生类中是可见的</strong> <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">B</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span>)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;B::f\n&quot;</span>; &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">g</span><span class="params">(<span class="type">char</span>)</span>        </span>&#123; std::cout &lt;&lt; <span class="string">&quot;B::g\n&quot;</span>; &#125;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">h</span><span class="params">(<span class="type">int</span>)</span>         </span>&#123; std::cout &lt;&lt; <span class="string">&quot;B::h\n&quot;</span>; &#125;</span><br><span class="line"><span class="keyword">protected</span>:</span><br><span class="line">    <span class="type">int</span> m; <span class="comment">// B::m is protected</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="type">int</span> value_type;</span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">D</span> : B</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">using</span> B::m;          <span class="comment">// D::m is public</span></span><br><span class="line">    <span class="keyword">using</span> B::value_type; <span class="comment">// D::value_type is public</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">using</span> B::f;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span>)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;D::f\n&quot;</span>; &#125; <span class="comment">// D::f(int) overrides B::f(int)</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">using</span> B::g;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">g</span><span class="params">(<span class="type">int</span>)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;D::g\n&quot;</span>; &#125; <span class="comment">// both g(int) and g(char) are visible</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">using</span> B::h;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">h</span><span class="params">(<span class="type">int</span>)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;D::h\n&quot;</span>; &#125; <span class="comment">// D::h(int) hides B::h(int)</span></span><br><span class="line">&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    D d;</span><br><span class="line">    B&amp; b = d;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//  b.m = 2;  // Error: B::m is protected</span></span><br><span class="line">    d.m = <span class="number">1</span>;  <span class="comment">// protected B::m is accessible as public D::m</span></span><br><span class="line"> </span><br><span class="line">    b.<span class="built_in">f</span>(<span class="number">1</span>);   <span class="comment">// calls derived f()</span></span><br><span class="line">    d.<span class="built_in">f</span>(<span class="number">1</span>);   <span class="comment">// calls derived f()</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;----------\n&quot;</span>;</span><br><span class="line"> </span><br><span class="line">    d.<span class="built_in">g</span>(<span class="number">1</span>);   <span class="comment">// calls derived g(int)</span></span><br><span class="line">    d.<span class="built_in">g</span>(<span class="string">&#x27;a&#x27;</span>); <span class="comment">// calls base g(char), exposed via using B::g;</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;----------\n&quot;</span>;</span><br><span class="line"> </span><br><span class="line">    b.<span class="built_in">h</span>(<span class="number">1</span>);   <span class="comment">// calls base h()</span></span><br><span class="line">    d.<span class="built_in">h</span>(<span class="number">1</span>);   <span class="comment">// calls derived h()</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><strong>聚合初始化(aggregate initialization)</strong><br><ul>
-<li>指定初始化器(designated initializers)  </li>
-<li>four types of initializers：<ul>
-<li>T object{d,s,i} brace elision is prohibited 直接列表初始化</li>
-<li>T object&#x3D;{d,s,i} 复制初始化</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><cstdint>头文件规定了uint32_t &amp; so on</li>
-</ul>
-<h1 id="5-2023-7-25"><a href="#5-2023-7-25" class="headerlink" title="5. 2023&#x2F;7&#x2F;25"></a>5. 2023&#x2F;7&#x2F;25</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ios::<span class="built_in">sync_with_stdio</span>(<span class="literal">false</span>);<span class="comment">//c++将printf和cout绑定到同一个输出流上，为了在输出时发生混乱，默认将cout的输出先放置在缓冲区，该语句可以打消输入输出的缓存，加快输入输出效率  </span></span><br><span class="line">ios::<span class="built_in">tie</span>();<span class="comment">//This unties cin from cout. Tied streams ensure that one stream is flushed automatically before each I/O operation on the other stream.</span></span><br><span class="line"><span class="comment">//解耦输入输出流导致当程序等待用户输入时，输出信息并没有显示在屏幕，此时可以使用 std::flush或者std::endl来刷新缓冲区</span></span><br><span class="line">cin.<span class="built_in">tie</span>(<span class="literal">nullptr</span>);</span><br><span class="line"><span class="comment">//返回值为指向在调用之前绑定的流对象的指针，或者在流未绑定的情况下为空指针。</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://www.runoob.com/cplusplus/cpp-files-streams.html">c++文件与流</a></li>
-<li>cin 与 cin.get()都会将分隔符留在输入缓冲区中</li>
-<li><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/string/basic_string/getline">c++ getline</a><ul>
-<li>getline分为两类:<table>
-<thead>
-<tr>
-<th>std:getline  string流里的</th>
-<th>std:basic_istream  isstream流里的，主要用来提取C string</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>getline(cin,str,delim)</td>
-<td>cin.getline(streamsize,delim)</td>
-</tr>
-<tr>
-<td>存储的字符大于str.max_size()或者碰到分隔符会结束提取字符</td>
-<td>存储的字符等于streamsize-1或者碰到分隔符会结束提取字符</td>
-</tr>
-<tr>
-<td>分割符会被提取但不会被存储</td>
-<td>分隔符会被提取同时被计数</td>
-</tr>
-</tbody></table>
-</li>
-</ul>
-</li>
-<li><em>memcpy</em> &amp; <em>memmove</em><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">memcpy</span>(array.<span class="built_in">data</span>(),str,bytessize) <span class="comment">//拷贝指定字节数至des</span></span><br><span class="line"><span class="built_in">memmove</span>(array.<span class="built_in">data</span>()/des,str/src,bytessize) <span class="comment">//当src+bytessize和des有重叠字节时用memmove </span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="6-2023-7-26"><a href="#6-2023-7-26" class="headerlink" title="6. 2023&#x2F;7&#x2F;26"></a>6. 2023&#x2F;7&#x2F;26</h1><ul>
-<li><p>queue,stack等adapter列表初始化时不能直接使用brace,要先使用brace将其转化为底层容器，再用小括号将其转化为adapter<br><strong>queue<int> myqueue({1,2,3})</strong></p>
-</li>
-<li><p><em>同一行不能用逗号隔开两个不同类型变量的定义或声明</em></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.stroustrup.com/bs_faq2.html#in-class">c++中类static member有关问题</a></p>
-</li>
-<li><p><strong>并查集的标准写法</strong></p>
-<ul>
-<li>私有成员成员vector也可以通过列表成员初始化进行初始化</li>
-<li><strong>iota</strong>：对序列中的元素进行值递增操作 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">UF</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; fa;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; sz;</span><br><span class="line">    <span class="type">int</span> n;</span><br><span class="line">    <span class="type">int</span> comp_cnt;</span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">UF</span>(<span class="type">int</span> _n): <span class="built_in">n</span>(_n), <span class="built_in">comp_cnt</span>(_n), <span class="built_in">fa</span>(_n), <span class="built_in">sz</span>(_n, <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">iota</span>(fa.<span class="built_in">begin</span>(), fa.<span class="built_in">end</span>(), <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">findset</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> fa[x] == x ? x : fa[x] = <span class="built_in">findset</span>(fa[x]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">unite</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> </span>&#123;</span><br><span class="line">        x = <span class="built_in">findset</span>(x);</span><br><span class="line">        y = <span class="built_in">findset</span>(y);</span><br><span class="line">        <span class="keyword">if</span> (x == y) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (sz[x] &lt; sz[y]) &#123;</span><br><span class="line">            <span class="built_in">swap</span>(x, y);</span><br><span class="line">        &#125;</span><br><span class="line">        fa[y] = x;</span><br><span class="line">        sz[x] += sz[y];</span><br><span class="line">        --comp_cnt;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">connected</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span> </span>&#123;</span><br><span class="line">        x = <span class="built_in">findset</span>(x);</span><br><span class="line">        y = <span class="built_in">findset</span>(y);</span><br><span class="line">        <span class="keyword">return</span> x == y;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-<li><p>结构化绑定</p>
-<ul>
-<li>auto [x, y] &#x3D; q.front();&#x2F;&#x2F;无需使用q.front().first</li>
-</ul>
-</li>
-<li><p>vector.erase(std::unique(vector.begin(), vector.end()),vector.end());</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2023/07/24/introduction/" data-id="cloy78enu0000hctl9prf44k1" data-title="introduction" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/encounter-cpp/" rel="tag">encounter cpp</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
-    <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/GNU-linux/">GNU/linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/command-line/">command line</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/cpp-related/">cpp related</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/POSIX-socket/" rel="tag">POSIX socket</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/POSIX-system-call/" rel="tag">POSIX system call</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c11-14-syntax/" rel="tag">c11&#x2F;14 syntax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c11-14-thread-future/" rel="tag">c11&#x2F;14 thread&#x2F;future</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmake/" rel="tag">cmake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cpp-memory-model/" rel="tag">cpp memory model</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dijstra/" rel="tag">dijstra</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/encounter-cpp/" rel="tag">encounter cpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/filesystem/" rel="tag">filesystem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash-table/" rel="tag">hash table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/smart-pointer/" rel="tag">smart-pointer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/static-dynamic-polymorphic/" rel="tag">static&#x2F;dynamic polymorphic</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/POSIX-socket/" style="font-size: 10px;">POSIX socket</a> <a href="/tags/POSIX-system-call/" style="font-size: 10px;">POSIX system call</a> <a href="/tags/c11-14-syntax/" style="font-size: 10px;">c11/14 syntax</a> <a href="/tags/c11-14-thread-future/" style="font-size: 10px;">c11/14 thread/future</a> <a href="/tags/cmake/" style="font-size: 10px;">cmake</a> <a href="/tags/cpp-memory-model/" style="font-size: 10px;">cpp memory model</a> <a href="/tags/dijstra/" style="font-size: 10px;">dijstra</a> <a href="/tags/encounter-cpp/" style="font-size: 10px;">encounter cpp</a> <a href="/tags/filesystem/" style="font-size: 10px;">filesystem</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/linux/" style="font-size: 20px;">linux</a> <a href="/tags/smart-pointer/" style="font-size: 10px;">smart-pointer</a> <a href="/tags/static-dynamic-polymorphic/" style="font-size: 10px;">static/dynamic polymorphic</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/11/">November 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">September 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/08/">August 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/07/">July 2023</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2023/11/06/effective-modern-cpp/">effective_modern_cpp</a>
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
           </li>
+          
         
-          <li>
-            <a href="/2023/11/03/linux-high-performanceserver/">linux-high-performanceserver</a>
-          </li>
         
-          <li>
-            <a href="/2023/09/30/cmake-and-so-on/">cmake and so_on</a>
-          </li>
-        
-          <li>
-            <a href="/2023/09/19/network-high-concurrency/">network &amp; high concurrency</a>
-          </li>
-        
-          <li>
-            <a href="/2023/08/25/houjiecpp/">houjiecpp</a>
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
           </li>
         
       </ul>
     </div>
   </div>
+</nav>
 
   
-</aside>
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="An elegant Material-Design theme for Hexo"></span>
+          
+        </div>
+
         
       </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
+
       
-      &copy; 2023 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+        <div class="scroll-down-bar">
+          <i class="iconfont icon-arrowdown"></i>
+        </div>
+      
     </div>
   </div>
-</footer>
+</div>
 
-    </div>
-    <nav id="mobile-nav">
+</div>
+
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div id="board"
+          style="margin-top: 0">
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/11/06/effective-modern-cpp/" target="_self">
+          effective_modern_cpp
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/11/06/effective-modern-cpp/" target="_self">
+        <div>
+          1. c++知识点补充 1.1. 杂项 1.2. c++异常处理 1.3. 智能指针 1.4. 特殊成员函数的生成- 1. c++知识点补充 1.5. volatile vs atomic 1.5.1. std::atomic 1.5.2. keyword volatile   move操作    1. c++知识点补充1.1. 杂项 c++11 lambda表达式不支持移动捕获和初始化捕获，c
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-11-06 17:30" pubdate>
+              2023-11-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
   
-    <a href="/" class="mobile-nav-link">Home</a>
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
+    
+      <span class="category-chain">
+        
+  <a href="/categories/cpp-related/" class="category-chain-item">cpp related</a>
   
-</nav>
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/smart-pointer/">#smart-pointer</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/11/03/linux-high-performanceserver/" target="_self">
+          linux-high-performanceserver
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/11/03/linux-high-performanceserver/" target="_self">
+        <div>
+          IO模型 阻塞IO和非阻塞IO的区别就在于对非就绪事件的处理， 对于设置了O_NONBLOCK的文件描述符来说，若此时文件描述符非可读或者可写，针对其进行的系统调用会返回-1，设置errno，而对未设置的文件描述符的connect，recv，send会阻塞进程  管道pipe是环形缓冲区  O_NONBLOCK对一般文件而言没有什么影响，所有一般文件都是可读或者可写的，它主要用来在fcntl时设置
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-11-03 22:38" pubdate>
+              2023-11-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/GNU-linux/" class="category-chain-item">GNU/linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/linux/">#linux</a>
+            
+              <a href="/tags/POSIX-system-call/">#POSIX system call</a>
+            
+              <a href="/tags/filesystem/">#filesystem</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/09/30/cmake-and-so-on/" target="_self">
+          cmake and so_on
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/30/cmake-and-so-on/" target="_self">
+        <div>
+          Linux 命令 valgrind 调试工具 系统监测工具 cmake cmake具体流程    Linux 命令 ldconfig (creates the required links and cache to the most recent shared libraries found in the standard library directories.)  ldd filename
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-30 11:35" pubdate>
+              2023-09-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/GNU-linux/" class="category-chain-item">GNU/linux</a>
+  
+  
+
+      </span>
+    
+  
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/linux/">#linux</a>
+            
+              <a href="/tags/cmake/">#cmake</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/09/19/network-high-concurrency/" target="_self">
+          network &amp; high concurrency
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/09/19/network-high-concurrency/" target="_self">
+        <div>
+          1. 网络编程 1.1. 字符串处理函数 1.2. IO模型 1.3. IO复用   2. pthread - 符合POSIX标准的线程库 2.1. 线程的取消 2.2. 线程的加入 2.3. 一些关于编程的底层知识补充   3. 并发编程 3.1. std::thread 3.2. std::future 3.3. condition_variable &amp; mutex 3.4. loc
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-09-19 17:39" pubdate>
+              2023-09-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/cpp-related/" class="category-chain-item">cpp related</a>
+  
+  
+
+      </span>
+    
+  
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/linux/">#linux</a>
+            
+              <a href="/tags/POSIX-socket/">#POSIX socket</a>
+            
+              <a href="/tags/c11-14-thread-future/">#c11/14 thread/future</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/08/25/houjiecpp/" target="_self">
+          houjiecpp
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/08/25/houjiecpp/" target="_self">
+        <div>
+          1. 2023&#x2F;08&#x2F;29 2. 2023&#x2F;08&#x2F;29 2.1. unicode 2.2. 非类型形参的局限： 2.3. 非类型实参的局限： 2.4. 编译时常量表达式 2.5. 隐式转换 2.6. 设计模式 2.7. 智能指针 2.8. 右值 2.9. 模板杂类 2.10. lambda 2.11. 成员函数指针 2.12. 数据成员指针 2.13. 虚
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-08-25 10:48" pubdate>
+              2023-08-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/cpp-related/" class="category-chain-item">cpp related</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/c11-14-syntax/">#c11/14 syntax</a>
+            
+              <a href="/tags/cpp-memory-model/">#cpp memory model</a>
+            
+              <a href="/tags/static-dynamic-polymorphic/">#static/dynamic polymorphic</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/08/24/cplus-learning/" target="_self">
+          cplus_learning
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/08/24/cplus-learning/" target="_self">
+        <div>
+          2023&#x2F;8&#x2F;2 dijstra，每次并入一个节点并更新dist值，下面列举几种不同实现方式 邻接矩阵 时间复杂度为O(v^2) 邻接链表，每个顶点连着跟他相连的顶点作为链表中的节点，存储着目的顶点和边的权重，时间复杂度为O(Elogv) 可以用list&lt;pair&lt;int(目的顶点),int(边的权重)&gt;&gt; 最小堆 基本知识：节点索引由一个数组维护，左右
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-08-24 22:07" pubdate>
+              2023-08-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/cpp-related/" class="category-chain-item">cpp related</a>
+  
+  
+
+      </span>
+    
+  
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/dijstra/">#dijstra</a>
+            
+              <a href="/tags/hash-table/">#hash table</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2023/07/24/introduction/" target="_self">
+          introduction
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2023/07/24/introduction/" target="_self">
+        <div>
+          1. 2023&#x2F;7&#x2F;13 1.1. Contribut   2. 2023&#x2F;7&#x2F;14 2.1. cpp learning   3. 2023&#x2F;7&#x2F;20 4. 2023&#x2F;7&#x2F;24 5. 2023&#x2F;7&#x2F;25 6. 2023&#x2F;7&#x2F;26  1. 2023&#x2F;7&#x2F;131
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-07-24 21:55" pubdate>
+              2023-07-24
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/cpp-related/" class="category-chain-item">cpp related</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/encounter-cpp/">#encounter cpp</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     
 
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
 
-<script src="/js/jquery-3.6.4.min.js"></script>
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
 
 
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
 
 
-<script src="/js/script.js"></script>
+  <script  src="/js/local-search.js" ></script>
 
 
 
 
 
-  </div>
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>
