@@ -309,20 +309,52 @@
 <li>sig，要捕获的信号</li>
 <li>act，struct sigaction*<ul>
 <li>结构体中的sa_handler是信号处理函数指针，用于指定函数处理函数</li>
-<li>sa_mask，类型为信号集sigset_t，用于设定增加的信号掩码（在原进程基础上）</li>
+<li>sa_mask，类型为信号集sigset_t，用于设定增加的信号掩码（在原进程基础上）<ul>
+<li>sa_mask指定了一个信号集的掩码，这些信号在信号处理程序执行期间应该被阻塞（<strong>即添加到调用信号处理程序的线程的信号掩码中</strong>）。此外，除非使用了SA_NODEFER标志，否则触发处理程序的信号也将被阻塞。</li>
+</ul>
+</li>
 <li>sa_flags, 整形数据，用于设置程序接收到信号时的行为<ul>
-<li>如SA_RESTART, 含义是重新调用被该信号终止的系统调用<br>成功返回0，失败返回-1并设置errno</li>
+<li>SA_RESTART, 含义是重新调用被该信号终止的系统调用</li>
+<li>SA_NODEFER, 一般情况下，在接收信号并进入其信号处理函数时，该信号会被加入至线程的信号掩码中，防止接收同种信号，引发竞态条件，设置该选项可以使得同种信号也被线程接收<br>成功返回0，失败返回-1并设置errno</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li>struct sigset 用于表示一组信号集，其中定义了一个长整型数组，每个元素的每个位都代表着一个信号</li>
+<li>struct sigset 用于表示一组信号集，其中定义了一个长整型数组，每个元素的每个位都代表着一个信号, 这组信号集可以用来设置进程掩码，标志着某个信号将会被<strong>阻塞</strong>，手册上给出了掩码和阻塞的说明：<ul>
+<li>一个信号可能会被阻塞，这意味着直到解除阻塞之前它将不会被传递。在生成和传递之间的时间内，信号被称为待处理的(pending)。</li>
+<li>进程中的每个线程都有一个独立的信号掩码，它指示线程当前阻止的信号集。线程可以使用pthread_sigmask(3)来操作其信号掩码。在传统的单thread线程应用程序中，可以使用sigprocmask(2)来操作信号掩码。</li>
+</ul>
+</li>
 <li>sigprocmask函数也可以用sigset来指定新的进程掩码，通过how参数可以设置新掩码集和当前掩码集的交互方式</li>
 <li>可以使用sigpending函数获取被挂起的信号集，当通过设置进程掩码导致新的信号被屏蔽时，新的信号会被操作系统设置为挂起的信号，若取消对信号的屏蔽，则可以立刻被进程接收到 </li>
 <li>fork出的子线程会继承父线程的信号集合，但会拥有空的挂起信号集</li>
-<li></li>
+<li><strong>正在阻塞</strong>的系统调用可以被信号处理函数中断(interrupt), 若在sigaction建立信号处理函数时设置了SA_RESTART标志，则某些系统调用可以在信号处理函数返回之后重启(restart), 有些则不论是否设置该标志都会<strong>失败</strong>，并设置errno为EINTR<ul>
+<li>SA_RESTART标志有效的系统调用包括： read，write，ioctl，open(如果能被阻塞，比如当打开FIFO时)，以及常见的socket接口</li>
+<li>SA_RESTART标志无效的系统调用包括： 通过setsockopt设置socket选项为超时SO_RECVTIMEO的输入输出socket接口， 以及IO复用select，poll，epoll_wait</li>
+<li>sleep函数永远不会重启但会成功返回，并返回剩余的sleep秒数</li>
+</ul>
+</li>
+<li>当挂起进程的控制终端时，SIGHUP将被触发，对于没有控制终端的网络后台程序来说，通常利用SIGHUP信号来强制服务器重读配置文件</li>
+<li>linux环境下，内核通知应用程序**带外数据(大小1字节，通常被tcp接收端存储到特殊缓存中，称为带外缓存)**到来的方式有两种：<ul>
+<li>使用IO复用函数监听事件集中的异常事件，select等系统调用在接收到带外数据时将返回，并向应用程序报告socket上的异常事件，此时应用程序可以调用FD_ISSET等函数来查看异常事件是否发生</li>
+<li>使用SIGURG信号，此时应用程序可设置信号处理函数来读取带外数据<blockquote>
+<p>对于带外缓存来说，可以设置连接socket的SO_OOBINLINE选项来将带外数据存放在接收端的普通数据输入队列中，此时我们不能使用MSB_OOB来读取数据</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="进程间通信-IPC"><a href="#进程间通信-IPC" class="headerlink" title="进程间通信 IPC"></a>进程间通信 IPC</h1><ol>
+<li><p>如果文件事先已经存在，<br>open(pathname, O_RDWR | O_CREAT，0666);  打开成功，返回一个大于0的fd<br>open(pathname, O_RDWR | O_CREAT | O_EXCL，0666); 打开失败，返回-1</p>
+<p>O_EXCL表示的是：如果使用O_CREAT时文件存在，就返回错误信息，它可以测试文件是否存在。并且此时检查文件和打开文件是原子性操作，避免了进程临界区竞争</p>
+<blockquote>
+<p>在NFS（网络文件系统）上，O_EXCL可能不是原子性的，此时可以调用link系统调用创建hard link来查看文件是否存在(通过使用stat可以查看st_nlink的数量)</p>
+</blockquote>
+</li>
+<li><p>IPC对象包括：信号量（semaphore），共享内存，消息队列</p>
+</li>
 </ol>
 
       
@@ -406,7 +438,12 @@
 </li>
 <li><p>chmod u&#x2F;g&#x2F;a +s （设置目标文件的set-user-id&#x2F;set-group-id&#x2F;全部标志，使得文件可以被不同UID用户执行时设置EUID为ownerID&#x2F;groupID，前提是设置others的权限为可以执行文件）</p>
 <ul>
-<li>数字模式下set-user-id 对应的比特位值为4， set-group-id 对应的比特位值为2，他们对应的比特位在u，g，o之前</li>
+<li>数字模式下set-user-id 对应的比特位值为4， set-group-id 对应的比特位值为2，他们对应的比特位在u，g，o之前, 这个比特位表示执行该文件的真实用户在执行该文件时可以获得该文件的拥有者的特权</li>
+<li>补充linux的setuid函数<ul>
+<li>如果调用进程具有特权（有效用户为0&#x2F;root），则此函数将进程的实际用户ID和有效用户ID都设置为newuid。如果有的话，它还会删除进程的文件用户ID。newuid可以是任何合法值。（一旦完成此操作，将无法恢复旧的有效用户ID。），所以对于特权进程而言，如果只是暂时想要放弃特权，应该使用<strong>seteuid</strong>函数</li>
+<li>如果调用进程不具有特权，则该函数和seteuid类似，只是将该函数将进程的有效用户ID设置为neweuid，前提是进程被允许更改其有效用户ID。具有特权的进程（有效用户ID为零）可以将其有效用户ID更改为任何合法值。具有文件用户ID的非特权进程可以将其有效用户ID更改为其实际用户ID或文件用户ID。</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><p>chmod u&#x2F;g&#x2F;o&#x2F;a +&#x2F;-&#x2F;&#x3D; r&#x2F;w&#x2F; 操作符+会将所选文件的模式位添加到每个文件的现有模式位中；-会将它们移除；&#x3D;会将它们添加，并且将未提及的位移除，但目录的未提及的设置用户和组ID位不受影响。</p>
@@ -430,7 +467,7 @@
 <li>bash命令是整个会话组的首领（会话组：一些有关联的进程组），会话首领对应的SID和进程组PGID以及PID都是相同的</li>
 <li>bash进程fork出两个子进程ps和less，ps和less同属一个进程组，ps是该进程组的首领</li>
 </ul>
-<ol start="17">
+<ol start="3">
 <li>cat<ul>
 <li>cat filename 显示文件内容</li>
 <li>cat &gt; filname1 将标准输入中的内容重定向到filename1中（用ctrl+d作为EOF结束输入）</li>
@@ -447,6 +484,31 @@
 </code></pre>
 </li>
 </ul>
+<ol>
+<li><p>基本正则表达式(BRE)和扩展正则表达式(ERE)是指定模式语法的两种变体。sed命令使用BRE语法<br>在对比如小括号()进行处理时两者有所区别，在BRE内，单独小括号是指文本中的小括号，加了backflash(也就是反斜杠)转义之后是模式匹配的意义，ERE相反，<a target="_blank" rel="noopener" href="https://www.runoob.com/regexp/regexp-syntax.html">ERE的详细信息</a><br>sed -i ‘s&#x2F;(.*)apple&#x2F;\1banana&#x2F;g’ fruits.txt(需要修改的文件名)</p>
+<ul>
+<li>s表示用字符串匹配模式，标准写法为”s&#x2F;pattern&#x2F;replacement&#x2F;flag”, flag g表示替换所有非重叠实例，而不仅仅是第一次匹配</li>
+<li>i表示将文件修改之后的内容不再输入标准输出(默认行为)，而是直接在文件内部修改</li>
+<li>.表示匹配任意一个字符，*表示这个字符出现0次或多次，用括号括起来表示捕获这个组，\1表示引用之前捕获的第一个组，所以这行命令的意思为将每行行尾出现的apple替换为banana</li>
+</ul>
+</li>
+<li><p>strace 跟踪系统调用和信号<br>flags:<br>- p: pid，指定进程</p>
+</li>
+<li><p>touch filename 创建新的空文件</p>
+<ul>
+<li>批量创建文件：touch file{1..5}.txt</li>
+</ul>
+</li>
+<li><p>find [path] [arguments] -exec [command] {} ;<br><em>or</em><br>find [path] [arguments] -exec [command] {} +<br> <a target="_blank" rel="noopener" href="https://www.myfreax.com/how-to-combine-find-exec-commands/">find exec 命令实例教程</a></p>
+<ul>
+<li>find . -type f -name ‘*.txt’ -exec sh -c ‘mv “$1” “${1%.txt}.js”‘ _ {} ;<ul>
+<li>解释: ;对;进行转义，表示command的结束，{}存储find命令执行的结果， _是占位符，表示$0 </li>
+<li>find找出所有后缀为txt的文件并使用sh -c启动subshell执行mv命令，将sh传给其的第二个参数(e.g., 1.txt)中的txt删除并替换为.js</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
 <h2 id="valgrind-调试工具"><a href="#valgrind-调试工具" class="headerlink" title="valgrind 调试工具"></a>valgrind 调试工具</h2><ol>
 <li>valgrind</li>
 </ol>

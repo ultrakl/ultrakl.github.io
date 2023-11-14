@@ -14,7 +14,7 @@
 <meta property="og:description" content="IO模型 阻塞IO和非阻塞IO的区别就在于对非就绪事件的处理， 对于设置了O_NONBLOCK的文件描述符来说，若此时文件描述符非可读或者可写，针对其进行的系统调用会返回-1，设置errno，而对未设置的文件描述符的connect，recv，send会阻塞进程  管道pipe是环形缓冲区  O_NONBLOCK对一般文件而言没有什么影响，所有一般文件都是可读或者可写的，它主要用来在fcntl时设置">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-11-03T14:38:03.000Z">
-<meta property="article:modified_time" content="2023-11-06T14:36:59.256Z">
+<meta property="article:modified_time" content="2023-11-14T06:37:29.510Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="POSIX system call">
@@ -185,20 +185,52 @@
 <li>sig，要捕获的信号</li>
 <li>act，struct sigaction*<ul>
 <li>结构体中的sa_handler是信号处理函数指针，用于指定函数处理函数</li>
-<li>sa_mask，类型为信号集sigset_t，用于设定增加的信号掩码（在原进程基础上）</li>
+<li>sa_mask，类型为信号集sigset_t，用于设定增加的信号掩码（在原进程基础上）<ul>
+<li>sa_mask指定了一个信号集的掩码，这些信号在信号处理程序执行期间应该被阻塞（<strong>即添加到调用信号处理程序的线程的信号掩码中</strong>）。此外，除非使用了SA_NODEFER标志，否则触发处理程序的信号也将被阻塞。</li>
+</ul>
+</li>
 <li>sa_flags, 整形数据，用于设置程序接收到信号时的行为<ul>
-<li>如SA_RESTART, 含义是重新调用被该信号终止的系统调用<br>成功返回0，失败返回-1并设置errno</li>
+<li>SA_RESTART, 含义是重新调用被该信号终止的系统调用</li>
+<li>SA_NODEFER, 一般情况下，在接收信号并进入其信号处理函数时，该信号会被加入至线程的信号掩码中，防止接收同种信号，引发竞态条件，设置该选项可以使得同种信号也被线程接收<br>成功返回0，失败返回-1并设置errno</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li>struct sigset 用于表示一组信号集，其中定义了一个长整型数组，每个元素的每个位都代表着一个信号</li>
+<li>struct sigset 用于表示一组信号集，其中定义了一个长整型数组，每个元素的每个位都代表着一个信号, 这组信号集可以用来设置进程掩码，标志着某个信号将会被<strong>阻塞</strong>，手册上给出了掩码和阻塞的说明：<ul>
+<li>一个信号可能会被阻塞，这意味着直到解除阻塞之前它将不会被传递。在生成和传递之间的时间内，信号被称为待处理的(pending)。</li>
+<li>进程中的每个线程都有一个独立的信号掩码，它指示线程当前阻止的信号集。线程可以使用pthread_sigmask(3)来操作其信号掩码。在传统的单thread线程应用程序中，可以使用sigprocmask(2)来操作信号掩码。</li>
+</ul>
+</li>
 <li>sigprocmask函数也可以用sigset来指定新的进程掩码，通过how参数可以设置新掩码集和当前掩码集的交互方式</li>
 <li>可以使用sigpending函数获取被挂起的信号集，当通过设置进程掩码导致新的信号被屏蔽时，新的信号会被操作系统设置为挂起的信号，若取消对信号的屏蔽，则可以立刻被进程接收到 </li>
 <li>fork出的子线程会继承父线程的信号集合，但会拥有空的挂起信号集</li>
-<li></li>
+<li><strong>正在阻塞</strong>的系统调用可以被信号处理函数中断(interrupt), 若在sigaction建立信号处理函数时设置了SA_RESTART标志，则某些系统调用可以在信号处理函数返回之后重启(restart), 有些则不论是否设置该标志都会<strong>失败</strong>，并设置errno为EINTR<ul>
+<li>SA_RESTART标志有效的系统调用包括： read，write，ioctl，open(如果能被阻塞，比如当打开FIFO时)，以及常见的socket接口</li>
+<li>SA_RESTART标志无效的系统调用包括： 通过setsockopt设置socket选项为超时SO_RECVTIMEO的输入输出socket接口， 以及IO复用select，poll，epoll_wait</li>
+<li>sleep函数永远不会重启但会成功返回，并返回剩余的sleep秒数</li>
+</ul>
+</li>
+<li>当挂起进程的控制终端时，SIGHUP将被触发，对于没有控制终端的网络后台程序来说，通常利用SIGHUP信号来强制服务器重读配置文件</li>
+<li>linux环境下，内核通知应用程序**带外数据(大小1字节，通常被tcp接收端存储到特殊缓存中，称为带外缓存)**到来的方式有两种：<ul>
+<li>使用IO复用函数监听事件集中的异常事件，select等系统调用在接收到带外数据时将返回，并向应用程序报告socket上的异常事件，此时应用程序可以调用FD_ISSET等函数来查看异常事件是否发生</li>
+<li>使用SIGURG信号，此时应用程序可设置信号处理函数来读取带外数据<blockquote>
+<p>对于带外缓存来说，可以设置连接socket的SO_OOBINLINE选项来将带外数据存放在接收端的普通数据输入队列中，此时我们不能使用MSB_OOB来读取数据</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="进程间通信-IPC"><a href="#进程间通信-IPC" class="headerlink" title="进程间通信 IPC"></a>进程间通信 IPC</h1><ol>
+<li><p>如果文件事先已经存在，<br>open(pathname, O_RDWR | O_CREAT，0666);  打开成功，返回一个大于0的fd<br>open(pathname, O_RDWR | O_CREAT | O_EXCL，0666); 打开失败，返回-1</p>
+<p>O_EXCL表示的是：如果使用O_CREAT时文件存在，就返回错误信息，它可以测试文件是否存在。并且此时检查文件和打开文件是原子性操作，避免了进程临界区竞争</p>
+<blockquote>
+<p>在NFS（网络文件系统）上，O_EXCL可能不是原子性的，此时可以调用link系统调用创建hard link来查看文件是否存在(通过使用stat可以查看st_nlink的数量)</p>
+</blockquote>
+</li>
+<li><p>IPC对象包括：信号量（semaphore），共享内存，消息队列</p>
+</li>
 </ol>
 
       
