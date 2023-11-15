@@ -24,7 +24,7 @@
 <meta property="og:description" content="IO模型 阻塞IO和非阻塞IO的区别就在于对非就绪事件的处理， 对于设置了O_NONBLOCK的文件描述符来说，若此时文件描述符非可读或者可写，针对其进行的系统调用会返回-1，设置errno，而对未设置的文件描述符的connect，recv，send会阻塞进程  管道pipe是环形缓冲区  O_NONBLOCK对一般文件而言没有什么影响，所有一般文件都是可读或者可写的，它主要用来在fcntl时设置">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-11-03T14:38:03.000Z">
-<meta property="article:modified_time" content="2023-11-14T06:37:29.510Z">
+<meta property="article:modified_time" content="2023-11-15T02:48:19.342Z">
 <meta property="article:author" content="李凯华">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="POSIX system call">
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.5k 字
+          4.1k 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          30 分钟
+          35 分钟
         
       </span>
     
@@ -389,7 +389,7 @@
 </ul>
 </li>
 </ol>
-<h1 id="进程间通信-IPC"><a href="#进程间通信-IPC" class="headerlink" title="进程间通信 IPC"></a>进程间通信 IPC</h1><ol>
+<h2 id="进程间通信-IPC"><a href="#进程间通信-IPC" class="headerlink" title="进程间通信 IPC"></a>进程间通信 IPC</h2><ol>
 <li><p>如果文件事先已经存在，<br>open(pathname, O_RDWR | O_CREAT，0666);  打开成功，返回一个大于0的fd<br>open(pathname, O_RDWR | O_CREAT | O_EXCL，0666); 打开失败，返回-1</p>
 <p>O_EXCL表示的是：如果使用O_CREAT时文件存在，就返回错误信息，它可以测试文件是否存在。并且此时检查文件和打开文件是原子性操作，避免了进程临界区竞争</p>
 <blockquote>
@@ -399,6 +399,19 @@
 <li><p>IPC对象包括：信号量（semaphore），共享内存，消息队列</p>
 </li>
 </ol>
+<h2 id="进程的退出"><a href="#进程的退出" class="headerlink" title="进程的退出"></a>进程的退出</h2><ul>
+<li><p>当exec失败时，应该使用_exit（或其同义词_Exit）来终止子进程，因为在这种情况下，子进程可能通过调用其atexit处理程序、调用其信号处理程序和&#x2F;或刷新缓冲区来干扰父进程的外部数据（文件）。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">switch</span> (fork()) &#123;<br>  <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:<br>    <span class="hljs-comment">// we&#x27;re the child</span><br>    <span class="hljs-built_in">execlp</span>(<span class="hljs-string">&quot;some&quot;</span>, <span class="hljs-string">&quot;program&quot;</span>, <span class="hljs-literal">NULL</span>);<br>    _exit(<span class="hljs-number">1</span>);  <span class="hljs-comment">// &lt;-- HERE</span><br>  <span class="hljs-keyword">case</span> <span class="hljs-number">-1</span>:<br>    <span class="hljs-comment">// error, no fork done ...</span><br>  <span class="hljs-keyword">default</span>:<br>    <span class="hljs-comment">// we&#x27;re the parent ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>当使用fork()，尤其是vfork()时，exit()和_exit()之间存在一些差异，这些差异变得很重要。</p>
+</li>
+<li><p>exit()和_exit()的基本区别在于前者执行与库中用户模式结构相关的清理，并调用用户提供的清理函数，而后者仅执行进程的内核清理。</p>
+</li>
+<li><p>在fork()的子分支中，通常不使用exit()，因为这可能导致stdio缓冲区被刷新两次，并且临时文件被意外删除。在C++代码中，情况更糟，因为静态对象的析构函数可能会被错误地运行。（有一些不寻常的情况，如守护进程，其中父进程应调用_exit()而不是子进程；适用于绝大多数情况的基本规则是：每次进入main时只应调用一次exit()。）</p>
+</li>
+<li><p>在vfork()的子分支中，使用exit()甚至更加危险，因为它会影响父进程的状态。</p>
+</li>
+</ul>
 
                 
               </div>
