@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/v2-233887068992518bb4eec56de043d1b2_r.jpg">
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/item38_fig1.png">
 <meta property="article:published_time" content="2023-09-19T09:39:14.000Z">
-<meta property="article:modified_time" content="2023-11-06T10:55:13.785Z">
+<meta property="article:modified_time" content="2023-11-15T16:06:26.440Z">
 <meta property="article:author" content="李凯华">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="POSIX socket">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.8k 字
+          7.9k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          65 分钟
+          66 分钟
         
       </span>
     
@@ -358,6 +358,7 @@
 <li>tcp通信双方在连接初始化，即发送同步报文段中要确定MSS及扩大窗口因子的大小，这样可以有效防止ip模块进行分片处理</li>
 <li>http和udp都是无状态协议，即每个http请求之间没有上下文关系，解决办法为设置cookie，服务器向客户端发送cookie，客户端每次请求时都会带上cookie（通过HTTP头部字段cookie），这样服务器就可以区别不同客户</li>
 <li>ip模块通过接收和发送ip数据报输入队列和输出队列与网络驱动程序交互</li>
+<li>半关闭状态指的是某方将socket的写端关闭，表示数据已经发送完毕，此时socket发送缓冲区中的数据全部被刷新，接收方可以使用read系统调用返回0来检测对方是否关闭了写操作</li>
 </ul>
 </li>
 </ol>

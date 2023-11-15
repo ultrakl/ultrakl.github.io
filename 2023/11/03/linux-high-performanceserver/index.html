@@ -24,7 +24,7 @@
 <meta property="og:description" content="IO模型 阻塞IO和非阻塞IO的区别就在于对非就绪事件的处理， 对于设置了O_NONBLOCK的文件描述符来说，若此时文件描述符非可读或者可写，针对其进行的系统调用会返回-1，设置errno，而对未设置的文件描述符的connect，recv，send会阻塞进程  管道pipe是环形缓冲区  O_NONBLOCK对一般文件而言没有什么影响，所有一般文件都是可读或者可写的，它主要用来在fcntl时设置">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-11-03T14:38:03.000Z">
-<meta property="article:modified_time" content="2023-11-15T02:48:19.342Z">
+<meta property="article:modified_time" content="2023-11-15T16:10:10.565Z">
 <meta property="article:author" content="李凯华">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="POSIX system call">
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.1k 字
+          4.3k 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          35 分钟
+          36 分钟
         
       </span>
     
@@ -337,6 +337,21 @@
 <td>SIGCHLD</td>
 <td>子进程状态发生变化（退出或者暂停）</td>
 <td>ign(忽略信号)</td>
+</tr>
+<tr>
+<td>SIGPIPE</td>
+<td>socket连接对方的读端已经关闭或者管道的读端已经关闭，此时发送方使用send或者往管道的写端写数据，都会触发该信号</td>
+<td>term</td>
+</tr>
+<tr>
+<td>SIGHUP</td>
+<td>控制终端被挂起(Ctrl + Z)，可以使用kill -HUP来向进程发送该信号</td>
+<td>term</td>
+</tr>
+<tr>
+<td>SIGTERM</td>
+<td>kill命令默认发送信号</td>
+<td>term</td>
 </tr>
 </tbody></table>
 <ol>
