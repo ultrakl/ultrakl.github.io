@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="kuli&#39;s blog">
 <meta property="og:description" content="上次使用pacman -Syu更新软件包后自动安装了开源版本的vscode，导致终端里使用code命令无法打开windows host中的官方版本vscode，今日卸载archlinux环境下安装的vscode，并使用pacman衍生的makepkg手动安装AUR库中的官方版本vscode，将一些心得和经验记录于下： pacman官方文档  软件包基础搜索及安装卸载$ pacman -Ss 软件名">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2023-11-16-pacman/yilai.png">
-<meta property="og:image" content="http://example.com/2023-11-16-pacman/clone.png">
-<meta property="og:image" content="http://example.com/2023-11-16-pacman/mark.png">
+<meta property="og:image" content="http://example.com/2023/11/16/pacman/yilai.png">
+<meta property="og:image" content="http://example.com/2023/11/16/pacman/clone.png">
+<meta property="og:image" content="http://example.com/2023/11/16/pacman/mark.png">
 <meta property="article:published_time" content="2023-11-16T10:04:51.000Z">
-<meta property="article:modified_time" content="2023-11-16T10:37:38.744Z">
+<meta property="article:modified_time" content="2023-11-16T10:44:32.223Z">
 <meta property="article:author" content="李凯华">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2023-11-16-pacman/yilai.png">
+<meta name="twitter:image" content="http://example.com/2023/11/16/pacman/yilai.png">
   
   
   
@@ -296,12 +296,12 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs zsh">$ sudo pacman -Qo /usr/share/man/man8/iw.8.gz<br>/usr/share/man/man8/iw.8.gz is owned by iw 5.0.1-1<br></code></pre></td></tr></table></figure></li>
 <li><p>查询包详细信息<br>查询包详细信息（-Qi;-Qii[Backup Files]）(-Si[Repository,Download Size];-Sii[Signatures,])<br><code>$ pacman -Qi 包名 </code><br>Repository 仓库名称（要联网用pacman -Si或Sii才能看到这一栏；）<br>Name 名称<br>Version 版本<br>Description 描述<br>Architecture 架构<br>URL 网址<br>Licenses 许可证<br>Groups 组<br>Provides 提供<br>Depends On 依赖于（依赖那些包）<br>Optional Deps 可选项<br>Required By 被需求的（被那些包需求）<br>Optional For 可选项<br>Conflicts With 与…发生冲突<br>Replaces 替代对象<br>Download Size 下载大小（要联网用pacman -Si或Sii才能看到这一栏；）<br>Installed Size 安装尺寸<br>Packager 包装者<br>Build Date 包装日期<br>Install Date 安装日期<br>Install Reason 安装原因（主动安装，还是被依赖自动安装）<br>Install Script 安装脚本<br>Validated By 验证者  </p>
 </li>
-<li><p>卸载软件包<br><code>pacman -Rs </code>会递归删除目标软件包及其包含的一些依赖，这些依赖不被其他包依赖的，但经过实践会发现，一些作为可选项被依赖的包也会被删除，所以保险起见，可以先使用<code>pacman -Rc</code>只删除当前安装包，之后使用<code>pacman -Rc $(pacman -Qtdq)</code>删除不再被需要的依赖，此时不包含可选依赖<br><img src="/2023-11-16-pacman/yilai.png" srcset="/img/loading.gif" lazyload></p>
+<li><p>卸载软件包<br><code>pacman -Rs </code>会递归删除目标软件包及其包含的一些依赖，这些依赖不被其他包依赖的，但经过实践会发现，一些作为可选项被依赖的包也会被删除，所以保险起见，可以先使用<code>pacman -Rc</code>只删除当前安装包，之后使用<code>pacman -Rc $(pacman -Qtdq)</code>删除不再被需要的依赖，此时不包含可选依赖<br><img src="/2023/11/16/pacman/yilai.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 <li><p>makepkg安装AUR包<br>  <strong>makepkg是一个软件包自动编译脚本。使用时需要一个 Unix 环境和 PKGBUILD.使用之前，确保 base-devel包组 软件组已经安装。</strong><br>安装软件包分为以下几个步骤</p>
 <ul>
-<li>首先需要找到软件包构建所需文件，克隆其git存储库，在其AUR页面的“包详细信息”中标记为“Git Clone URL”。<br> <img src="/2023-11-16-pacman/clone.png" srcset="/img/loading.gif" lazyload></li>
-<li>之后切换到含有软件包的 PKGBUILD 文件的目录<br> <img src="/2023-11-16-pacman/mark.png" srcset="/img/loading.gif" lazyload></li>
+<li>首先需要找到软件包构建所需文件，克隆其git存储库，在其AUR页面的“包详细信息”中标记为“Git Clone URL”。<br> <img src="/2023/11/16/pacman/clone.png" srcset="/img/loading.gif" lazyload></li>
+<li>之后切换到含有软件包的 PKGBUILD 文件的目录<br> <img src="/2023/11/16/pacman/mark.png" srcset="/img/loading.gif" lazyload></li>
 <li>使用如下命令编译软件包并安装软件包所需依赖<br> <code>$ makepkg --syncdeps / -s</code></li>
 <li>最后安装软件包<br> <code>$ makepkg --install / -i</code></li>
 <li>删除软件包时可以使用pacman对应命令</li>
