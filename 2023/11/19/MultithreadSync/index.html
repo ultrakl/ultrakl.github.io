@@ -16,27 +16,21 @@
   <meta name="author" content="李凯华">
   <meta name="keywords" content="">
   
-    <meta name="description" content="上次使用pacman -Syu更新软件包后自动安装了开源版本的vscode，导致终端里使用code命令无法打开windows host中的官方版本vscode，今日卸载archlinux环境下安装的vscode，并使用pacman衍生的makepkg手动安装AUR库中的官方版本vscode，将一些心得和经验记录于下： pacman官方文档  软件包基础搜索及安装卸载$ pacman -Ss 软件名">
+    <meta name="description" content="1. 多线程同步 1.1. 互斥锁pthread_mutex 1.1.1. 多线程程序中调用fork      1. 多线程同步1.1. 互斥锁pthread_mutex1.1.1. 多线程程序中调用fork 父进程使用fork()创建出的子进程会继承互斥锁的状态，所以如果父进程是多线程并且有一个线程锁住了mutex，则子进程创建时也会锁住（两个互斥锁分属于两个进程），此时子进程若调用pthre">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pacman - archlinu环境下的包管理程序">
-<meta property="og:url" content="http://example.com/2023/11/16/pacman/index.html">
+<meta property="og:title" content="MultithreadSync">
+<meta property="og:url" content="http://example.com/2023/11/19/MultithreadSync/index.html">
 <meta property="og:site_name" content="kuli&#39;s blog">
-<meta property="og:description" content="上次使用pacman -Syu更新软件包后自动安装了开源版本的vscode，导致终端里使用code命令无法打开windows host中的官方版本vscode，今日卸载archlinux环境下安装的vscode，并使用pacman衍生的makepkg手动安装AUR库中的官方版本vscode，将一些心得和经验记录于下： pacman官方文档  软件包基础搜索及安装卸载$ pacman -Ss 软件名">
+<meta property="og:description" content="1. 多线程同步 1.1. 互斥锁pthread_mutex 1.1.1. 多线程程序中调用fork      1. 多线程同步1.1. 互斥锁pthread_mutex1.1.1. 多线程程序中调用fork 父进程使用fork()创建出的子进程会继承互斥锁的状态，所以如果父进程是多线程并且有一个线程锁住了mutex，则子进程创建时也会锁住（两个互斥锁分属于两个进程），此时子进程若调用pthre">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2023/11/16/pacman/yilai.png">
-<meta property="og:image" content="http://example.com/2023/11/16/pacman/clone.png">
-<meta property="og:image" content="http://example.com/2023/11/16/pacman/mark.png">
-<meta property="article:published_time" content="2023-11-16T10:04:51.000Z">
-<meta property="article:modified_time" content="2023-11-18T16:19:59.765Z">
+<meta property="article:published_time" content="2023-11-18T16:09:22.000Z">
+<meta property="article:modified_time" content="2023-11-18T16:24:23.372Z">
 <meta property="article:author" content="李凯华">
-<meta property="article:tag" content="linux">
-<meta property="article:tag" content="package management">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2023/11/16/pacman/yilai.png">
   
   
   
-  <title>pacman - archlinu环境下的包管理程序 - kuli&#39;s blog</title>
+  <title>MultithreadSync - kuli&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -202,7 +196,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="pacman - archlinu环境下的包管理程序"></span>
+            <span id="subtitle" data-typed-text="MultithreadSync"></span>
           
         </div>
 
@@ -213,8 +207,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-11-16 18:04" pubdate>
-          2023年11月16日 晚上
+        <time datetime="2023-11-19 00:09" pubdate>
+          2023年11月19日 凌晨
         </time>
       </span>
     
@@ -225,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k 字
+          433 字
         
       </span>
     
@@ -236,7 +230,7 @@
         
         
         
-          15 分钟
+          4 分钟
         
       </span>
     
@@ -273,43 +267,27 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">pacman - archlinu环境下的包管理程序</h1>
+            <h1 id="seo-header">MultithreadSync</h1>
             
             
               <div class="markdown-body">
                 
-                <p>上次使用pacman -Syu更新软件包后自动安装了开源版本的vscode，导致终端里使用code命令无法打开windows host中的官方版本vscode，今日卸载archlinux环境下安装的vscode，并使用pacman衍生的makepkg手动安装AUR库中的官方版本vscode，将一些心得和经验记录于下：</p>
-<p><a target="_blank" rel="noopener" href="https://archlinux.org/pacman/pacman.8.html#_remove_options_apply_to_em_r_em_a_id_ro_a">pacman官方文档</a></p>
-<ol>
-<li><p>软件包基础搜索及安装卸载<br><code>$ pacman -Ss 软件名称 //(搜索软件包)</code><br><code>$ pacman -S 软件名称 //(安装软件包)</code><br><code>$ pacman -Rs 软件名称 //(卸载软件包)</code><br><code>$ pacman -Syu (更新)</code></p>
-</li>
-<li><p>包的查询及清理<br>列出所有本地软件包（-Q,query查询本地；-q省略版本号）<br><code>$ pacman -Qq </code></p>
-</li>
-</ol>
-<p>列出所有显式安装（-e,explicitly显式安装；-n忽略外部包AUR）<br><code>$ pacman -Qqe </code></p>
-<p>列出自动安装的包（-d,depends作为依赖项）<br><code>$ pacman -Qqd </code></p>
-<p>列出孤立的包（-t不再被依赖的”作为依赖项安装的包”）<br><code>$ pacman -Qqdt </code><br>注意：通常这些是可以妥妥的删除的。(sudo pacman -Qqdt | sudo pacman -Rs -)</p>
-<ol start="3">
-<li><p>软件包和文件的查询<br>列出包所拥有的文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs zsh">$ sudo pacman -Ql iw<br>iw /usr/<br>iw /usr/bin/<br>iw /usr/bin/iw<br>iw /usr/share/<br>iw /usr/share/man/<br>iw /usr/share/man/man8/<br>iw /usr/share/man/man8/iw.8.gz<br></code></pre></td></tr></table></figure>
-<p>check 检查包文件是否存在（-kk用于文件属性）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs zsh">$ sudo pacman -Qk iw<br>iw: 7 total files, 0 missing files<br></code></pre></td></tr></table></figure>
-<p>查询提供文件的包</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs zsh">$ sudo pacman -Qo /usr/share/man/man8/iw.8.gz<br>/usr/share/man/man8/iw.8.gz is owned by iw 5.0.1-1<br></code></pre></td></tr></table></figure></li>
-<li><p>查询包详细信息<br>查询包详细信息（-Qi;-Qii[Backup Files]）(-Si[Repository,Download Size];-Sii[Signatures,])<br><code>$ pacman -Qi 包名 </code><br>Repository 仓库名称（要联网用pacman -Si或Sii才能看到这一栏；）<br>Name 名称<br>Version 版本<br>Description 描述<br>Architecture 架构<br>URL 网址<br>Licenses 许可证<br>Groups 组<br>Provides 提供<br>Depends On 依赖于（依赖那些包）<br>Optional Deps 可选项<br>Required By 被需求的（被那些包需求）<br>Optional For 可选项<br>Conflicts With 与…发生冲突<br>Replaces 替代对象<br>Download Size 下载大小（要联网用pacman -Si或Sii才能看到这一栏；）<br>Installed Size 安装尺寸<br>Packager 包装者<br>Build Date 包装日期<br>Install Date 安装日期<br>Install Reason 安装原因（主动安装，还是被依赖自动安装）<br>Install Script 安装脚本<br>Validated By 验证者  </p>
-</li>
-<li><p>卸载软件包<br><code>pacman -Rs </code>会递归删除目标软件包及其包含的一些依赖，这些依赖不被其他包依赖的，但经过实践会发现，一些作为可选项被依赖的包也会被删除，所以保险起见，可以先使用<code>pacman -Rc</code>只删除当前安装包，之后使用<code>pacman -Rc $(pacman -Qtdq)</code>删除不再被需要的依赖，此时不包含可选依赖<br><img src="/2023/11/16/pacman/yilai.png" srcset="/img/loading.gif" lazyload></p>
-</li>
-<li><p>makepkg安装AUR包<br>  <strong>makepkg是一个软件包自动编译脚本。使用时需要一个 Unix 环境和 PKGBUILD.使用之前，确保 base-devel包组 软件组已经安装。</strong><br>安装软件包分为以下几个步骤</p>
-<ul>
-<li>首先需要找到软件包构建所需文件，克隆其git存储库，在其AUR页面的“包详细信息”中标记为“Git Clone URL”。<br> <img src="/2023/11/16/pacman/clone.png" srcset="/img/loading.gif" lazyload></li>
-<li>之后切换到含有软件包的 PKGBUILD 文件的目录<br> <img src="/2023/11/16/pacman/mark.png" srcset="/img/loading.gif" lazyload></li>
-<li>使用如下命令编译软件包并安装软件包所需依赖<br> <code>$ makepkg --syncdeps / -s</code></li>
-<li>最后安装软件包<br> <code>$ makepkg --install / -i</code></li>
-<li>删除软件包时可以使用pacman对应命令</li>
+                <ul>
+<li><a href="#1-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5">1. 多线程同步</a><ul>
+<li><a href="#11-%E4%BA%92%E6%96%A5%E9%94%81pthread_mutex">1.1. 互斥锁pthread_mutex</a><ul>
+<li><a href="#111-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E4%B8%AD%E8%B0%83%E7%94%A8fork">1.1.1. 多线程程序中调用fork</a></li>
 </ul>
 </li>
-</ol>
+</ul>
+</li>
+</ul>
+<h2 id="1-多线程同步"><a href="#1-多线程同步" class="headerlink" title="1. 多线程同步"></a>1. 多线程同步</h2><h3 id="1-1-互斥锁pthread-mutex"><a href="#1-1-互斥锁pthread-mutex" class="headerlink" title="1.1. 互斥锁pthread_mutex"></a>1.1. 互斥锁pthread_mutex</h3><h4 id="1-1-1-多线程程序中调用fork"><a href="#1-1-1-多线程程序中调用fork" class="headerlink" title="1.1.1. 多线程程序中调用fork"></a>1.1.1. 多线程程序中调用fork</h4><ul>
+<li>父进程使用fork()创建出的子进程会继承互斥锁的状态，所以如果父进程是多线程并且有一个线程锁住了mutex，则子进程创建时也会锁住（两个互斥锁分属于两个进程），此时子进程若调用pthread_mutex_lock则会导致死锁</li>
+<li>我们可以在调用fork()之前使用pthread_atfork(prepare, parent, child)来保证父子进程中的互斥锁都有一个清晰的状态<ul>
+<li>prepare，parent，child都为函数指针，prepare在fork调用之后，子进程创建之前使用，parent和child分别在fork调用返回之前，在父进程和子进程中使用，我们可以在prepare中对mutex上锁，在parent和child分别对其解锁来达到fork之后父子进程中的互斥锁都为解锁的</li>
+</ul>
+</li>
+</ul>
 
                 
               </div>
@@ -318,36 +296,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/GNU-linux/" class="category-chain-item">GNU/linux</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/tags/linux/" class="print-no-link">#linux</a>
-      
-        <a href="/tags/package-management/" class="print-no-link">#package management</a>
-      
-    </div>
   
 </div>
 
@@ -357,8 +305,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>pacman - archlinu环境下的包管理程序</div>
-      <div>http://example.com/2023/11/16/pacman/</div>
+      <div>MultithreadSync</div>
+      <div>http://example.com/2023/11/19/MultithreadSync/</div>
     </div>
     <div class="license-meta">
       
@@ -370,7 +318,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年11月16日</div>
+          <div>2023年11月19日</div>
         </div>
       
       
@@ -402,18 +350,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/11/19/MultithreadSync/" title="MultithreadSync">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">MultithreadSync</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/11/06/effective-modern-cpp/" title="effective_modern_cpp">
-                        <span class="hidden-mobile">effective_modern_cpp</span>
+                      <a href="/2023/11/16/pacman/" title="pacman - archlinu环境下的包管理程序">
+                        <span class="hidden-mobile">pacman - archlinu环境下的包管理程序</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
