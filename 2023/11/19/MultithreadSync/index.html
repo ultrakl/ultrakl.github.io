@@ -16,16 +16,18 @@
   <meta name="author" content="李凯华">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 多线程同步 1.1. 互斥锁pthread_mutex 1.1.1. 多线程程序中调用fork      1. 多线程同步1.1. 互斥锁pthread_mutex1.1.1. 多线程程序中调用fork 父进程使用fork()创建出的子进程会继承互斥锁的状态，所以如果父进程是多线程并且有一个线程锁住了mutex，则子进程创建时也会锁住（两个互斥锁分属于两个进程），此时子进程若调用pthre">
+    <meta name="description" content="1. 多线程同步 1.1. 互斥锁pthread_mutex 1.1.1. 多线程程序中调用fork   1.2. 多线程信号处理    1. 多线程同步1.1. 互斥锁pthread_mutex1.1.1. 多线程程序中调用fork 父进程使用fork()创建出的子进程会继承互斥锁的状态，所以如果父进程是多线程并且有一个线程锁住了mutex，则子进程创建时也会锁住（两个互斥锁分属于两个进程），">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MultithreadSync">
 <meta property="og:url" content="http://example.com/2023/11/19/MultithreadSync/index.html">
 <meta property="og:site_name" content="kuli&#39;s blog">
-<meta property="og:description" content="1. 多线程同步 1.1. 互斥锁pthread_mutex 1.1.1. 多线程程序中调用fork      1. 多线程同步1.1. 互斥锁pthread_mutex1.1.1. 多线程程序中调用fork 父进程使用fork()创建出的子进程会继承互斥锁的状态，所以如果父进程是多线程并且有一个线程锁住了mutex，则子进程创建时也会锁住（两个互斥锁分属于两个进程），此时子进程若调用pthre">
+<meta property="og:description" content="1. 多线程同步 1.1. 互斥锁pthread_mutex 1.1.1. 多线程程序中调用fork   1.2. 多线程信号处理    1. 多线程同步1.1. 互斥锁pthread_mutex1.1.1. 多线程程序中调用fork 父进程使用fork()创建出的子进程会继承互斥锁的状态，所以如果父进程是多线程并且有一个线程锁住了mutex，则子进程创建时也会锁住（两个互斥锁分属于两个进程），">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-11-18T16:09:22.000Z">
-<meta property="article:modified_time" content="2023-11-18T16:24:23.372Z">
+<meta property="article:modified_time" content="2023-11-19T13:03:31.700Z">
 <meta property="article:author" content="李凯华">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="POSIX thread">
 <meta name="twitter:card" content="summary_large_image">
   
   
@@ -219,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          433 字
+          1.9k 字
         
       </span>
     
@@ -230,7 +232,7 @@
         
         
         
-          4 分钟
+          17 分钟
         
       </span>
     
@@ -278,6 +280,7 @@
 <li><a href="#111-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E4%B8%AD%E8%B0%83%E7%94%A8fork">1.1.1. 多线程程序中调用fork</a></li>
 </ul>
 </li>
+<li><a href="#12-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86">1.2. 多线程信号处理</a></li>
 </ul>
 </li>
 </ul>
@@ -288,6 +291,18 @@
 </ul>
 </li>
 </ul>
+<h3 id="1-2-多线程信号处理"><a href="#1-2-多线程信号处理" class="headerlink" title="1.2. 多线程信号处理"></a>1.2. 多线程信号处理</h3><ul>
+<li>fork创建子进程，子进程会继承父进程的信号掩码并清除信号处理函数</li>
+<li>对于线程来说，使用pthread_sigmask可以设置各线程的信号掩码，使用pthread_create创建的新线程也会继承该信号掩码</li>
+<li>所有线程都共享信号处理函数，一个线程针对某信号设置的信号处理函数会覆盖其余线程的信号处理函数</li>
+<li>当信号被产生(generate)后，内核会查找进程中没有为此信号设置掩码的线程,若没有，则会将该信号挂起(pending)，若有漏网之鱼，信号被成功投递(delivered)则信号处理函数被触发，若没有为此信号设置处理函数，则会触发进程的默认行为 </li>
+<li>sigwait(set, signal)会等待信号集中的信号，知道发现某信号处于pending状态，这说明sigwait可以处理被信号掩码屏蔽的信号，它可以取出处于进程挂起信号集(sigpending()函数获取到的信号集)内的信号，之后实现对于信号的处理，这种处理方式是线程级别的，和signal或sigaction所设置的线程共享处理函数的方式不同，二者只能存在一个</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">static</span> <span class="hljs-type">void</span>* <span class="hljs-title">sig_handler</span><span class="hljs-params">(<span class="hljs-type">void</span>* arg)</span> </span>&#123;<br>    <span class="hljs-type">sigset_t</span> * set = (<span class="hljs-type">sigset_t</span>*)arg;<br>    <span class="hljs-comment">/* sigset_t set1;</span><br><span class="hljs-comment">    sigemptyset(&amp;set1);</span><br><span class="hljs-comment">    sigaddset(&amp;set1, SIGQUIT);</span><br><span class="hljs-comment">    pthread_sigmask(SIG_UNBLOCK, &amp;set1, nullptr); */</span><br>    <span class="hljs-type">int</span> s, sig;<br>    <span class="hljs-keyword">for</span> (; ; ) &#123;<br>        s = <span class="hljs-built_in">sigwait</span>(set, &amp;sig);<br>        <span class="hljs-keyword">if</span>(s != <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-built_in">handle_errno_en</span>(s, <span class="hljs-string">&quot;sigwait&quot;</span>);<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;signal handling thread got signal %d\n&quot;</span>, sig);<br>        &#125; <br>        <span class="hljs-built_in">sleep</span>(<span class="hljs-number">5</span>);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;got a signal\n&quot;</span>);<br>        <span class="hljs-comment">//break;</span><br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>* argv[])</span> </span>&#123;<br>    <span class="hljs-type">pthread_t</span> thread;<br>    <span class="hljs-type">sigset_t</span> set;<br>    <span class="hljs-type">int</span> s;<br>    <span class="hljs-built_in">sigemptyset</span>(&amp;set);<br>    <span class="hljs-built_in">sigaddset</span>(&amp;set, SIGQUIT);<br>    <span class="hljs-built_in">sigaddset</span>(&amp;set, SIGUSR1);<br>    <span class="hljs-built_in">pthread_sigmask</span>(SIG_BLOCK, &amp;set, <span class="hljs-literal">nullptr</span>);<br>    <span class="hljs-built_in">pthread_create</span>(&amp;thread, <span class="hljs-literal">nullptr</span>, sig_handler, &amp;set);<br>    <span class="hljs-built_in">pause</span>();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>例程取自pthread_sigmask的man手册，它展示了如何在一个线程内实现对于信号的处理</p>
+<blockquote>
+<p>在多线程环境中，您可以使用sigwait UNIX系统调用来同步地处理异步信号。这可以帮助您的应用程序避免中断，并使其行为更加可预测。通常，专用的信号处理程序线程使用sigwait等待异步信号。为sigwait提供的信号掩码表示要等待哪些信号。在发送信号时，sigwait返回信号编号，信号处理程序线程执行信号处理程序。要通过sigwait接收异步信号，进程必须:<br>创建一个专用的信号处理程序线程，在该线程中调用sigwait来捕获异步信号。为这个线程屏蔽这些信号。对于所有其他线程，将set参数中指定的信号屏蔽为sigwait。</p>
+</blockquote>
 
                 
               </div>
@@ -296,6 +311,36 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/GNU-linux/" class="category-chain-item">GNU/linux</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/linux/" class="print-no-link">#linux</a>
+      
+        <a href="/tags/POSIX-thread/" class="print-no-link">#POSIX thread</a>
+      
+    </div>
   
 </div>
 
