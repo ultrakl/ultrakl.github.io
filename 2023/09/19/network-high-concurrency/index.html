@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/v2-233887068992518bb4eec56de043d1b2_r.jpg">
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/item38_fig1.png">
 <meta property="article:published_time" content="2023-09-19T09:39:14.000Z">
-<meta property="article:modified_time" content="2023-11-15T16:06:26.440Z">
+<meta property="article:modified_time" content="2023-11-24T16:50:55.200Z">
 <meta property="article:author" content="李凯华">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="POSIX socket">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.9k 字
+          8.3k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          66 分钟
+          70 分钟
         
       </span>
     
@@ -377,12 +377,19 @@
 <ul>
 <li>LT：如果此时缓存区没有可读数据，则epoll_wait不会返回EPOLLIN，如果此时缓冲区有可读数据，则epoll_wait会持续返回EPOLLIN</li>
 <li>ET：如果此时缓存区没有可读数据，则epoll_wait不会返回EPOLLIN，如果此时缓冲区有可读数据，则epoll_wait会返回一次EPOLLIN<br>可通过设置evnets为EPOLL_ET来显式设置工作模式为EPOLL_ET</li>
+<li>具体来说，设置ET之后，在epoll_wait()期间，若socket&#x2F;pipe对应的缓冲区的数据发生了变化，则会通知事件发生，若没有变化，则会一直阻塞</li>
+<li>比LT高效的点在于epoll不会通过轮询文件描述符，观察缓冲区是否还有数据来通知事件是否发生，而是当数据到来时通过回调函数来通知事件发生</li>
+<li>当多块数据同时到来时，比如tcp的接收缓冲区小于发送的数据量，此时也会多次通知事件发生</li>
+<li>ET对应的文件描述符应当是非阻塞的，使用EPOLLET标志的应用程序应该使用非阻塞文件描述符，以避免阻塞读或写使正在处理多个文件描述符的任务饥饿。使<blockquote>
+<p>如果多个线程（或者进程，如果子进程通过fork(2)继承了epoll文件描述符）在等待同一个epoll文件描述符上的epoll_wait(2)时被阻塞，并且兴趣列表中标记为边缘触发（EPOLLET）通知的文件描述符准备好了，只有一个线程（或进程）会从epoll_wait(2)中唤醒。这在某些情况下提供了一个有用的优化，可以避免”惊群”唤醒。</p>
+</blockquote>
+</li>
 </ul>
 </li>
 <li><p>由于ET工作模式仍会导致某个事件被触发多次，使得多线程可能会处理同个fd，从而避免许多竞态条件，EPOLLONESHOT使得某个时刻只可能触发fd注册的一个可读，可写，异常事件，并且该事件只能触发一次</p>
 <ul>
 <li>可通过epoll_ctl来重新设置EPOLLONESHOT来重新触发新的可读事件（通过设置flag为EPOLL_CTL_MOD）</li>
-<li>监听fd不应该设为EPOLLONESHOT，不然只能某个时刻处理一个客户连接</li>
+<li>监听fd不应该设为EPOLLONESHOT，不然只能某个时刻处理一个客户连接（新来的连接不会触发新事件）</li>
 </ul>
 </li>
 <li><p>多线程使用pthread_exit(NULL)来退出线程不是<strong>异步信号安全的</strong>，其发出的信号可以中断例如epoll_wait()等阻塞函数 </p>

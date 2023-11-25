@@ -16,12 +16,12 @@
   <meta name="author" content="李凯华">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Linux 命令 valgrind 调试工具 系统监测工具 cmake cmake具体流程    Linux 命令 ldconfig创建所需的链接并缓存到标准库目录中找到的最新共享库. ldd filename显示特定Linux命令需要运行的共享对象文件。   file filename展示文件属性 set当前终端进程的shell variable，不会遗传给子进程，注意和environment">
+    <meta name="description" content="Linux 命令 valgrind 调试工具 系统监测工具 cmake cmake具体流程 cmake commands    Linux 命令 ldconfig创建所需的链接并缓存到标准库目录中找到的最新共享库. ldd filename显示特定Linux命令需要运行的共享对象文件。   file filename展示文件属性 set当前终端进程的shell variable，不会遗传给子进程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux&#x2F;cmake commands">
 <meta property="og:url" content="http://example.com/2023/09/30/linux-&-cmake-commands/index.html">
 <meta property="og:site_name" content="kuli&#39;s blog">
-<meta property="og:description" content="Linux 命令 valgrind 调试工具 系统监测工具 cmake cmake具体流程    Linux 命令 ldconfig创建所需的链接并缓存到标准库目录中找到的最新共享库. ldd filename显示特定Linux命令需要运行的共享对象文件。   file filename展示文件属性 set当前终端进程的shell variable，不会遗传给子进程，注意和environment">
+<meta property="og:description" content="Linux 命令 valgrind 调试工具 系统监测工具 cmake cmake具体流程 cmake commands    Linux 命令 ldconfig创建所需的链接并缓存到标准库目录中找到的最新共享库. ldd filename显示特定Linux命令需要运行的共享对象文件。   file filename展示文件属性 set当前终端进程的shell variable，不会遗传给子进程">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2023/09/30/linux-&-cmake-commands/ps%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B%E7%BB%84%E5%85%B3%E7%B3%BB.png">
 <meta property="og:image" content="http://example.com/2023/09/30/linux-&-cmake-commands/pscmd.png">
@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://example.com/2023/09/30/linux-&-cmake-commands/1.png">
 <meta property="og:image" content="http://example.com/2023/09/30/linux-&-cmake-commands/cmake-simple-flowchart.png">
 <meta property="article:published_time" content="2023-09-30T03:35:37.000Z">
-<meta property="article:modified_time" content="2023-11-19T14:18:33.614Z">
+<meta property="article:modified_time" content="2023-11-25T16:56:11.822Z">
 <meta property="article:author" content="李凯华">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="cmake">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.3k 字
+          5.1k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          36 分钟
+          43 分钟
         
       </span>
     
@@ -287,6 +287,7 @@
 <li><a href="#%E7%B3%BB%E7%BB%9F%E7%9B%91%E6%B5%8B%E5%B7%A5%E5%85%B7">系统监测工具</a></li>
 <li><a href="#cmake">cmake</a><ul>
 <li><a href="#cmake%E5%85%B7%E4%BD%93%E6%B5%81%E7%A8%8B">cmake具体流程</a></li>
+<li><a href="#cmake-commands">cmake commands</a></li>
 </ul>
 </li>
 </ul>
@@ -394,6 +395,8 @@
 </li>
 <li><p><strong>fg</strong><br>将后台进程移动至前台(tty&#x2F;pts)执行<br>语法 : fg [job_spec]</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">运行<span class="hljs-built_in">sleep</span>命令，然后按下ctrl+z。</span><br>sleep 60<br>^Z<br>[1]+  Stopped                 sleep 60<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用<span class="hljs-built_in">fg</span>命令使得作业在前台运行。</span><br>fg %1<br></code></pre></td></tr></table></figure></li>
+<li><p><strong>nm</strong><br>查看库的符号表<br><code>nm ./build/libMyLibExample.a</code></p>
+</li>
 </ol>
 <h2 id="valgrind-调试工具"><a href="#valgrind-调试工具" class="headerlink" title="valgrind 调试工具"></a>valgrind 调试工具</h2><ol>
 <li>valgrind</li>
@@ -415,6 +418,12 @@
 <li><p>命令行中通过设置cmake的–config选项可以指定编译源文件时是按debug模式还是release模式编译</p>
 </li>
 </ol>
+<h3 id="cmake-commands"><a href="#cmake-commands" class="headerlink" title="cmake commands"></a>cmake commands</h3><ol>
+<li>创建静态库  <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">add_library</span>(hello_library STATIC<br>    src/Hello.cpp<br>)<br>```  <br>&gt;补充：  <br>**GCC 命令行创建静态库:**   <br>`gcc -c somfile.c -o somefile.o`  <br>使用binutils软件包中的ar工具将目标文件转换为静态库（存档）  <br>`ar rcs libfoo.a somfile.o`  <br>当链接到库时，GCC 会自动从 .a 文件扩展名识别出该库是静态链接的存档。  <br>`gcc ... -lfoo ...`  <br>**GCC 命令行创建动态库:**    <br>使用位置无关代码选项-fPIC将每个源文件编译为目标文件  <br>`gcc ... -c -fPIC some_file.c ...`  <br>从目标文件中链接共享库:  <br>`gcc -shared -o libfoo.so.x.y -Wl,-soname,libfoo.so.x some_file.o ...`  <br>使用的主版本号为 X，次版本号为 Y  <br>创建用于soname机制的符号链接结构(软链接):  <br>`ln -s libfoo.so.x.y libfoo.so.x`  <br>`ln -s libfoo.so.x libfoo.so`<br><br><br><br><br><span class="hljs-number">2</span>. 链接库<br>```cmake<br><span class="hljs-keyword">target_link_libraries</span>( hello_binary<br>    PRIVATE<br>        hello_library<br>)<br></code></pre></td></tr></table></figure></li>
+<li>添加目标编译所需要的头文件</li>
+</ol>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_include_directories</span>(hello_headers<br>    PRIVATE <br>        <span class="hljs-variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/<span class="hljs-keyword">include</span><br>)<br></code></pre></td></tr></table></figure>
+<p>private将头文件目录的作用域限制在当前目标，而不会传递给依赖当前目标的其他目标，这表明其他目标若想使用该头文件，需显式将其添加</p>
 
                 
               </div>
