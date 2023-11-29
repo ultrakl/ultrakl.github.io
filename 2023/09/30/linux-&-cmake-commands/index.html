@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://example.com/2023/09/30/linux-&-cmake-commands/1.png">
 <meta property="og:image" content="http://example.com/2023/09/30/linux-&-cmake-commands/cmake-simple-flowchart.png">
 <meta property="article:published_time" content="2023-09-30T03:35:37.000Z">
-<meta property="article:modified_time" content="2023-11-25T17:11:55.919Z">
+<meta property="article:modified_time" content="2023-11-29T08:54:51.794Z">
 <meta property="article:author" content="李凯华">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="cmake">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5k 字
+          6.1k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          42 分钟
+          51 分钟
         
       </span>
     
@@ -395,8 +395,10 @@
 </li>
 <li><p><strong>fg</strong><br>将后台进程移动至前台(tty&#x2F;pts)执行<br>语法 : fg [job_spec]</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">运行<span class="hljs-built_in">sleep</span>命令，然后按下ctrl+z。</span><br>sleep 60<br>^Z<br>[1]+  Stopped                 sleep 60<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用<span class="hljs-built_in">fg</span>命令使得作业在前台运行。</span><br>fg %1<br></code></pre></td></tr></table></figure></li>
-<li><p><strong>nm</strong><br>查看库的符号表<br><code>nm ./build/libMyLibExample.a</code></p>
+<li><p><strong>nm</strong><br>查看库的符号表<br><code>nm ./build/libMyLibExample.a</code>    </p>
 </li>
+<li><p><strong>ulimit</strong><br>控制shell程序的资源,作为临时限制，ulimit 可以作用于通过使用其命令登录的 shell 会话，在会话终止时便结束限制，并不影响于其他 shell 会话 </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs shell">[root@localhost ~]# ulimit -a<br>core file size          (blocks, -c) 0           #core文件的最大值为100 blocks。<br>data seg size           (kbytes, -d) unlimited   #进程的数据段可以任意大。<br>scheduling priority             (-e) 0<br>file size               (blocks, -f) unlimited   #文件可以任意大。<br>pending signals                 (-i) 98304       #最多有98304个待处理的信号。<br>max locked memory       (kbytes, -l) 32          #一个任务锁住的物理内存的最大值为32KB。<br>max memory size         (kbytes, -m) unlimited   #一个任务的常驻物理内存的最大值。<br>open files                      (-n) 1024        #一个任务最多可以同时打开1024的文件。<br>pipe size            (512 bytes, -p) 8           #管道的最大空间为4096字节。<br>POSIX message queues     (bytes, -q) 819200      #POSIX的消息队列的最大值为819200字节。<br>real-time priority              (-r) 0<br>stack size              (kbytes, -s) 10240       #进程的栈的最大值为10240字节。<br>cpu time               (seconds, -t) unlimited   #进程使用的CPU时间。<br>max user processes              (-u) 98304       #当前用户同时打开的进程（包括线程）的最大个数为98304。<br>virtual memory          (kbytes, -v) unlimited   #没有限制进程的最大地址空间。<br>file locks                      (-x) unlimited   #所能锁住的文件的最大个数没有限制。<br><br></code></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="valgrind-调试工具"><a href="#valgrind-调试工具" class="headerlink" title="valgrind 调试工具"></a>valgrind 调试工具</h2><ol>
 <li>valgrind</li>
@@ -421,6 +423,9 @@
 <h3 id="cmake-commands"><a href="#cmake-commands" class="headerlink" title="cmake commands"></a>cmake commands</h3><ol>
 <li>创建静态库<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">add_library</span>(hello_library STATIC<br>    src/Hello.cpp<br>)<br></code></pre></td></tr></table></figure></li>
 </ol>
+<ul>
+<li>hello_library 即为要创建的库文件的名称，该库文件是全局共享的</li>
+</ul>
 <blockquote><p>补充：<br><strong>GCC 命令行创建静态库:</strong><br><code>gcc -c somfile.c -o somefile.o</code><br>使用binutils软件包中的ar工具将目标文件转换为静态库（存档）<br><code>ar rcs libfoo.a somfile.o</code><br>当链接到库时，GCC 会自动从 .a 文件扩展名识别出该库是静态链接的存档。<br><code>gcc ... -lfoo ...</code><br><strong>GCC 命令行创建动态库:</strong><br>使用位置无关代码选项-fPIC将每个源文件编译为目标文件<br><code>gcc ... -c -fPIC some_file.c ...</code><br>从目标文件中链接共享库:<br><code>gcc -shared -o libfoo.so.x.y -Wl,-soname,libfoo.so.x some_file.o ...</code><br>使用的主版本号为 X，次版本号为 Y<br>创建用于soname机制的符号链接结构(软链接):<br><code>ln -s libfoo.so.x.y libfoo.so.x</code><br><code>ln -s libfoo.so.x libfoo.so</code></p>
 </blockquote>
 
@@ -428,10 +433,19 @@
 
 <ol start="2">
 <li>链接库<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_link_libraries</span>( hello_binary<br>    PRIVATE<br>        hello_library<br>)<br></code></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>这里的库文件应该是之前使用add_library创建的，若该库是在别的CML下创建的，则应在当前CML使用add_subdirectory(source_dir)引入创建该库的CML所在的目录source_dir</li>
+<li>add_subdirectory(source_dir)其实就是执行了在source_dir下的CML，生成的库文件或可执行文件若没有指定其余参数则会存放在build之后的source_dir目录下</li>
+</ul>
+<ol start="3">
 <li>添加目标编译所需要的头文件</li>
 </ol>
 <figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cmake"><span class="hljs-keyword">target_include_directories</span>(hello_headers<br>    PRIVATE <br>        <span class="hljs-variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/<span class="hljs-keyword">include</span><br>)<br></code></pre></td></tr></table></figure>
-<p>private将头文件目录的作用域限制在当前目标，而不会传递给依赖当前目标的其他目标，这表明其他目标若想使用该头文件，需显式将其添加</p>
+<ul>
+<li>private将头文件目录的作用域限制在当前目标，而不会传递给依赖当前目标的其他目标，这表明其他目标若想使用该头文件，需显式将其添加</li>
+<li>使用该命令之后，在源文件中引入头文件时可以直接使用头文件名，不需要特定加入相对或者绝对地址</li>
+</ul>
 
                 
               </div>
