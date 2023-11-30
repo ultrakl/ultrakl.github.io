@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/v2-233887068992518bb4eec56de043d1b2_r.jpg">
 <meta property="og:image" content="http://example.com/2023/09/19/network-high-concurrency/item38_fig1.png">
 <meta property="article:published_time" content="2023-09-19T09:39:14.000Z">
-<meta property="article:modified_time" content="2023-11-27T07:21:39.281Z">
+<meta property="article:modified_time" content="2023-11-30T14:49:31.132Z">
 <meta property="article:author" content="李凯华">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="POSIX socket">
@@ -228,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.9k 字
+          9.2k 字
         
       </span>
     
@@ -239,7 +239,7 @@
         
         
         
-          75 分钟
+          77 分钟
         
       </span>
     
@@ -462,25 +462,36 @@
 </ul>
 <p>  <code>typedef std::integral_constant&lt;   bool, true&gt; true_type; typedef std::integral_constant&lt;   bool, false&gt; false_type;</code></p>
 <ol start="2">
-<li>不只是thread，bind以及async都会在创建的对象中构造传入实参另一份数据，所以如果函数形参为引用类型，使用std::ref()来构造reference_wrapper函数对象是一个明智的选择</li>
-<li>thread在析构时若是<strong>可结合的</strong>，比如没有显式join(主线程会阻塞直到thread对应的底层线程返回)或detach(底层软件线程分离)或者移动，则会调用std::terminate终止程序</li>
-<li>thread作为软件线程的句柄可调用native_handle来返回tid，之后可以通过其他方法来设置线程优先级和调度策略，<strong>这是future做不到的</strong></li>
-<li>为了防止线程终止，可以构造RAII类型对象，在析构时通过构造实参指定的join或者detach来指定析构方法</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ThreadRAII</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">enum class</span> <span class="hljs-title class_">DtorAction</span> &#123; join, detach &#125;;         <span class="hljs-comment">//跟之前一样</span><br><br>    <span class="hljs-built_in">ThreadRAII</span>(std::thread&amp;&amp; t, DtorAction a)       <span class="hljs-comment">//跟之前一样</span><br>    : <span class="hljs-built_in">action</span>(a), <span class="hljs-built_in">t</span>(std::<span class="hljs-built_in">move</span>(t)) &#123;&#125;<br><br>    ~<span class="hljs-built_in">ThreadRAII</span>()<br>    &#123;<br>        …                                           <span class="hljs-comment">//跟之前一样</span><br>    &#125;<br><br>    <span class="hljs-built_in">ThreadRAII</span>(ThreadRAII&amp;&amp;) = <span class="hljs-keyword">default</span>;             <span class="hljs-comment">//支持移动</span><br>    ThreadRAII&amp; <span class="hljs-keyword">operator</span>=(ThreadRAII&amp;&amp;) = <span class="hljs-keyword">default</span>;<br><br>    <span class="hljs-function">std::thread&amp; <span class="hljs-title">get</span><span class="hljs-params">()</span> </span>&#123; <span class="hljs-keyword">return</span> t; &#125;                <span class="hljs-comment">//跟之前一样</span><br><br><span class="hljs-keyword">private</span>: <span class="hljs-comment">// as before</span><br>    DtorAction action;<br>    std::thread t;<br>&#125;;<br><br></code></pre></td></tr></table></figure>
+<li><p>不只是thread，bind以及async都会在创建的对象中构造传入实参另一份数据，所以如果函数形参为引用类型，使用std::ref()来构造reference_wrapper函数对象是一个明智的选择</p>
+</li>
+<li><p>thread在析构时若是<strong>可结合的</strong>，比如没有显式join(主线程会阻塞直到thread对应的底层线程返回)或detach(底层软件线程分离)或者移动，则会调用std::terminate终止程序</p>
+</li>
+<li><p>thread作为软件线程的句柄可调用native_handle来返回tid，之后可以通过其他方法来设置线程优先级和调度策略，<strong>这是future做不到的</strong></p>
+</li>
+<li><p>为了防止线程终止，可以构造RAII类型对象，在析构时通过构造实参指定的join或者detach来指定析构方法</p>
+</li>
+<li><p>获取传统posix标准底层pthread的tid的方式为调用thread对象的native_handler, 而在c++层面上获取线程的ID标识符，本线程应该调用std::this_thread::get_id()，其余线程应该调用t.get_id(), t为std::thread对象</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ThreadRAII</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">enum class</span> <span class="hljs-title class_">DtorAction</span> &#123; join, detach &#125;;         <span class="hljs-comment">//跟之前一样</span><br><br>    <span class="hljs-built_in">ThreadRAII</span>(std::thread&amp;&amp; t, DtorAction a)       <span class="hljs-comment">//跟之前一样</span><br>    : <span class="hljs-built_in">action</span>(a), <span class="hljs-built_in">t</span>(std::<span class="hljs-built_in">move</span>(t)) &#123;&#125; <span class="hljs-comment">//std::thread对象可能会在初始化结束后就立即执行函数了，所以在最后声明是一个好习惯</span><br><br>    ~<span class="hljs-built_in">ThreadRAII</span>()<br>    &#123;<br>        …                                           <span class="hljs-comment">//跟之前一样</span><br>    &#125;<br><br>    <span class="hljs-built_in">ThreadRAII</span>(ThreadRAII&amp;&amp;) = <span class="hljs-keyword">default</span>;             <span class="hljs-comment">//支持移动</span><br>    ThreadRAII&amp; <span class="hljs-keyword">operator</span>=(ThreadRAII&amp;&amp;) = <span class="hljs-keyword">default</span>;<br><br>    <span class="hljs-function">std::thread&amp; <span class="hljs-title">get</span><span class="hljs-params">()</span> </span>&#123; <span class="hljs-keyword">return</span> t; &#125;                <span class="hljs-comment">//跟之前一样</span><br><br><span class="hljs-keyword">private</span>: <span class="hljs-comment">// as before</span><br>    DtorAction action;<br>    std::thread t;<br>&#125;;<br><br></code></pre></td></tr></table></figure>
 <blockquote>
 <p>按理来说当显式生成析构函数时，编译器不会再主动生成移动构造和移动赋值函数，但当对象是可以逐成员移动时，我们可以显式default声明移动函数来保证移动操作是可以被执行的  </p>
 </blockquote>
-<ol start="6">
-<li>为了防止线程在开始后被修改优先级，可以在创建线程时将方法设为wait函数，将线程挂起</li>
+</li>
+<li><p>为了防止线程在开始后被修改优先级，可以在创建线程时将方法设为wait函数，将线程挂起</p>
+</li>
 </ol>
 <h4 id="3-2-std-future"><a href="#3-2-std-future" class="headerlink" title="3.2. std::future"></a>3.2. std::future</h4><ol>
 <li>与thread不同，在使用默认策略启动时，不一定会使用异步执行，这种调用方式将线程管理的职责转交给C++标准库的开发者。举个例子，这种调用方式会减少抛出资源超额异常的可能性</li>
 <li>std::launch::deferred启动策略意味着f仅当在std::async返回的future上调用get或者wait时才执行。这表示f推迟到存在这样的调用时才执行</li>
-<li>默认启动策略的调度灵活性导致使用thread_local变量比较麻烦，因为这意味着如果f读写了线程本地存储（thread-local storage，TLS），不可能预测到哪个线程的变量被访问<br>可以使用 <code>fut.wait_for(0s) == std::future_status::deferred</code> 检查函数是否被延时</li>
+<li>默认启动策略的调度灵活性导致使用thread_local变量比较麻烦，因为这意味着如果f读写了线程本地存储（thread-local storage，TLS），不可能预测到哪个线程的变量被访问</li>
+</ol>
+<ul>
+<li>可以使用 <code>fut.wait_for(0s) == std::future_status::deferred</code> 检查函数是否被延时执行</li>
+<li>在检查异步执行的future是否完成执行时，可以检查<code>fut.wait_for(100ms) == std::future_status::ready</code></li>
+</ul>
+<ol start="4">
 <li>future是通信信道的一端，被调用者通过该信道将结果发送给调用者。被调用者（通常是异步执行）将计算结果写入通信信道中（通常通过std::promise对象），调用者使用future读取结果, 除了这种普通用途外还可以将promise模板实参设为void，用来当作<strong>条件变量</strong>通知future对象，future所在线程调用wait方法将会阻塞直到结果返回，这种方法好处在于不再需要互斥锁，条件变量，或者原子变量，并且可以用来设置线程优先级，使得线程在创建时不会自动运行，处于挂起状态，坏处在于通道的值只能设置一次，线程也只能被挂起一次。<br>  <img src="/2023/09/19/network-high-concurrency/item38_fig1.png" srcset="/img/loading.gif" lazyload alt="future信道"></li>
 <li>因为与被调用者关联的对象和与调用者关联的对象都不适合存储这个结果，所以调用结果必须存储在两者之外的位置。此位置称为共享状态（shared state）。共享状态通常是基于堆的对象，一般来说对于future对象拥有这个共享状态的控制权，或者说引用了共享状态，析构时引用该状态的future会自动阻塞并且等待任务完成</li>
-<li>future不能被拷贝，但他却可以用来构造shared_future，之后转交共享状态的控制权，shared_future在并发访问时可以用来为每个线程构造副本来共享共享状态的拥有权，设置std::promise::set_value()可以在多线程使用wait来唤起多个线程<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c++">std::promise&lt;<span class="hljs-type">void</span>&gt; p;                   <span class="hljs-comment">//跟之前一样</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">detect</span><span class="hljs-params">()</span>                           <span class="hljs-comment">//现在针对多个反映线程</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">auto</span> sf = p.<span class="hljs-built_in">get_future</span>().<span class="hljs-built_in">share</span>();   <span class="hljs-comment">//sf的类型是std::shared_future&lt;void&gt;</span><br>    std::vector&lt;std::thread&gt; vt;        <span class="hljs-comment">//反应线程容器</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; threadsToRun; ++i) &#123;<br>        vt.<span class="hljs-built_in">emplace_back</span>([sf]&#123; sf.<span class="hljs-built_in">wait</span>();    <span class="hljs-comment">//在sf的局部副本上wait；</span><br>                              <span class="hljs-built_in">react</span>(); &#125;);  <span class="hljs-comment">//emplace_back见条款42</span><br>    &#125;<br>    …                                   <span class="hljs-comment">//如果这个“…”抛出异常，detect挂起！</span><br>    p.<span class="hljs-built_in">set_value</span>();                      <span class="hljs-comment">//所有线程解除挂起</span><br>    …<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; t : vt) &#123;                <span class="hljs-comment">//使所有线程不可结合；</span><br>        t.<span class="hljs-built_in">join</span>();                       <span class="hljs-comment">//“auto&amp;”见条款2</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>future不能被拷贝，但他却可以用来构造shared_future(通过成员函数share())，之后转交共享状态的控制权，shared_future在并发访问时可以用来为每个线程构造副本来共享共享状态的拥有权，设置std::promise::set_value()可以在多线程使用wait来唤起多个线程<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c++">std::promise&lt;<span class="hljs-type">void</span>&gt; p;                   <span class="hljs-comment">//跟之前一样</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">detect</span><span class="hljs-params">()</span>                           <span class="hljs-comment">//现在针对多个反映线程</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">auto</span> sf = p.<span class="hljs-built_in">get_future</span>().<span class="hljs-built_in">share</span>();   <span class="hljs-comment">//sf的类型是std::shared_future&lt;void&gt;</span><br>    std::vector&lt;std::thread&gt; vt;        <span class="hljs-comment">//反应线程容器</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; threadsToRun; ++i) &#123;<br>        vt.<span class="hljs-built_in">emplace_back</span>([sf]&#123; sf.<span class="hljs-built_in">wait</span>();    <span class="hljs-comment">//在sf的局部副本上wait；</span><br>                              <span class="hljs-built_in">react</span>(); &#125;);  <span class="hljs-comment">//emplace_back见条款42</span><br>    &#125;<br>    …                                   <span class="hljs-comment">//如果这个“…”抛出异常，detect挂起！</span><br>    p.<span class="hljs-built_in">set_value</span>();                      <span class="hljs-comment">//所有线程解除挂起</span><br>    …<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span>&amp; t : vt) &#123;                <span class="hljs-comment">//使所有线程不可结合；</span><br>        t.<span class="hljs-built_in">join</span>();                       <span class="hljs-comment">//“auto&amp;”见条款2</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ol>
 <h4 id="3-3-condition-variable-mutex"><a href="#3-3-condition-variable-mutex" class="headerlink" title="3.3. condition_variable &amp; mutex"></a>3.3. condition_variable &amp; mutex</h4><ol>
 <li>cv.Wait(lock<which is basically unique_lock>, bool function)会导致当前线程阻塞，直到条件变量被通知或发生假唤醒，或者循环直到满足某个谓词</li>
