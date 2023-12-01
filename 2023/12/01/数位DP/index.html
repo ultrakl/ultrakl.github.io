@@ -23,14 +23,14 @@
 <meta property="og:site_name" content="kuli&#39;s blog">
 <meta property="og:description" content="数位DP是什么？数位是指把一个数字按照个、十、百、千等等一位一位地拆开，关注它每一位上的数字。如果拆的是十进制数，那么每一位数字都是 0~9，其他进制可类比十进制。 数位 DP：用来解决一类特定问题，这种问题比较好辨认，一般具有这几个特征：  要求统计满足一定条件的数的数量（即，最终目的为计数）；  这些条件经过转化后可以使用「数位」的思想去理解和判断；  输入会提供一个数字区间（有时也只提供上界">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2023-12-01-%E6%95%B0%E4%BD%8DDP/n%E7%9A%84%E8%A1%A8%E7%A4%BA.jpg">
-<meta property="og:image" content="http://example.com/2023-12-01-%E6%95%B0%E4%BD%8DDP/y%E6%80%BB.jpg">
+<meta property="og:image" content="http://example.com/2023/12/01/%E6%95%B0%E4%BD%8DDP/n%E7%9A%84%E8%A1%A8%E7%A4%BA.jpg">
+<meta property="og:image" content="http://example.com/2023/12/01/%E6%95%B0%E4%BD%8DDP/y%E6%80%BB.jpg">
 <meta property="article:published_time" content="2023-12-01T09:51:36.000Z">
-<meta property="article:modified_time" content="2023-12-01T11:09:40.686Z">
+<meta property="article:modified_time" content="2023-12-01T11:12:50.459Z">
 <meta property="article:author" content="李凯华">
 <meta property="article:tag" content="动态规划">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2023-12-01-%E6%95%B0%E4%BD%8DDP/n%E7%9A%84%E8%A1%A8%E7%A4%BA.jpg">
+<meta name="twitter:image" content="http://example.com/2023/12/01/%E6%95%B0%E4%BD%8DDP/n%E7%9A%84%E8%A1%A8%E7%A4%BA.jpg">
   
   
   
@@ -293,7 +293,7 @@
 <ul>
 <li>以上内容摘自OI-WIKI中关于<a target="_blank" rel="noopener" href="https://oi-wiki.org/dp/number/">数位DP</a>的介绍</li>
 </ul>
-<h3 id="数位DP的普遍做法"><a href="#数位DP的普遍做法" class="headerlink" title="数位DP的普遍做法"></a>数位DP的普遍做法</h3><p>数位DP通常要求将区间最大值N拆为B进制的各个位(以10进制为例)， 假设N在10进制下有n位，则N可以用下式表示：<br><img src="/2023-12-01-%E6%95%B0%E4%BD%8DDP/n%E7%9A%84%E8%A1%A8%E7%A4%BA.jpg" srcset="/img/loading.gif" lazyload><br>从最高位开始，由于所在区间挑选的所有数不能大于N，则对于每个位来说，可选的数为0-a[i]-1 和 a[i]两种情况(根据特定题目，可选的数还会进一步缩小)， 若当前位选择0-a[i]-1，则之后的各个位可以随心所欲的挑选符合题意的数，若当前位选择a[i]，则后一位也必须分成两种情况来讨论，DP的过程可以用二叉树来进行模拟<br><img src="/2023-12-01-%E6%95%B0%E4%BD%8DDP/y%E6%80%BB.jpg" srcset="/img/loading.gif" lazyload><br>左边的分支即为挑选比当前位小的数，最右边的分支表示选择的数即为原数，左边分支由于后续不再受到N的限制，可以直接用组合数或者动态规划的方式求得所有情况，于是不必要继续分支下去，最右边的分支表示1种情况，并且最后需判断原数是否满足题意即可</p>
+<h3 id="数位DP的普遍做法"><a href="#数位DP的普遍做法" class="headerlink" title="数位DP的普遍做法"></a>数位DP的普遍做法</h3><p>数位DP通常要求将区间最大值N拆为B进制的各个位(以10进制为例)， 假设N在10进制下有n位，则N可以用下式表示：<br><img src="/2023/12/01/%E6%95%B0%E4%BD%8DDP/n%E7%9A%84%E8%A1%A8%E7%A4%BA.jpg" srcset="/img/loading.gif" lazyload><br>从最高位开始，由于所在区间挑选的所有数不能大于N，则对于每个位来说，可选的数为0-a[i]-1 和 a[i]两种情况(根据特定题目，可选的数还会进一步缩小)， 若当前位选择0-a[i]-1，则之后的各个位可以随心所欲的挑选符合题意的数，若当前位选择a[i]，则后一位也必须分成两种情况来讨论，DP的过程可以用二叉树来进行模拟<br><img src="/2023/12/01/%E6%95%B0%E4%BD%8DDP/y%E6%80%BB.jpg" srcset="/img/loading.gif" lazyload><br>左边的分支即为挑选比当前位小的数，最右边的分支表示选择的数即为原数，左边分支由于后续不再受到N的限制，可以直接用组合数或者动态规划的方式求得所有情况，于是不必要继续分支下去，最右边的分支表示1种情况，并且最后需判断原数是否满足题意即可</p>
 <p>介绍一道例题，来自力扣：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/numbers-at-most-n-given-digit-set/">902.最大为N的数字组合</a><br>根据评论区star靠前的各个题解，我总结出了三种解法：</p>
 <ol>
 <li>最接近所述数位DP原理和普遍做法的题解</li>
@@ -318,26 +318,7 @@
 <ol start="3">
 <li>递归 + 记忆化搜索(最难理解的一个解法)<br>先看代码:</li>
 </ol>
-<pre><code class="c++">int atMostNGivenDigitSet(vector&lt;string&gt;&amp; digits, int n) &#123;
-        auto s = to_string(n);
-        int m = s.length(), dp[m];
-        memset(dp, -1, sizeof(dp));
-         function&lt;int(int, bool, bool)&gt; f = [&amp;](int i, bool is_limit, bool is_num) -&gt; int &#123;
-             if (i == m) return is_num;
-             if(!is_limit &amp;&amp; is_num &amp;&amp; dp[i] &gt;= 0) return dp[i];
-             int res = 0;
-             if (!is_num) res = f( i + 1, false, false);
-             char up = is_limit ? s[i] : &#39;9&#39;;
-             for(auto&amp; d : digits) &#123;
-                 if( d[0] &gt; up) break;
-                 res += f(i + 1, is_limit &amp;&amp; d[0] == up, true);
-             &#125;
-             if(!is_limit &amp;&amp; is_num)dp[i] = res;
-             return res;
-         &#125;;
-         return f(0, true, false); 
-    &#125;
-</code></pre>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">atMostNGivenDigitSet</span><span class="hljs-params">(vector&lt;string&gt;&amp; digits, <span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-keyword">auto</span> s = <span class="hljs-built_in">to_string</span>(n);<br>        <span class="hljs-type">int</span> m = s.<span class="hljs-built_in">length</span>(), dp[m];<br>        <span class="hljs-built_in">memset</span>(dp, <span class="hljs-number">-1</span>, <span class="hljs-built_in">sizeof</span>(dp));<br>         function&lt;<span class="hljs-type">int</span>(<span class="hljs-type">int</span>, <span class="hljs-type">bool</span>, <span class="hljs-type">bool</span>)&gt; f = [&amp;](<span class="hljs-type">int</span> i, <span class="hljs-type">bool</span> is_limit, <span class="hljs-type">bool</span> is_num) -&gt; <span class="hljs-type">int</span> &#123;<br>             <span class="hljs-keyword">if</span> (i == m) <span class="hljs-keyword">return</span> is_num;<br>             <span class="hljs-keyword">if</span>(!is_limit &amp;&amp; is_num &amp;&amp; dp[i] &gt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> dp[i];<br>             <span class="hljs-type">int</span> res = <span class="hljs-number">0</span>;<br>             <span class="hljs-keyword">if</span> (!is_num) res = <span class="hljs-built_in">f</span>( i + <span class="hljs-number">1</span>, <span class="hljs-literal">false</span>, <span class="hljs-literal">false</span>);<br>             <span class="hljs-type">char</span> up = is_limit ? s[i] : <span class="hljs-string">&#x27;9&#x27;</span>;<br>             <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; d : digits) &#123;<br>                 <span class="hljs-keyword">if</span>( d[<span class="hljs-number">0</span>] &gt; up) <span class="hljs-keyword">break</span>;<br>                 res += <span class="hljs-built_in">f</span>(i + <span class="hljs-number">1</span>, is_limit &amp;&amp; d[<span class="hljs-number">0</span>] == up, <span class="hljs-literal">true</span>);<br>             &#125;<br>             <span class="hljs-keyword">if</span>(!is_limit &amp;&amp; is_num)dp[i] = res;<br>             <span class="hljs-keyword">return</span> res;<br>         &#125;;<br>         <span class="hljs-keyword">return</span> <span class="hljs-built_in">f</span>(<span class="hljs-number">0</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>); <br>    &#125;<br></code></pre></td></tr></table></figure>
 <blockquote><p>将 n 转换成字符串 s，定义 f(i,isLimit,isNum) 表示构造从左往右第 i 位及其之后数位的合法方案数，其中：</p>
 <p>isLimit表示当前是否受到了 n 的约束。若为真，则第 i 位填入的数字至多为 s[i]，否则至多为 9。<br>isNum 表示 i 前面的数位是否填了数字。若为假，则当前位可以跳过（不填数字），或者要填入的数字至少为 1；若为真，则必须填数字，且要填入的数字从 0 开始。这样我们可以控制构造出的是一位数&#x2F;两位数&#x2F;三位数等等。对于本题而言，要填入的数字可直接从 digits 中选择。<br>枚举要填入的数字，具体实现逻辑见代码。</p>
 <p>代码中 Java&#x2F;C++&#x2F;Go 只需要记忆化 i，因为：</p>
