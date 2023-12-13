@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2023/11/26/systemd/Snipaste_2023-12-09_00-28-33.jpg">
 <meta property="article:published_time" content="2023-11-26T10:00:35.000Z">
-<meta property="article:modified_time" content="2023-12-13T16:15:41.873Z">
+<meta property="article:modified_time" content="2023-12-13T16:53:33.864Z">
 <meta property="article:author" content="李凯华">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="journal">
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5k 字
+          5.1k 字
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          42 分钟
+          43 分钟
         
       </span>
     
@@ -318,10 +318,10 @@
 <p>wsl2下systemd-coredump失效，&#x2F;var&#x2F;lib&#x2F;systemd&#x2F;coredump 中不会记录core dump文件，查看系统日志可以发现出现以下条目：<em>Failed to connect to coredump service: No such file or directory</em>，但是<strong>coredumpctl</strong>可以正常运行，&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;systemd-coredump文件也正常存在，该bug存在已久，一直没有得到修复  </p>
 <h4 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h4><p>由于内核参数kernel.core_pattern是可以通过sysctl修改的，并且该参数的默认配置本身也来于&#x2F;usr&#x2F;lib&#x2F;sysctl.d&#x2F;50-coredump.conf， 所以我们可以临时修改或者永久修改该参数来改变core dump文件存储位置为&#x2F;tmp&#x2F;core(这里随喜好选择即可)  </p>
 <blockquote>
-<p>首先使用 <code>ulimit -c 1024</code> 来修改core dump文件的大小不为0，我这里修改为1024blocks，1blocks &#x3D; 512MB, 当然 </p>
+<p>首先使用 <code>ulimit -c 1024</code> 来修改core dump文件的大小不为0，我这里修改为1024blocks，1blocks &#x3D; 512MB, 当然修改后只对目标用户当前进程及其子进程(session)有效，永久修改可以将其加入login shell的start up文件中(如&#x2F;etc&#x2F;profile)，或者在&#x2F;etc&#x2F;security&#x2F;limits.conf 中加入 一行 <code>* hard core 1024</code> 表示修改系统的硬限制为1024blocks  </p>
 </blockquote>
 <ul>
-<li>临时修改, 只在当前session中有效： <code>sudo sysctl -w kernel.core_pattern=/tmp/core</code></li>
+<li>临时修改, 重启后失效： <code>sudo sysctl -w kernel.core_pattern=/tmp/core</code></li>
 <li>永久修改： 在&#x2F;etc&#x2F;sysctl.d&#x2F;core.conf中添加以下内容：<br><code>kernel.core_pattern=/tmp/core</code>之后运行<br><code>sysctl -p /etc/sysctl.d/50-coredump.conf</code><br><a target="_blank" rel="noopener" href="https://github.com/microsoft/WSL/issues/1262">方法来源</a></li>
 </ul>
 
