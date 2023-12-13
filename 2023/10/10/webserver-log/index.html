@@ -16,21 +16,21 @@
   <meta name="author" content="李凯华">
   <meta name="keywords" content="">
   
-    <meta name="description" content="vscode&amp;lldb 环境下的多进程调试vscode目前不支持使用lldb作为调试器的c++项目的多进程调试，gdb可以在launch.json中修改setupcommand来达到调试所有进程的目的，但是lldb不行，即使修改setupcommand也不能在子进程中设置断点并调试   vscode的codelldb插件支持command prompt命令可以在命令行中操作lldb，此时可">
+    <meta name="description" content="c++ 学习爱好者，欢迎交流">
 <meta property="og:type" content="article">
-<meta property="og:title" content="lldb调试器调试多进程">
-<meta property="og:url" content="http://example.com/2023/11/28/lldb%E8%B0%83%E8%AF%95%E5%99%A8%E8%B0%83%E8%AF%95%E5%A4%9A%E8%BF%9B%E7%A8%8B/index.html">
+<meta property="og:title" content="webserver_log">
+<meta property="og:url" content="http://example.com/2023/10/10/webserver-log/index.html">
 <meta property="og:site_name" content="kuli&#39;s blog">
-<meta property="og:description" content="vscode&amp;lldb 环境下的多进程调试vscode目前不支持使用lldb作为调试器的c++项目的多进程调试，gdb可以在launch.json中修改setupcommand来达到调试所有进程的目的，但是lldb不行，即使修改setupcommand也不能在子进程中设置断点并调试   vscode的codelldb插件支持command prompt命令可以在命令行中操作lldb，此时可">
+<meta property="og:description" content="c++ 学习爱好者，欢迎交流">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-11-27T16:38:31.000Z">
-<meta property="article:modified_time" content="2023-12-13T15:15:59.226Z">
+<meta property="article:published_time" content="2023-10-10T04:00:21.000Z">
+<meta property="article:modified_time" content="2023-12-10T04:00:32.914Z">
 <meta property="article:author" content="李凯华">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>lldb调试器调试多进程 - kuli&#39;s blog</title>
+  <title>webserver_log - kuli&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -196,7 +196,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="lldb调试器调试多进程"></span>
+            <span id="subtitle" data-typed-text="webserver_log"></span>
           
         </div>
 
@@ -207,8 +207,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-11-28 00:38" pubdate>
-          2023年11月28日 凌晨
+        <time datetime="2023-10-10 12:00" pubdate>
+          2023年10月10日 中午
         </time>
       </span>
     
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          774 字
+          0 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          7 分钟
+          1 分钟
         
       </span>
     
@@ -267,29 +267,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">lldb调试器调试多进程</h1>
+            <h1 id="seo-header">webserver_log</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="vscode-lldb-环境下的多进程调试"><a href="#vscode-lldb-环境下的多进程调试" class="headerlink" title="vscode&amp;lldb 环境下的多进程调试"></a>vscode&amp;lldb 环境下的多进程调试</h2><p>vscode目前不支持使用lldb作为调试器的c++项目的多进程调试，gdb可以在launch.json中修改setupcommand来达到调试所有进程的目的，但是lldb不行，即使修改setupcommand也不能在子进程中设置断点并调试  </p>
-<p>vscode的codelldb插件支持command prompt命令可以在命令行中操作lldb，此时可以先设置lldb的fork属性以及进程断点，之后运行时自动切换至该子进程<br>目前测试一个进程只能绑定一个进程，若想绑定多进程可以在主进程运行之后使用ps命令查看子进程pid，之后打开多个终端运行lldb attach，<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/14746315/how-to-attach-to-child-process-in-lldb">StackOverflow给出了另一种方法</a></p>
-<h2 id="lldb命令"><a href="#lldb命令" class="headerlink" title="lldb命令"></a>lldb命令</h2><p>lldb基本用法：</p>
-<ul>
-<li>target create : 一般来说，若以launch操作启动lldb时会附加可执行文件名(也就是执行的目标target)，若没有指定，在进入lldb后可用该命令指定target<ul>
-<li>调试可执行文件tinywebserver生成的core dump文件：<code>(lldb) target create &quot;/home/kuli/tinywebserver/TinyWebServer/build/tinywebserver&quot; --core &quot;/tmp/core.1579&quot;</code></li>
-</ul>
-</li>
-<li>r : 执行target </li>
-<li>c ：继续执行直至遇到下一个断点 </li>
-<li>q ：退出lldb</li>
-<li>bt : 展开断点所在函数的call stack</li>
-<li>b file:123  : 设置file断点在123行</li>
-<li>attach pid : 将lldb附着在已经在执行的一个进程上</li>
-<li>process interrupt&#x2F;ctrl + c ：中断进程</li>
-</ul>
-<p>lldb的quit命令会杀死(process kill)调试的进程，和kill命令默认发送的sigterm信号不同</p>
-
+                
                 
               </div>
             
@@ -306,8 +289,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>lldb调试器调试多进程</div>
-      <div>http://example.com/2023/11/28/lldb调试器调试多进程/</div>
+      <div>webserver_log</div>
+      <div>http://example.com/2023/10/10/webserver-log/</div>
     </div>
     <div class="license-meta">
       
@@ -319,7 +302,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年11月28日</div>
+          <div>2023年10月10日</div>
         </div>
       
       
@@ -351,9 +334,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/12/01/%E6%95%B0%E4%BD%8DDP/" title="数位DP">
+                      <a href="/2023/11/03/linux-high-performanceserver/" title="linux-high-performanceserver">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">数位DP</span>
+                        <span class="hidden-mobile">linux-high-performanceserver</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -361,8 +344,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/11/26/systemd/" title="systemd-journald">
-                        <span class="hidden-mobile">systemd-journald</span>
+                      <a href="/2023/09/30/linux-&amp;-cmake-commands/" title="linux/cmake commands">
+                        <span class="hidden-mobile">linux/cmake commands</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
