@@ -16,15 +16,15 @@
   <meta name="author" content="李凯华">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 多线程同步 1.1. 互斥锁pthread_mutex 1.1.1. 多线程程序中调用fork   1.2. 多线程信号处理    1. 多线程同步1.1. 互斥锁pthread_mutex1.1.1. 多线程程序中调用fork 父进程使用fork()创建出的子进程会继承互斥锁的状态，所以如果父进程是多线程并且有一个线程锁住了mutex，则子进程创建时也会锁住（两个互斥锁分属于两个进程），">
+    <meta name="description" content="1. 多线程同步 1.1. 互斥锁pthread_mutex 1.1.1. 多线程程序中调用fork   条件变量pthread_cond 1.2. 多线程信号处理    1. 多线程同步1.1. 互斥锁pthread_mutex1.1.1. 多线程程序中调用fork 父进程使用fork()创建出的子进程会继承互斥锁的状态，所以如果父进程是多线程并且有一个线程锁住了mutex，则子进程创建时也会">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MultithreadSync">
 <meta property="og:url" content="http://example.com/2023/11/19/MultithreadSync/index.html">
 <meta property="og:site_name" content="kuli&#39;s blog">
-<meta property="og:description" content="1. 多线程同步 1.1. 互斥锁pthread_mutex 1.1.1. 多线程程序中调用fork   1.2. 多线程信号处理    1. 多线程同步1.1. 互斥锁pthread_mutex1.1.1. 多线程程序中调用fork 父进程使用fork()创建出的子进程会继承互斥锁的状态，所以如果父进程是多线程并且有一个线程锁住了mutex，则子进程创建时也会锁住（两个互斥锁分属于两个进程），">
+<meta property="og:description" content="1. 多线程同步 1.1. 互斥锁pthread_mutex 1.1.1. 多线程程序中调用fork   条件变量pthread_cond 1.2. 多线程信号处理    1. 多线程同步1.1. 互斥锁pthread_mutex1.1.1. 多线程程序中调用fork 父进程使用fork()创建出的子进程会继承互斥锁的状态，所以如果父进程是多线程并且有一个线程锁住了mutex，则子进程创建时也会">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-11-18T16:09:22.000Z">
-<meta property="article:modified_time" content="2023-11-19T13:03:31.700Z">
+<meta property="article:modified_time" content="2023-12-18T08:58:49.651Z">
 <meta property="article:author" content="李凯华">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="POSIX thread">
@@ -221,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.9k 字
+          2.7k 字
         
       </span>
     
@@ -232,7 +232,7 @@
         
         
         
-          17 分钟
+          23 分钟
         
       </span>
     
@@ -280,6 +280,7 @@
 <li><a href="#111-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E4%B8%AD%E8%B0%83%E7%94%A8fork">1.1.1. 多线程程序中调用fork</a></li>
 </ul>
 </li>
+<li><a href="#%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8Fpthread_cond">条件变量pthread_cond</a></li>
 <li><a href="#12-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86">1.2. 多线程信号处理</a></li>
 </ul>
 </li>
@@ -290,6 +291,10 @@
 <li>prepare，parent，child都为函数指针，prepare在fork调用之后，子进程创建之前使用，parent和child分别在fork调用返回之前，在父进程和子进程中使用，我们可以在prepare中对mutex上锁，在parent和child分别对其解锁来达到fork之后父子进程中的互斥锁都为解锁的</li>
 </ul>
 </li>
+</ul>
+<h3 id="条件变量pthread-cond"><a href="#条件变量pthread-cond" class="headerlink" title="条件变量pthread_cond"></a>条件变量pthread_cond</h3><ul>
+<li>mutex用于同步线程对于共享数据的访问，conditional_variable用于同步线程之间共享数据的值</li>
+<li>pthread_cond_signal不会解锁mutex（它不能，因为它没有对mutex的引用，所以它怎么知道要解锁什么？）事实上，发出信号的线程不需要与互斥体有任何连接， pthread_cond_wait在将等待线程放入等待队列之前先将mutex加锁，放入之后解锁，当线程被成功唤醒(即wait函数返回时)，mutex会再次被锁上，所以在pthread_cond_wait在被调用之后到调用线程被成功放入等待队列这段时间内，应该确保pthread_cond_signal和pthread_cond_broadcast等函数不会修改条件变量的值，将信号函数加上锁是个很好的方法，所以条件变量的通常用法如下所示：<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c++">thread <span class="hljs-number">1</span>:<br>    <span class="hljs-built_in">pthread_mutex_lock</span>(&amp;mutex);<br>    <span class="hljs-keyword">while</span> (!condition) <span class="hljs-comment">//等待某个条件变真，while循环防止假唤醒，cond通常被设为能够表示目标线程的唯一标识，从而唤醒一个指定线程</span><br>        <span class="hljs-built_in">pthread_cond_wait</span>(&amp;cond, &amp;mutex);<br>    <span class="hljs-comment">/* do something that requires holding the mutex and condition is true */</span><br>    <span class="hljs-built_in">pthread_mutex_unlock</span>(&amp;mutex);<br><br>thread2:<br>    <span class="hljs-built_in">pthread_mutex_lock</span>(&amp;mutex);<br>    <span class="hljs-comment">/* do something that might make condition true */</span><br>    <span class="hljs-built_in">pthread_cond_signal</span>(&amp;cond);<br>    <span class="hljs-built_in">pthread_mutex_unlock</span>(&amp;mutex);<br></code></pre></td></tr></table></figure></li>
 </ul>
 <h3 id="1-2-多线程信号处理"><a href="#1-2-多线程信号处理" class="headerlink" title="1.2. 多线程信号处理"></a>1.2. 多线程信号处理</h3><ul>
 <li>fork创建子进程，子进程会继承父进程的信号掩码并清除信号处理函数</li>
