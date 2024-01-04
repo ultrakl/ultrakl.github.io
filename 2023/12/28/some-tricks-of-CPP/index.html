@@ -24,7 +24,7 @@
 <meta property="og:description" content="c++中的窄化转换类型 从浮点类型到整型。 从浮点类型到更窄或排名更低的浮点类型，除非要转换的值是 constexpr 并且在目标类型的范围内（即使目标类型不具有存储浮点类型的所有有效数字的精度）数字）。 从整型到浮点类型，除非要转换的值是 constexpr 并且其值可以准确地存储在目标类型中。 从一个整型到另一个不能表示原始类型的所有值的整型，除非要转换的值是 constexpr 并且其值可以">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-12-28T08:15:27.000Z">
-<meta property="article:modified_time" content="2024-01-04T12:53:30.869Z">
+<meta property="article:modified_time" content="2024-01-04T13:04:55.600Z">
 <meta property="article:author" content="李凯华">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3k 字
+          3.6k 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          25 分钟
+          30 分钟
         
       </span>
     
@@ -328,6 +328,10 @@
 <h3 id="remove-if-find-if"><a href="#remove-if-find-if" class="headerlink" title="remove_if &amp; find_if"></a>remove_if &amp; find_if</h3><p>find_if(ForwardIt first, ForwardIt last, UnaryPredicate p)找到一个满足p的迭代器first并返回<br>remove_if(ForwardIt first, ForwardIt last, UnaryPredicate p)返回全部满足条件p的迭代器的后一个位置，实则就是将满足条件的元素全部移动至容器前方，将不满足的全部移至后方，可搭配erase方法使用:  </p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++">std::string str2 = <span class="hljs-string">&quot;Text\n with\tsome \t  whitespaces\n\n&quot;</span>;<br>    str2.<span class="hljs-built_in">erase</span>(std::<span class="hljs-built_in">remove_if</span>(str2.<span class="hljs-built_in">begin</span>(),<br>                              str2.<span class="hljs-built_in">end</span>(),<br>                              [](<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span> x)&#123;<span class="hljs-keyword">return</span> std::<span class="hljs-built_in">isspace</span>(x);&#125;),<br>               str2.<span class="hljs-built_in">end</span>());<br></code></pre></td></tr></table></figure>
 
+<h3 id="c-17中新引入的推导指引decution-guide"><a href="#c-17中新引入的推导指引decution-guide" class="headerlink" title="c++17中新引入的推导指引decution guide"></a>c++17中新引入的推导指引decution guide</h3><p>推导指引就是可以省略显式指出类模板的模板实参，交给编译器去做推导<br>手动实现一个类模板的推导指引规则的语法为<br><code>explicit-specifier (optional) template-name ( parameter-declaration-clause ) -&gt; simple-template-id </code><br>标准库的各大容器都实现了相应的推导指引规则<br>priority_queue对应的推导指引规则之一:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt; <span class="hljs-keyword">class</span> Comp, <span class="hljs-keyword">class</span> Container &gt;</span><br><span class="hljs-function"><span class="hljs-title">priority_queue</span><span class="hljs-params">( Comp, Container )</span></span><br><span class="hljs-function">    -&gt; priority_queue&lt;<span class="hljs-keyword">typename</span> Container::value_type, Container, Comp&gt;</span>;<br></code></pre></td></tr></table></figure>
+<p>这样我们只需在实例化priority_queue时给出Comp和Container这两个实参就够了，具体例子:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++">priority_queue<br>        <span class="hljs-comment">// &lt;ListNode*, vector&lt;ListNode*&gt;, function&lt;bool(ListNode*, ListNode*)&gt;&gt;可省略</span><br>        pq&#123;[](<span class="hljs-keyword">auto</span>&amp; a, <span class="hljs-keyword">auto</span>&amp; b)-&gt;<span class="hljs-type">bool</span>&#123;<span class="hljs-keyword">return</span> a-&gt;val &gt; b-&gt;val;&#125;, lists&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
