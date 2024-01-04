@@ -18,13 +18,13 @@
   
     <meta name="description" content="1. 多线程同步 1.1. 互斥锁pthread_mutex 1.1.1. 多线程程序中调用fork   条件变量pthread_cond 1.2. 多线程信号处理    1. 多线程同步1.1. 互斥锁pthread_mutex1.1.1. 多线程程序中调用fork 父进程使用fork()创建出的子进程会继承互斥锁的状态，所以如果父进程是多线程并且有一个线程锁住了mutex，则子进程创建时也会">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MultithreadSync">
+<meta property="og:title" content="多线程之间的同步">
 <meta property="og:url" content="http://example.com/2023/11/19/MultithreadSync/index.html">
 <meta property="og:site_name" content="kuli&#39;s blog">
 <meta property="og:description" content="1. 多线程同步 1.1. 互斥锁pthread_mutex 1.1.1. 多线程程序中调用fork   条件变量pthread_cond 1.2. 多线程信号处理    1. 多线程同步1.1. 互斥锁pthread_mutex1.1.1. 多线程程序中调用fork 父进程使用fork()创建出的子进程会继承互斥锁的状态，所以如果父进程是多线程并且有一个线程锁住了mutex，则子进程创建时也会">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-11-18T16:09:22.000Z">
-<meta property="article:modified_time" content="2023-12-18T08:58:49.651Z">
+<meta property="article:modified_time" content="2024-01-04T12:45:12.846Z">
 <meta property="article:author" content="李凯华">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="POSIX thread">
@@ -32,7 +32,7 @@
   
   
   
-  <title>MultithreadSync - kuli&#39;s blog</title>
+  <title>多线程之间的同步 - kuli&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="MultithreadSync"></span>
+            <span id="subtitle" data-typed-text="多线程之间的同步"></span>
           
         </div>
 
@@ -269,7 +269,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">MultithreadSync</h1>
+            <h1 id="seo-header">多线程之间的同步</h1>
             
             
               <div class="markdown-body">
@@ -355,7 +355,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>MultithreadSync</div>
+      <div>多线程之间的同步</div>
       <div>http://example.com/2023/11/19/MultithreadSync/</div>
     </div>
     <div class="license-meta">
@@ -400,9 +400,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/11/25/file/" title="linux_kernel_file">
+                      <a href="/2023/11/25/file/" title="linux /proc文件夹下保存内核参数的各文件">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">linux_kernel_file</span>
+                        <span class="hidden-mobile">linux /proc文件夹下保存内核参数的各文件</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     

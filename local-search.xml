@@ -17,7 +17,7 @@
   
   
   <entry>
-    <title>webserver_log</title>
+    <title>webserver-log模块</title>
     <link href="/2023/12/10/webserver-log/"/>
     <url>/2023/12/10/webserver-log/</url>
     
@@ -171,7 +171,7 @@
   
   
   <entry>
-    <title>linux_kernel_file</title>
+    <title>linux /proc文件夹下保存内核参数的各文件</title>
     <link href="/2023/11/25/file/"/>
     <url>/2023/11/25/file/</url>
     
@@ -184,7 +184,7 @@
   
   
   <entry>
-    <title>MultithreadSync</title>
+    <title>多线程之间的同步</title>
     <link href="/2023/11/19/MultithreadSync/"/>
     <url>/2023/11/19/MultithreadSync/</url>
     
@@ -292,7 +292,7 @@
   
   
   <entry>
-    <title>linux/cmake commands</title>
+    <title>linux/cmake 常用命令</title>
     <link href="/2023/09/30/linux-&amp;-cmake-commands/"/>
     <url>/2023/09/30/linux-&amp;-cmake-commands/</url>
     
@@ -321,7 +321,7 @@
   
   
   <entry>
-    <title>network &amp; high concurrency</title>
+    <title>符合c++14标准的网络和高并发编程</title>
     <link href="/2023/09/19/network-high-concurrency/"/>
     <url>/2023/09/19/network-high-concurrency/</url>
     
@@ -352,7 +352,7 @@
   
   
   <entry>
-    <title>houjiecpp</title>
+    <title>cpp学习上遇到的问题</title>
     <link href="/2023/08/25/houjiecpp/"/>
     <url>/2023/08/25/houjiecpp/</url>
     
@@ -410,7 +410,7 @@
   
   
   <entry>
-    <title>introduction</title>
+    <title>初识c++</title>
     <link href="/2023/07/24/introduction/"/>
     <url>/2023/07/24/introduction/</url>
     
