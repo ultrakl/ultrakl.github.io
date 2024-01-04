@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2023/08/25/houjiecpp/structure.png">
 <meta property="article:published_time" content="2023-08-25T02:48:38.000Z">
-<meta property="article:modified_time" content="2023-12-31T17:22:50.529Z">
+<meta property="article:modified_time" content="2024-01-04T12:01:27.500Z">
 <meta property="article:author" content="李凯华">
 <meta property="article:tag" content="c11&#x2F;14 syntax">
 <meta property="article:tag" content="cpp memory model">
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          18k 字
+          19k 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          153 分钟
+          155 分钟
         
       </span>
     
@@ -366,7 +366,8 @@
 </ol>
 </li>
 <li>如果非类型形参类型为对象指针，则必须传入完整对象的地址，不能是指向该对象的指针</li>
-<li>如下，如果数组类型形参不是引用传递而是值传递，数组会自动降一维，成为一个指向一维数组的指针<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-type">size_t</span> w, <span class="hljs-type">size_t</span> h&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">double</span> (&amp;s)[w][h])</span></span>&#123;cout&lt;&lt;s[<span class="hljs-number">0</span>]&lt;&lt;endl;&#125;<br></code></pre></td></tr></table></figure></li>
+<li>如下，如果模板函数中数组类型形参(<strong>不是模板列表中的模板形参</strong>)不是引用传递而是值传递，数组会自动降一维，成为一个指向一维数组的指针<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(T)</span></span>;<br> <br><span class="hljs-type">int</span> a[<span class="hljs-number">3</span>];<br><span class="hljs-built_in">f</span>(a); <span class="hljs-comment">// P = T, A = int[3], adjusted to int*: deduced T = int*</span><br></code></pre></td></tr></table></figure></li>
+<li>数组在做模板函数的实参时，若模板函数形参不是引用或指向数组的指针(列如二维数组退化为指向一维数组的指针)，则不会进行模板实参推导<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-type">size_t</span> w, <span class="hljs-type">size_t</span> h&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">double</span> (&amp;s)[w][h])</span></span>&#123;cout&lt;&lt;s[<span class="hljs-number">0</span>]&lt;&lt;endl;&#125; <span class="hljs-comment">//若去掉引用，则w不会被正确推导，但h可以，因为此时退化为一维数组指针</span><br></code></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="2-4-编译时常量表达式"><a href="#2-4-编译时常量表达式" class="headerlink" title="2.4. 编译时常量表达式"></a>2.4. 编译时常量表达式</h2><ul>
 <li>整形常量为如果被常量表达式初始化则为常量表达式 ，也可以用于初始化其他常量表达式，其他类型目前未知</li>

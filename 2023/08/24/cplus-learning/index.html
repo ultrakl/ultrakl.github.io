@@ -16,16 +16,16 @@
   <meta name="author" content="李凯华">
   <meta name="keywords" content="">
   
-    <meta name="description" content="2023&#x2F;8&#x2F;2 dijstra，每次并入一个节点并更新dist值，下面列举几种不同实现方式 邻接矩阵 时间复杂度为O(v^2) 邻接链表，每个顶点连着跟他相连的顶点作为链表中的节点，存储着目的顶点和边的权重，时间复杂度为O(Elogv) 可以用list&lt;pair&lt;int(目的顶点),int(边的权重)&gt;&gt; 最小堆 基本知识：节点索引由一个数组维护，左右">
+    <meta name="description" content="2023&#x2F;8&#x2F;2 dijstra，每次并入一个节点并更新dist值，下面列举几种不同实现方式 邻接矩阵 时间复杂度为O(v^2) 邻接链表，每个顶点连着跟他相连的顶点作为链表中的节点，存储着目的顶点和边的权重，时间复杂度为O(Elogv) 可以用list&lt;pair&lt;int(目的顶点),int(边的权重)&gt;&gt; 最小堆 基本知识：最小堆是一个完全二叉树，节点">
 <meta property="og:type" content="article">
 <meta property="og:title" content="常用的最短路算法总结">
 <meta property="og:url" content="http://example.com/2023/08/24/cplus-learning/index.html">
 <meta property="og:site_name" content="kuli&#39;s blog">
-<meta property="og:description" content="2023&#x2F;8&#x2F;2 dijstra，每次并入一个节点并更新dist值，下面列举几种不同实现方式 邻接矩阵 时间复杂度为O(v^2) 邻接链表，每个顶点连着跟他相连的顶点作为链表中的节点，存储着目的顶点和边的权重，时间复杂度为O(Elogv) 可以用list&lt;pair&lt;int(目的顶点),int(边的权重)&gt;&gt; 最小堆 基本知识：节点索引由一个数组维护，左右">
+<meta property="og:description" content="2023&#x2F;8&#x2F;2 dijstra，每次并入一个节点并更新dist值，下面列举几种不同实现方式 邻接矩阵 时间复杂度为O(v^2) 邻接链表，每个顶点连着跟他相连的顶点作为链表中的节点，存储着目的顶点和边的权重，时间复杂度为O(Elogv) 可以用list&lt;pair&lt;int(目的顶点),int(边的权重)&gt;&gt; 最小堆 基本知识：最小堆是一个完全二叉树，节点">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/image/dijkstra.png">
 <meta property="article:published_time" content="2023-08-24T14:07:42.000Z">
-<meta property="article:modified_time" content="2023-12-01T09:51:17.420Z">
+<meta property="article:modified_time" content="2024-01-03T11:19:59.482Z">
 <meta property="article:author" content="李凯华">
 <meta property="article:tag" content="dijstra">
 <meta property="article:tag" content="hash table">
@@ -223,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          1.4k 字
         
       </span>
     
@@ -234,7 +234,7 @@
         
         
         
-          10 分钟
+          13 分钟
         
       </span>
     
@@ -280,11 +280,18 @@
 <li>dijstra，每次并入一个节点并更新dist值，下面列举几种不同实现方式<ul>
 <li>邻接矩阵 时间复杂度为O(v^2)</li>
 <li>邻接链表，每个顶点连着跟他相连的顶点作为链表中的节点，存储着目的顶点和边的权重，时间复杂度为O(Elogv) 可以用list&lt;pair&lt;int(目的顶点),int(边的权重)&gt;&gt;<ul>
-<li>最小堆<ul>
-<li>基本知识：节点索引由一个数组维护，左右子树下标和二叉树类似， 每个左右子树的父节点的值都比子节点的值小，这里的值指的是dist值</li>
-<li>提取最小值：将堆中最小值节点，也就是根节点和数组中最后一个节点调换位置，并减少堆中size的值，这样可以防止下次寻找最小值时再次访问该节点，之后进行堆最小化操作</li>
-<li>堆最小化操作 : 递归函数，递归对比父节点和左右节点的值并交换节点中的值以及交换对应图中顶点所在索引值</li>
-<li>减少键值操作：每次更新顶点的dist值后都要在最小堆中进行更新，并递归和其父节点进行比较，将其放在最小堆中应在的位置</li>
+<li><strong>最小堆</strong><ul>
+<li>基本知识：最小堆是一个完全二叉树，节点值由一个数组维护，每个左右子树的父节点的值都比子节点的值小</li>
+<li>构建最小堆：完全二叉树的非叶子节点数量为[N&#x2F;2]，N为节点数量<blockquote>
+<p>证明：<br>设出度数为0，1，2的节点数分别为x, y, z，由完全二叉树的性质可知，y为0(N为奇数)或1(N为偶数)，且有以下公式：<br> x + y + z &#x3D; N, 2x + y &#x3D; N - 1(边的数量，除了头节点每个节点都被一条边牵引)<br>则可得出 x + y &#x3D; N &#x2F; 2(向下取整)</p>
+</blockquote>
+构建堆时叶子节点由于没用子节点，我们可以将其认为是已经构建好的子堆，那我们可以从最后一个非叶子节点开始以此执行<strong>下沉</strong>操作, 总时间复杂度为O(N)</li>
+<li>下沉：递归比较父节点和左右子节点中较大节点的值，若小于，则交换, 时间复杂度为O(logN)</li>
+<li>上浮：递归比较要操作的子节点和父节点中较大节点的值，若小于，则交换，时间复杂度为O(logN)</li>
+<li>提取最小值&#x2F;删除操作：将堆中最小值节点，也就是根节点和数组中最后一个节点调换位置，并减少堆中size的值，之后进行堆化操作</li>
+<li>插入元素：在数组末尾新增元素，并执行上浮操作</li>
+<li>减少键值：<strong>减小</strong>堆中某个节点的值(直接在数组中针对索引进行操作)，由于是减小了键值所以之后执行上浮操作</li>
+<li>STL中实现的<em>priority_queue</em>默认实现<strong>最大堆</strong>，和最小堆完全相反，其父节点的值要大于左右子树的值</li>
 </ul>
 </li>
 </ul>
