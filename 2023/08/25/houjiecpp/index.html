@@ -16,16 +16,16 @@
   <meta name="author" content="李凯华">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 2023&#x2F;08&#x2F;29 2. 2023&#x2F;08&#x2F;29 2.1. unicode 2.2. 非类型形参的局限： 2.3. 非类型实参的局限： 2.4. 编译时常量表达式 2.5. 隐式转换 2.6. 设计模式 2.7. 智能指针 2.8. const成员函数 2.9. 右值 2.10. 模板杂类 2.11. lambda 2.12. 成员函数指针 2.13">
+    <meta name="description" content="1. 2023&#x2F;08&#x2F;29 2. 2023&#x2F;08&#x2F;29 2.1. unicode 2.2. 非类型形参的局限： 2.3. 非类型实参的局限： 函数模板中模板实参的推导   2.4. 编译时常量表达式 2.5. 隐式转换 2.6. 设计模式 2.7. 智能指针 2.8. const成员函数 2.9. 右值 2.10. 模板杂类 2.11. lambda 2.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="houjiecpp">
 <meta property="og:url" content="http://example.com/2023/08/25/houjiecpp/index.html">
 <meta property="og:site_name" content="kuli&#39;s blog">
-<meta property="og:description" content="1. 2023&#x2F;08&#x2F;29 2. 2023&#x2F;08&#x2F;29 2.1. unicode 2.2. 非类型形参的局限： 2.3. 非类型实参的局限： 2.4. 编译时常量表达式 2.5. 隐式转换 2.6. 设计模式 2.7. 智能指针 2.8. const成员函数 2.9. 右值 2.10. 模板杂类 2.11. lambda 2.12. 成员函数指针 2.13">
+<meta property="og:description" content="1. 2023&#x2F;08&#x2F;29 2. 2023&#x2F;08&#x2F;29 2.1. unicode 2.2. 非类型形参的局限： 2.3. 非类型实参的局限： 函数模板中模板实参的推导   2.4. 编译时常量表达式 2.5. 隐式转换 2.6. 设计模式 2.7. 智能指针 2.8. const成员函数 2.9. 右值 2.10. 模板杂类 2.11. lambda 2.">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2023/08/25/houjiecpp/structure.png">
 <meta property="article:published_time" content="2023-08-25T02:48:38.000Z">
-<meta property="article:modified_time" content="2024-01-04T12:01:27.500Z">
+<meta property="article:modified_time" content="2024-01-04T12:42:16.217Z">
 <meta property="article:author" content="李凯华">
 <meta property="article:tag" content="c11&#x2F;14 syntax">
 <meta property="article:tag" content="cpp memory model">
@@ -235,7 +235,7 @@
         
         
         
-          155 分钟
+          157 分钟
         
       </span>
     
@@ -282,7 +282,10 @@
 <li><a href="#2-20230829">2. 2023&#x2F;08&#x2F;29</a><ul>
 <li><a href="#21-unicode">2.1. unicode</a></li>
 <li><a href="#22-%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%BD%A2%E5%8F%82%E7%9A%84%E5%B1%80%E9%99%90">2.2. 非类型形参的局限：</a></li>
-<li><a href="#23-%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%AE%9E%E5%8F%82%E7%9A%84%E5%B1%80%E9%99%90">2.3. 非类型实参的局限：</a></li>
+<li><a href="#23-%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%AE%9E%E5%8F%82%E7%9A%84%E5%B1%80%E9%99%90">2.3. 非类型实参的局限：</a><ul>
+<li><a href="#%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF%E4%B8%AD%E6%A8%A1%E6%9D%BF%E5%AE%9E%E5%8F%82%E7%9A%84%E6%8E%A8%E5%AF%BC">函数模板中模板实参的推导</a></li>
+</ul>
+</li>
 <li><a href="#24-%E7%BC%96%E8%AF%91%E6%97%B6%E5%B8%B8%E9%87%8F%E8%A1%A8%E8%BE%BE%E5%BC%8F">2.4. 编译时常量表达式</a></li>
 <li><a href="#25-%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2">2.5. 隐式转换</a></li>
 <li><a href="#26-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F">2.6. 设计模式</a></li>
@@ -327,20 +330,21 @@
 </ul>
 <hr>
 <ul>
-<li><input disabled="" type="checkbox"> 函数模板重载</li>
+<li><input checked="" disabled="" type="checkbox"> 函数模板重载</li>
 <li>重载运算符为成员函数和友元函数时关键的区别在于成员函数具有this指针，而友元函数没有this指针。</li>
 </ul>
 <h1 id="2-2023-08-29"><a href="#2-2023-08-29" class="headerlink" title="2. 2023&#x2F;08&#x2F;29"></a>2. 2023&#x2F;08&#x2F;29</h1><h2 id="2-1-unicode"><a href="#2-1-unicode" class="headerlink" title="2.1. unicode"></a>2.1. unicode</h2><ol>
-<li><p>字符集定义了字符和二进制的对应关系，为每个字符分配了唯一的编号。可以将字符集理解成一个很大的表格，它列出了所有字符和二进制的对应关系，<br>计算机显示文字或者存储文字，就是一个查表的过程。</p>
+<li><p>字符集定义了字符和数字(一般用16进制表示，又名<strong>码点</strong>)的对应关系，为每个字符分配了唯一的编号。可以将字符集理解成一个很大的表格，它列出了所有字符和数字的对应关系，<br>计算机显示文字或者存储文字，就是一个查表的过程。</p>
 </li>
-<li><p>而字符编码规定了如何将字符的编号存储到计算机中。如果使用了类似 GB2312 和 GBK 的变长存储方案（不同的字符占用的字节数不一样），那么为了区分一个字符</p>
-</li>
-<li><p>到底使用了几个字节，就不能将字符的编号直接存储到计算机中，字符编号在存储之前必须要经过转换，在读取时还要再逆向转换一次，这套转换方案就叫做字符编码</p>
+<li><p>而字符编码规定了如何将字符的编号存储到计算机中。如果使用了类似 GB2312 和 GBK 的变长存储方案（不同的字符占用的字节数不一样），那么为了区分一个字符，到底使用了几个字节，就不能将字符的编号直接存储到计算机中，字符编号在存储之前必须要经过转换，在读取时还要再逆向转换一次，这套转换方案就叫做字符编码</p>
 </li>
 </ol>
 <ul>
 <li>字面常量(literal constant)即无需定义可以直接写出来的量。字面常量的值一望便知，但是他的数据类型往往不能被准确分辨（尤其是使用auto时）。</li>
-<li>编译期可知的值“享有特权”，它们可能被存放到只读存储空间中。</li>
+<li>编译期可知的值“享有特权”，它们可能被存放到只读存储空间中。<blockquote>
+<p>这里的编码指的是字符对应的数如何映射为二进制数，utf-8中一个数字可能映射为1-4字节的二进制编码，utf-32是所有的数都映射为4字节，utf-16则是用2或4字节来实现映射，宽字符wchar_t则是根据实现定义，它是32位，在Linux和许多其他非Windows系统上保存 UTF-32，但在 Windows上是16位，保存 UTF-16<strong>代码单元</strong>。<br>代码单元是字符编码系统（例如 UTF-8 或 UTF-16）使用的基本组件。字符编码系统使用一个或多个代码单元对 Unicode代码点进行编码。</p>
+</blockquote>
+</li>
 </ul>
 <h2 id="2-2-非类型形参的局限："><a href="#2-2-非类型形参的局限：" class="headerlink" title="2.2. 非类型形参的局限："></a>2.2. 非类型形参的局限：</h2><ol>
 <li>浮点数不可以作为非类型形参，包括float，double。具体原因可能是历史因素，也许未来C++会支持浮点数；</li>
@@ -348,16 +352,14 @@
 <li>字符串不可以作为非类型形参；</li>
 <li>整形，可转化为整形的类型都可以作为形参，比如int，char，long，unsigned，bool，short（enum声明的内部数据可以作为实参传递给int，但是一般不能当形参）；</li>
 <li>指向对象或函数的指针与引用（左值引用）可以作为形参。</li>
-<li>this is [a link][link-id]<br>[link-id]: <a target="_blank" rel="noopener" href="https://github.com/">https://github.com/</a></li>
+<li>this is <a target="_blank" rel="noopener" href="https://github.com/" title="Optional Title Here">an example</a></li>
 </ol>
 <h2 id="2-3-非类型实参的局限："><a href="#2-3-非类型实参的局限：" class="headerlink" title="2.3. 非类型实参的局限："></a>2.3. 非类型实参的局限：</h2><ol>
 <li>实参必须是编译时常量表达式，不能使用非const的局部变量，局部对象地址及动态对象；</li>
 <li>非const的全局指针，全局对象&#x2F;全局变量（下面可能有个特例）都不是常量表达式；</li>
 <li>由于形参的已经做了限定，字符串，浮点型即使是常量表达式也不可以作为非类型实参 ；</li>
-<li>当传递指针或者引用给模板参数时，他们指向的对象不能是字符串字面值、临时量或者数据成员或者其他子对象。<ul>
-<li>这些限制在每个的C++版本中有所放送，额外的限制：</li>
-</ul>
-<ol>
+<li>当模板非类型形参为对象指针或引用时，则对于实参而言他们指向的对象不能是字符串字面值、临时量或者数据成员或者其他子对象。<ul>
+<li>这些限制在每个的C++版本中有所放送，额外的限制：<ol>
 <li>C++11前，该对象必须有外部链接（external linkage）</li>
 <li>C++14前，该对象必须有外部链接或者内部链接<blockquote>
 <p>备注：常量表达式基本上是字面值以及const修饰的变量</p>
@@ -365,8 +367,12 @@
 </li>
 </ol>
 </li>
-<li>如果非类型形参类型为对象指针，则必须传入完整对象的地址，不能是指向该对象的指针</li>
-<li>如下，如果模板函数中数组类型形参(<strong>不是模板列表中的模板形参</strong>)不是引用传递而是值传递，数组会自动降一维，成为一个指向一维数组的指针<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(T)</span></span>;<br> <br><span class="hljs-type">int</span> a[<span class="hljs-number">3</span>];<br><span class="hljs-built_in">f</span>(a); <span class="hljs-comment">// P = T, A = int[3], adjusted to int*: deduced T = int*</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>紧接上条，如果非类型形参类型为对象指针，则实参必须传入完整对象的地址，<em>直接用取地址符取对象地址</em>，不能是指向该对象的指针</li>
+</ol>
+<h3 id="函数模板中模板实参的推导"><a href="#函数模板中模板实参的推导" class="headerlink" title="函数模板中模板实参的推导"></a>函数模板中模板实参的推导</h3><ol>
+<li>如果模板函数中数组类型形参(<strong>不是模板列表中的模板形参</strong>)不是引用传递而是值传递，数组会自动降一维，成为一个指向一维数组的指针<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(T)</span></span>;<br> <br><span class="hljs-type">int</span> a[<span class="hljs-number">3</span>];<br><span class="hljs-built_in">f</span>(a); <span class="hljs-comment">// P = T, A = int[3], adjusted to int*: deduced T = int*</span><br></code></pre></td></tr></table></figure></li>
 <li>数组在做模板函数的实参时，若模板函数形参不是引用或指向数组的指针(列如二维数组退化为指向一维数组的指针)，则不会进行模板实参推导<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-type">size_t</span> w, <span class="hljs-type">size_t</span> h&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">double</span> (&amp;s)[w][h])</span></span>&#123;cout&lt;&lt;s[<span class="hljs-number">0</span>]&lt;&lt;endl;&#125; <span class="hljs-comment">//若去掉引用，则w不会被正确推导，但h可以，因为此时退化为一维数组指针</span><br></code></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="2-4-编译时常量表达式"><a href="#2-4-编译时常量表达式" class="headerlink" title="2.4. 编译时常量表达式"></a>2.4. 编译时常量表达式</h2><ul>
