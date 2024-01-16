@@ -16,16 +16,16 @@
   <meta name="author" content="李凯华">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 2023&#x2F;08&#x2F;29 2. 2023&#x2F;08&#x2F;29 2.1. unicode 2.2. 非类型形参的局限： 2.3. 非类型实参的局限： 函数模板中模板实参的推导   2.4. 编译时常量表达式 2.5. 隐式转换 2.6. 设计模式 2.7. 智能指针 2.8. const成员函数 2.9. 右值 2.10. 模板杂类 2.11. lambda 2.">
+    <meta name="description" content="1. 2023&#x2F;08&#x2F;29 2. 2023&#x2F;08&#x2F;29 2.1. unicode 2.2. 非类型形参的局限： 2.3. 非类型实参的局限： 2.3.1. 函数模板中模板实参的推导   2.4. 编译时常量表达式 2.5. 隐式转换 2.6. 设计模式 2.7. 智能指针 2.8. const成员函数 2.9. 右值 2.10. 模板杂类 2.11. la">
 <meta property="og:type" content="article">
 <meta property="og:title" content="cpp学习上遇到的问题">
 <meta property="og:url" content="http://example.com/2023/08/25/houjiecpp/index.html">
 <meta property="og:site_name" content="kuli&#39;s blog">
-<meta property="og:description" content="1. 2023&#x2F;08&#x2F;29 2. 2023&#x2F;08&#x2F;29 2.1. unicode 2.2. 非类型形参的局限： 2.3. 非类型实参的局限： 函数模板中模板实参的推导   2.4. 编译时常量表达式 2.5. 隐式转换 2.6. 设计模式 2.7. 智能指针 2.8. const成员函数 2.9. 右值 2.10. 模板杂类 2.11. lambda 2.">
+<meta property="og:description" content="1. 2023&#x2F;08&#x2F;29 2. 2023&#x2F;08&#x2F;29 2.1. unicode 2.2. 非类型形参的局限： 2.3. 非类型实参的局限： 2.3.1. 函数模板中模板实参的推导   2.4. 编译时常量表达式 2.5. 隐式转换 2.6. 设计模式 2.7. 智能指针 2.8. const成员函数 2.9. 右值 2.10. 模板杂类 2.11. la">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2023/08/25/houjiecpp/structure.png">
 <meta property="article:published_time" content="2023-08-25T02:48:38.000Z">
-<meta property="article:modified_time" content="2024-01-04T12:49:04.889Z">
+<meta property="article:modified_time" content="2024-01-16T16:59:23.130Z">
 <meta property="article:author" content="李凯华">
 <meta property="article:tag" content="c11&#x2F;14 syntax">
 <meta property="article:tag" content="cpp memory model">
@@ -235,7 +235,7 @@
         
         
         
-          157 分钟
+          158 分钟
         
       </span>
     
@@ -283,7 +283,7 @@
 <li><a href="#21-unicode">2.1. unicode</a></li>
 <li><a href="#22-%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%BD%A2%E5%8F%82%E7%9A%84%E5%B1%80%E9%99%90">2.2. 非类型形参的局限：</a></li>
 <li><a href="#23-%E9%9D%9E%E7%B1%BB%E5%9E%8B%E5%AE%9E%E5%8F%82%E7%9A%84%E5%B1%80%E9%99%90">2.3. 非类型实参的局限：</a><ul>
-<li><a href="#%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF%E4%B8%AD%E6%A8%A1%E6%9D%BF%E5%AE%9E%E5%8F%82%E7%9A%84%E6%8E%A8%E5%AF%BC">函数模板中模板实参的推导</a></li>
+<li><a href="#231-%E5%87%BD%E6%95%B0%E6%A8%A1%E6%9D%BF%E4%B8%AD%E6%A8%A1%E6%9D%BF%E5%AE%9E%E5%8F%82%E7%9A%84%E6%8E%A8%E5%AF%BC">2.3.1. 函数模板中模板实参的推导</a></li>
 </ul>
 </li>
 <li><a href="#24-%E7%BC%96%E8%AF%91%E6%97%B6%E5%B8%B8%E9%87%8F%E8%A1%A8%E8%BE%BE%E5%BC%8F">2.4. 编译时常量表达式</a></li>
@@ -301,6 +301,7 @@
 <li><a href="#2142-%E8%99%9A%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0">2.14.2. 虚析构函数</a></li>
 </ul>
 </li>
+<li><a href="#215-%E8%99%9A%E5%9F%BA%E7%B1%BB">2.15. 虚基类</a></li>
 </ul>
 </li>
 <li><a href="#3-202391">3. 2023&#x2F;9&#x2F;1</a><ul>
@@ -371,7 +372,7 @@
 </li>
 <li>紧接上条，如果非类型形参类型为对象指针，则实参必须传入完整对象的地址，<em>直接用取地址符取对象地址</em>，不能是指向该对象的指针</li>
 </ol>
-<h3 id="函数模板中模板实参的推导"><a href="#函数模板中模板实参的推导" class="headerlink" title="函数模板中模板实参的推导"></a>函数模板中模板实参的推导</h3><ol>
+<h3 id="2-3-1-函数模板中模板实参的推导"><a href="#2-3-1-函数模板中模板实参的推导" class="headerlink" title="2.3.1. 函数模板中模板实参的推导"></a>2.3.1. 函数模板中模板实参的推导</h3><ol>
 <li>如果模板函数中数组类型形参(<strong>不是模板列表中的模板形参</strong>)不是引用传递而是值传递，数组会自动降一维，成为一个指向一维数组的指针<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> T&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(T)</span></span>;<br> <br><span class="hljs-type">int</span> a[<span class="hljs-number">3</span>];<br><span class="hljs-built_in">f</span>(a); <span class="hljs-comment">// P = T, A = int[3], adjusted to int*: deduced T = int*</span><br></code></pre></td></tr></table></figure></li>
 <li>数组在做模板函数的实参时，若模板函数形参不是引用或指向数组的指针(列如二维数组退化为指向一维数组的指针)，则不会进行模板实参推导<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-type">size_t</span> w, <span class="hljs-type">size_t</span> h&gt;</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">f</span><span class="hljs-params">(<span class="hljs-type">double</span> (&amp;s)[w][h])</span></span>&#123;cout&lt;&lt;s[<span class="hljs-number">0</span>]&lt;&lt;endl;&#125; <span class="hljs-comment">//若去掉引用，则w不会被正确推导，但h可以，因为此时退化为一维数组指针</span><br></code></pre></td></tr></table></figure></li>
 </ol>
@@ -552,6 +553,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">AbstractBase</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">virtual</span> ~<span class="hljs-built_in">AbstractBase</span>() = <span class="hljs-number">0</span>;<br>&#125;;<br>AbstractBase::~<span class="hljs-built_in">AbstractBase</span>() &#123;&#125;<br> <br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Derived</span> : <span class="hljs-keyword">public</span> AbstractBase &#123;&#125;;<br> <br><span class="hljs-comment">// AbstractBase obj; // 编译错误</span><br>Derived obj;         <span class="hljs-comment">// OK</span><br></code></pre></td></tr></table></figure>
 
 <p>几个讲解虚函数讲的不错的博客：<br><a target="_blank" rel="noopener" href="https://jacktang816.github.io/post/virtualfunction/">虚函数的内存分布</a><br><a target="_blank" rel="noopener" href="http://www.fmddlmyy.cn/text15.html">C++基本概念在编译器中的实现</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/FJfSkrRKvuOmAfqqgf_e8Q">多态实现-虚函数、函数指针以及变体</a></p>
+<h2 id="2-15-虚基类"><a href="#2-15-虚基类" class="headerlink" title="2.15. 虚基类"></a>2.15. 虚基类</h2><p>这里贴出一篇<a target="_blank" rel="noopener" href="https://blog.csdn.net/xiejingfa/article/details/48028491">博客</a>，讲解了虚基类在内存中的分布</p>
 <h1 id="3-2023-9-1"><a href="#3-2023-9-1" class="headerlink" title="3. 2023&#x2F;9&#x2F;1"></a>3. 2023&#x2F;9&#x2F;1</h1><h2 id="3-1-std-bind"><a href="#3-1-std-bind" class="headerlink" title="3.1. std::bind"></a>3.1. std::bind</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c++">std::vector&lt;<span class="hljs-type">double</span>&gt; data;               <span class="hljs-comment">//同上</span><br><br>…                                       <span class="hljs-comment">//同上</span><br><br><span class="hljs-keyword">auto</span> func =<br>    std::<span class="hljs-built_in">bind</span>(                              <span class="hljs-comment">//C++11模拟初始化捕获</span><br>        [](<span class="hljs-type">const</span> std::vector&lt;<span class="hljs-type">double</span>&gt;&amp; data) <span class="hljs-comment">//译者注：本行高亮</span><br>        &#123; <span class="hljs-comment">/*使用data*/</span> &#125;,<br>        std::<span class="hljs-built_in">move</span>(data)                     <span class="hljs-comment">//译者注：本行高亮</span><br>    );<br><br></code></pre></td></tr></table></figure>
 <ul>
 <li>std::bind为每个实参创建了bind对象里的<strong>副本</strong>，每次调用bind对象时，调用的是传递给lambda表达式的本地副本。在如上的例子中，std::move(data)使用移动构造创建了本地副本（左值），之后每次调用函数副本时，调用的都是该副本</li>
@@ -562,9 +564,9 @@
 <li><p>若T为类对象且有用户提供（<em>除了在类定义内直接显式指定default的默认构造函数都可以称为用户提供的默认构造函数</em>）的默认构造函数，则对对象进行<strong>默认初始化</strong>；</p>
 </li>
 <li><p>若T为类对象且T只有隐式生成的默认构造函数，或者只有在类定义内指定default的默认构造函数，换而言之，如果显式定义&#x2F;预置&#x2F;删除了转换构造，拷贝或者移动构造（经过实验发现赋值操作不会影响默认构造函数的隐式生成），那么默认构造函数就不会隐式生成，如果默认构造函数隐式生成或被显式预置（后者前提是没有用户提供或者显示删除的默认构造函数），则会首先对类对象进行<strong>零初始化</strong>(即所有bit位置零)，之后会通过语义限制检查默认构造函数是否为<strong>重要(non-trivial)<strong>的默认构造函数，来对其中的对象进行</strong>默认初始化</strong></p>
-<p>  trivial default constructor :</p>
+<p><em>trivial default constructor</em> :  </p>
 <ul>
-<li>不是用户提供（即隐式生成或者首次声明时就显式预置）</li>
+<li>不是用户提供（即隐式生成或者首次声明时就显式预置）  </li>
 <li>对应的类没有虚函数或者虚基类</li>
 <li>直接基类拥有trivial default ctor</li>
 <li>非静态成员同上</li>
@@ -578,11 +580,12 @@
 <li>调用无参默认构造函数，并对没有<strong>在成员初始化列表进行指明</strong>或者<strong>没有默认成员初始化器</strong>的非静态成员和基类成员进行默认初始化</li>
 <li>注意： <strong>对自动&#x2F;动态存储期非类类型成员进行默认初始化时会获得不确定的值</strong>，这也是我想讨论的重点，比如对int成员变量进行默认初始化之后，使用其赋值会导致UB</li>
 <li>使用默认初始化初始化const修饰的对象时，若为类对象必须有用户定义或提供的默认构造函数，或者每个非静态成员都有成员默认初始化器。最重要的是对应的基类子对象也必须满足上述条件</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c++"><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br> <br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">T1</span> &#123; <span class="hljs-type">int</span> mem; &#125;;<br> <br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">T2</span><br>&#123;<br>    <span class="hljs-type">int</span> mem;<br>    <span class="hljs-built_in">T2</span>() &#123; &#125; <span class="hljs-comment">// &quot;mem&quot; is not in the initializer list</span><br>&#125;;<br> <br><span class="hljs-type">int</span> n; <span class="hljs-comment">// static non-class, a two-phase initialization is done:</span><br>       <span class="hljs-comment">// 1) zero-initialization initializes n to zero</span><br>       <span class="hljs-comment">// 2) default-initialization does nothing, leaving n being zero</span><br> <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    [[maybe_unused]]<br>    <span class="hljs-type">int</span> n;            <span class="hljs-comment">// non-class, the value is indeterminate</span><br>    std::string s;    <span class="hljs-comment">// class, calls default ctor, the value is &quot;&quot; (empty string)</span><br>    std::string a[<span class="hljs-number">2</span>]; <span class="hljs-comment">// array, default-initializes the elements, the value is &#123;&quot;&quot;, &quot;&quot;&#125;</span><br><span class="hljs-comment">//  int&amp; r;           // error: a reference</span><br><span class="hljs-comment">//  const int n;      // error: a const non-class</span><br><span class="hljs-comment">//  const T1 t1;      // error: const class with implicit default ctor</span><br>    [[maybe_unused]]<br>    T1 t1;            <span class="hljs-comment">// class, calls implicit default ctor</span><br>    <span class="hljs-type">const</span> T2 t2;      <span class="hljs-comment">// const class, calls the user-provided default ctor</span><br>                      <span class="hljs-comment">// t2.mem is default-initialized (to indeterminate value)</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<li>tips: <em>member initializer list</em> 中没有出现但在函数主体中出现的成员变量在进入函数主体前被默认初始化，这要求其必须具备<strong>默认构造函数</strong><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c++"><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string&gt;</span></span><br> <br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">T1</span> &#123; <span class="hljs-type">int</span> mem; &#125;;<br> <br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">T2</span><br>&#123;<br>    <span class="hljs-type">int</span> mem;<br>    <span class="hljs-built_in">T2</span>() &#123; &#125; <span class="hljs-comment">// &quot;mem&quot; is not in the initializer list</span><br>&#125;;<br> <br><span class="hljs-type">int</span> n; <span class="hljs-comment">// static non-class, a two-phase initialization is done:</span><br>       <span class="hljs-comment">// 1) zero-initialization initializes n to zero</span><br>       <span class="hljs-comment">// 2) default-initialization does nothing, leaving n being zero</span><br> <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    [[maybe_unused]]<br>    <span class="hljs-type">int</span> n;            <span class="hljs-comment">// non-class, the value is indeterminate</span><br>    std::string s;    <span class="hljs-comment">// class, calls default ctor, the value is &quot;&quot; (empty string)</span><br>    std::string a[<span class="hljs-number">2</span>]; <span class="hljs-comment">// array, default-initializes the elements, the value is &#123;&quot;&quot;, &quot;&quot;&#125;</span><br><span class="hljs-comment">//  int&amp; r;           // error: a reference</span><br><span class="hljs-comment">//  const int n;      // error: a const non-class</span><br><span class="hljs-comment">//  const T1 t1;      // error: const class with implicit default ctor</span><br>    [[maybe_unused]]<br>    T1 t1;            <span class="hljs-comment">// class, calls implicit default ctor</span><br>    <span class="hljs-type">const</span> T2 t2;      <span class="hljs-comment">// const class, calls the user-provided default ctor</span><br>                      <span class="hljs-comment">// t2.mem is default-initialized (to indeterminate value)</span><br>&#125;<br></code></pre></td></tr></table></figure>
 <blockquote>
 <p>若用clang编译器进行编译，输出t1.mem会发现是随机值，用gcc编译器进行编译会发现编译器给出‘uninitiated value’警告但仍然进行了零初始化，若改写为T1 t1{}，则都能正常编译并对进行mem零初始化，这就是我认为值初始化和默认初始化的最大区别所在；</p>
 </blockquote>
+</li>
+</ul>
 <h3 id="3-2-3-静态成员的初始化"><a href="#3-2-3-静态成员的初始化" class="headerlink" title="3.2.3. 静态成员的初始化"></a>3.2.3. 静态成员的初始化</h3><ul>
 <li>具有static(<em>全局变量或static声明</em>)或 thread 存储期限的<strong>非局部变量</strong>在程序开始前被初始化，存放在全局区，先进行<strong>静态初始化</strong>，再进行<strong>动态初始化</strong>, 全局区分为已被初始化的段(.data段)，和未被初始化的段(.bss段)<ul>
 <li>静态初始化一般来说就是指零初始化和常量初始化，动态初始化在 <a href="%5Bhttps://%5D(https://en.cppreference.com/w/cpp/language/initialization#Non-local_variables)">cppreference</a>中并没给出明确定义，网络上对于这方面的相关资料也甚少，但值得注意的是，<strong>若没有被常量初始化的静态非局部变量在其他初始化进行前都会进行零初始化</strong>，之后会根据变量的定义来判断是否改变变量的值，但变量此时必须出现定义，若无定义则会报<strong>undefined reference</strong> 错误！！</li>
@@ -601,7 +604,7 @@
 <h4 id="3-2-3-1-2023-11-1-更新动态初始化"><a href="#3-2-3-1-2023-11-1-更新动态初始化" class="headerlink" title="3.2.3.1. 2023&#x2F;11&#x2F;1 更新动态初始化"></a>3.2.3.1. 2023&#x2F;11&#x2F;1 更新动态初始化</h4><p>在动手查看过各静态变量汇编层面的动态初始化后，对动态初始化有了更多的认识<br>代码文件及汇编代码在<a target="_blank" rel="noopener" href="https://godbolt.org/z/METvfhPj3">complier explore</a>，编译器为x86-64 clang9.0;</p>
 <ol>
 <li>对于未初始化的普通数据类型静态或全局变量（即没有初始化器）来说， 其被储存在.bss段中且这些0变量本身并没有保存在可执行文件或者动态链接库文件中，但是其总内存段大小和起止位置在加载件时被统计出来。<ul>
-<li>C++ name-mangling机制把<strong>这类数据以及局部静态未初始化或者零或者动态初始化变量</strong>命名为_ZZ3fooiE开头的变量，用于表示一个静态变量的实际存储位置，根据下面对于动态初始化局部静态变量的汇编代码可以看出，编译器它调用了一些C++运行时库的函数，如__cxa_guard_acquire和__cxa_guard_release，来保证初始化的线程安全和一次性 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs assembly">cmp     byte ptr [guard variable for foo(int)::staticLocalInitVar], 0<br>jne     .LBB1_3<br>movabs  rdi, offset guard variable for foo(int)::staticLocalInitVar<br>call    __cxa_guard_acquire<br>cmp     eax, 0<br>je      .LBB1_3<br>call    fd()<br>mov     dword ptr [_ZZ3fooiE18staticLocalInitVar], eax<br>movabs  rdi, offset guard variable for foo(int)::staticLocalInitVar<br>call    __cxa_guard_release<br></code></pre></td></tr></table></figure></li>
+<li>C++ name-mangling机制把<strong>这类数据以及局部静态未初始化或者零初始化或者动态初始化变量</strong>命名为_ZZ3fooiE开头的变量，用于表示一个静态变量的实际存储位置，根据下面对于动态初始化局部静态变量的汇编代码可以看出，编译器它调用了一些C++运行时库的函数，如__cxa_guard_acquire和__cxa_guard_release，来保证初始化的线程安全和一次性(<strong>详情见内存屏障</strong>) <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs assembly">cmp     byte ptr [guard variable for foo(int)::staticLocalInitVar], 0<br>jne     .LBB1_3<br>movabs  rdi, offset guard variable for foo(int)::staticLocalInitVar<br>call    __cxa_guard_acquire<br>cmp     eax, 0<br>je      .LBB1_3<br>call    fd()<br>mov     dword ptr [_ZZ3fooiE18staticLocalInitVar], eax<br>movabs  rdi, offset guard variable for foo(int)::staticLocalInitVar<br>call    __cxa_guard_release<br></code></pre></td></tr></table></figure></li>
 </ul>
 </li>
 <li>对于有初始化器但不是常量初始化的普通数据类型静态或全局变量来说，其被存储在.data段中，但编译阶段被初始化为0，其被真正初始化的阶段在运行期，program startup的阶段，在主函数执行之前被无序，偏序，或正序初始化。对于clang为每个静态数据成员在编译阶段分配了其初始化的，名称为__cxx_global_var_init.<strong>num</strong>的函数代码，到startup时会被__start函数调用<ul>
@@ -610,7 +613,7 @@
 <li>其余静态变量或普通类的静态数据成员在同一翻译单元中按照代码顺序动态初始化</li>
 </ul>
 </li>
-<li>对于class类型的全局成员来说，.data段将其非静态数据成员全部零初始化，并且构造函数也在startup阶段被调用，析构函数在主函数推出后也被调用</li>
+<li>对于class类型的全局成员来说，.data段将其非静态数据成员全部零初始化，并且构造函数也在startup阶段被调用，析构函数在主函数退出后也被调用</li>
 <li>还有一种动态初始化可以提早发生在编译阶段，其必须满足以下条件<ul>
 <li>初始化的动态版本不改变命名空间作用域中任何先于其初始化的对象的值</li>
 <li>初始化的静态版本在被初始化变量中产生的值，与当所有不要求静态初始化的变量都被动态初始化时，由动态初始化所生成的值相同。<br>但这只是可能提前初始化，并不保证一定会</li>
