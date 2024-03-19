@@ -293,14 +293,14 @@
       <h2 class="index-header">
         
         <a href="/2023/12/10/webserver-log/" target="_self">
-          webserver-log模块
+          webserver面试题
         </a>
       </h2>
 
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/12/10/webserver-log/" target="_self">
         <div>
-          
+          协议栈相关 为什么listenfd要设置为非阻塞     客户端和服务端建立tcp连接时，connect()会先于accep()函数返回。   当一个连接到来的时候，监听套接字可读，此时，我们稍微等一段时间之后再调用accept()。就在这段时间内，客户端设置linger选项(l_onoff &#x3D; 1, l_linger &#x3D; 0)，然后调用了close()，那么客户端将不经过四次
         </div>
       </a>
 
@@ -359,14 +359,14 @@
       <h2 class="index-header">
         
         <a href="/2023/12/05/chrono%E7%94%A8%E6%B3%95/" target="_self">
-          chrono用法
+          c/c++中各种时间函数
         </a>
       </h2>
 
       
       <a class="index-excerpt index-excerpt__noimg" href="/2023/12/05/chrono%E7%94%A8%E6%B3%95/" target="_self">
         <div>
-          chrono库的chrono 库定义三种主要类型以及工具函数和常用 typedef  时钟(clock) system_clock  steady_clockC++ 标准不提供有关时钟精度、起始点或有效时间范围的保证。通常， std::chrono:system_clock的起点是 1.1.1970，即所谓的UNIX-epoch。对于std::chrono::steady_clock，通常是 PC
+          time_ttime()提供了秒级的精确度函数time_t time(time_t * timer)，返回从TC1970-1-1 0:0:0开始到现在的秒数，如果需要更高的时间精确度，就需要struct timespec 和 struct timeval来处理 timeval &amp; timespec struct timespec有两个成员，一个是秒，一个是纳秒, 所以最高精确度是纳秒。
         </div>
       </a>
 
